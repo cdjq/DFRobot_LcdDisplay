@@ -1,0 +1,147 @@
+#######################################
+# Syntax Coloring Map For DFRobot_LcdDisplay
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+DFRobot_LcdDisplay	KEYWORD1
+DFRobot_Lcd_IIC	KEYWORD1
+DFRobot_Lcd_UART	KEYWORD1
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+
+begin	KEYWORD2
+
+drawPixel	KEYWORD2
+lvglInit	KEYWORD2
+fillScreen	KEYWORD2
+setBackLight	KEYWORD2
+drawLine	KEYWORD2
+drawRect	KEYWORD2
+fillRect	KEYWORD2
+drawRoundRect	KEYWORD2
+fillRoundRect	KEYWORD2
+drawCircle	KEYWORD2
+fillCircle	KEYWORD2
+drawTriangle	KEYWORD2
+fillTriangle	KEYWORD2
+drawChar	KEYWORD2
+drawIcon	KEYWORD2
+  
+reset	KEYWORD2
+creatSlider	KEYWORD2
+setSliderValue	KEYWORD2
+creatBar	KEYWORD2
+setBar	KEYWORD2
+creatChart	KEYWORD2
+setChartTickTexts	KEYWORD2 
+creatGauge	KEYWORD2
+setCompassScale	KEYWORD2
+setGaugeScale	KEYWORD2
+setGaugeRange	KEYWORD2
+setGaugeValue	KEYWORD2
+creatCompass	KEYWORD2
+creatArc	KEYWORD2
+setArcRotation	KEYWORD2
+creatStations	KEYWORD2
+addChart	KEYWORD2
+setStationValue	KEYWORD2
+creatLineMeter	KEYWORD2
+creatChartSerie	KEYWORD2
+addChartPoint	KEYWORD2
+setMeterValue	KEYWORD2
+setMeterScale	KEYWORD2
+setMeterRange	KEYWORD2
+drawString	KEYWORD2
+drawStringHepler	KEYWORD2
+drawLcdDate	KEYWORD2
+drawLcdTime	KEYWORD2
+lvglDelete	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+
+LOOP	LITERAL1
+PASSWORD	LITERAL1
+BUTTON	LITERAL1
+eIconUnhappy	LITERAL1
+eIconCrying	LITERAL1
+eIconLaugh	LITERAL1
+eIconWhimsy	LITERAL1
+eIconSurprised	LITERAL1
+eIconSleep	LITERAL1
+eIconSmile	LITERAL1
+eIconNoInductive	LITERAL1
+eIconFierce	LITERAL1
+eIconWeighing	LITERAL1
+eIconLightBulb	LITERAL1
+eIconBattery	LITERAL1
+eIconCarbonDioxide	LITERAL1
+eIconWind	LITERAL1
+eIconMountain	LITERAL1
+eIconAlcohol	LITERAL1
+eIconDistance	LITERAL1
+eIconMicrophone	LITERAL1
+eIconWater	LITERAL1
+eIconThermometer	LITERAL1
+eIconHeartRate	LITERAL1
+eIconPressure	LITERAL1
+eIconLiquid	LITERAL1
+eIconRaindrops	LITERAL1
+eIconCompass	LITERAL1
+
+eIconClock	LITERAL1
+eIconRunning	LITERAL1
+eIconCar	LITERAL1
+eIconCalendar	LITERAL1
+eIconAlarm	LITERAL1
+eIconBluetooth	LITERAL1
+
+eIconRainbow	LITERAL1
+eIconRains	LITERAL1
+eIconCloudy	LITERAL1
+eIconWindy	LITERAL1
+eIconSun	LITERAL1
+eIconLightning	LITERAL1
+eIconSnows	LITERAL1
+eIconOvercast	LITERAL1
+eIconUmbrella	LITERAL1
+eIconMoon	LITERAL1
+
+eChinese	LITERAL1
+eShiftJis	LITERAL1
+eAscii	LITERAL1
+eGreece	LITERAL1
+eCyrillic	LITERAL1
+eHebrew	LITERAL1
+eThailand	LITERAL1
+eAlb	LITERAL1
+eKhmer	LITERAL1
+eKorean	LITERAL1
+
+
+
+BLACK_RGB565	LITERAL1
+BLUE_RGB565	LITERAL1
+RED_RGB565	LITERAL1
+GREEN_RGB565	LITERAL1
+CYAN_RGB565	LITERAL1
+MAGENTA_RGB565	LITERAL1
+YELLOW_RGB565	LITERAL1
+WHITE_RGB565	LITERAL1
+NAVY_RGB565	LITERAL1
+DARKGREEN_RGB565	LITERAL1
+DARKCYAN_RGB565	LITERAL1
+MAROON_RGB565	LITERAL1
+PURPLE_RGB565	LITERAL1
+OLIVE_RGB565	LITERAL1
+LIGHTGREY_RGB565	LITERAL1
+DARKGREY_RGB565	LITERAL1
+ORANGE_RGB565	LITERAL1
+GREENYELLOW_RGB565	LITERAL1
+DCYAN_RGB565	LITERAL1
