@@ -46,8 +46,8 @@ To use this library, please download the library file first, and paste it into t
 
   /**
    * @fn setFont
-   * @brief 初始化lvgl,但是用lvgl的控件或者图标时,需要调用此函数 
-   * @param bg_color lvgl背景颜色
+   * @brief 设置字体, 方便计算一连串字体的显示位置
+   * @param font 字体种类, eLcdFont_t
    */
   void setFont(eLcdFont_t font);
   /**
@@ -218,7 +218,7 @@ To use this library, please download the library file first, and paste it into t
    * @fn setBar
    * @brief 创建一个滑条控件
    * @param obj 滑条控件的对象
-   * @param value 滑条的值
+   * @param str 滑条的值
    */
   void setBar(sControlinf_t* obj,String str);
   
@@ -235,6 +235,7 @@ To use this library, please download the library file first, and paste it into t
   /**
    * @fn creatChartSerie
    * @brief 在图表中创建折线图或柱状图
+   * @param obj 图表控件的对象
    * @param color 折线图/柱状图的颜色
    * @return 返回图的编号
    */
@@ -255,7 +256,7 @@ To use this library, please download the library file first, and paste it into t
   
   
   /**
-   * @fn creatCompass
+   * @fn setCompassScale
    * @brief 设置指南针指针的角度
    * @param obj 指南针的对象
    * @param scale 指针角度(0~360)
@@ -263,10 +264,10 @@ To use this library, please download the library file first, and paste it into t
   void setCompassScale(sControlinf_t* obj,uint16_t scale);
   
   /**
-   * @fn creatCompass
+   * @fn setGaugeScale
    * @brief 设置表盘的参数
    * @param obj 表盘的对象
-   * @param scale angle of the scale (0..360)
+   * @param angle angle of the scale (0..360)
    * @param start minimum value
    * @param end maximum value
    */
@@ -307,7 +308,7 @@ To use this library, please download the library file first, and paste it into t
    * @fn setArcRotation
    * @brief 设置角度控件数值
    * @param obj 角度控件的对象
-   * @param value the new value
+   * @param rotation the new value
    */
   void setArcRotation(sControlinf_t* obj,uint16_t rotation);
 
@@ -335,11 +336,9 @@ To use this library, please download the library file first, and paste it into t
   
   /**
    * @fn setStationValue
-   * @brief 设置
-   * @param obj 图表控件的对象
-   * @param id the allocated data series
-   * @param point 曲线图/柱状图需要数据的数组
-   * @param len  数组长度
+   * @brief 设置气象站控件
+   * @param obj 气象站控件的对象
+   * @param value 气象监测值, 如温度
    */
   void setStationValue(sControlinf_t* obj,String value);
 
@@ -404,6 +403,7 @@ To use this library, please download the library file first, and paste it into t
    * @param hour 小时
    * @param Minute 分钟
    * @param seconds 秒
+   * @param fontSize 字体大小
    * @param color 字体颜色
    * @param bgColor 字体背景颜色
    */
@@ -417,6 +417,7 @@ To use this library, please download the library file first, and paste it into t
    * @param month 月份
    * @param day 天数
    * @param weeks 星期数
+   * @param fontSize 字体大小
    * @param color 字体颜色
    * @param bgColor 字体背景颜色
    */
