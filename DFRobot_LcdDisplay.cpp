@@ -289,6 +289,8 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawDiskImg(int16_t x, in
   writeCommand(cmd, 12 + length);
   free(cmd);
 
+  delay(1000);   // u盘图片需要读取解析, 显示较慢
+
   return img;
 }
 

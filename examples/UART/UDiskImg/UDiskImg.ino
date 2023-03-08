@@ -47,16 +47,16 @@ void setup(void)
   // 显示u盘的图片, 可显示: 16位或者24位(色深)的bmp图片(屏幕最大尺寸320*240), 小尺寸(70*70以下)png图片
   // 最后一个参数为缩放指数范围为(128~512),128-缩小一倍,512-放大一倍
   img1 = lcd.drawDiskImg(/*x=*/0, /*y=*/0, /*文件路径名(String类型)*/"/2.bmp", /*缩放指数*/256);
+  delay(1000);
+  lcd.lvglDelete(img1);
+  Serial.println("/1.bmp");
+  img1 = lcd.drawDiskImg(0, 0, "/1.bmp", 256);
+  delay(1000);
+  lcd.lvglDelete(img1);
+  Serial.println("/2.bmp");
+  img1 = lcd.drawDiskImg(0, 0, "/2.bmp", 256);
 }
 
 void loop(void)
 {
-  delay(5000);
-  lcd.lvglDelete(img1);
-  Serial.println("/1.bmp");
-  img1 = lcd.drawDiskImg(0, 0, "/1.bmp", 256);
-  delay(5000);
-  lcd.lvglDelete(img1);
-  Serial.println("/2.bmp");
-  img1 = lcd.drawDiskImg(0, 0, "/2.bmp", 256);
 }
