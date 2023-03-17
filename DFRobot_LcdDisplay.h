@@ -16,7 +16,7 @@
 #include <String.h>
 
 #ifndef ENABLE_DBG
-// # define ENABLE_DBG   //!< Open this macro and you can see the details of the program
+ // # define ENABLE_DBG   //!< Open this macro and you can see the details of the program
 # ifdef ENABLE_DBG
 #   ifdef DBG
 #    undef DBG
@@ -61,8 +61,7 @@
 #define CMDLEN_OF_FILLCIRCLE       11
 #define CMDLEN_OF_DRAWTRIANGLE     18
 #define CMDLEN_OF_FILLTRIANGLE     18
-#define CMDLEN_OF_DRAWCHAR         36
-#define CMDLEN_OF_DRAWICON         12
+#define CMDLEN_OF_DRAWICON         13
 #define CMDLEN_OF_DRAWSTRING       36
 #define CMDLEN_OF_HEAD_LEN         3
 
@@ -94,7 +93,6 @@
 #define CMDLEN_INIT_LVGL            7
 
 // cmd
-#define CMD_OF_DRAWCHAR         1
 #define CMD_OF_DRAWPIXEL        2
 #define CMD_OF_DRAWLINE         3
 #define CMD_OF_DRAWRECT         4
@@ -144,52 +142,330 @@ public:
    * @brief 表示不同的图标,当要显示图标时,选择对应的枚举即可
    */
   typedef enum {
-    //表情图标
-    eIconUnhappy,  /**<不开心*/
-    eIconCrying,  /**<哭泣*/
-    eIconLaugh,  /**<大笑*/
-    eIconWhimsy,  /**<搞怪*/
-    eIconSurprised,  /**<惊讶*/
-    eIconSleep,  /**<睡眠*/
-    eIconSmile,  /**<微笑*/
-    eIconNoInductive,  /**<无感*/
-    eIconFierce,  /**<凶狠*/
-    //传感器图标
-    eIconWeighing,/**<称重*/
-    eIconLightBulb,/**<灯泡*/
-    eIconBattery,/**<电池*/
-    eIconCarbonDioxide,/**<二氧化碳*/
-    eIconWind,/**<风*/
-    eIconMountain,/**<高山*/
-    eIconAlcohol,/**<酒精*/
-    eIconDistance,/**<距离*/
-    eIconMicrophone,/**<麦克风*/
-    eIconWater,/**<水*/
-    eIconThermometer,/**<温度计*/
-    eIconHeartRate,/**<心率*/
-    eIconPressure,/**<压力*/
-    eIconLiquid,/**<液体*/
-    eIconRaindrops,/**<雨滴*/
-    eIconCompass,/**<指南针*/
-    //其它图标
-    eIconClock,/**<闹钟*/
-    eIconRunning,/**<跑步*/
-    eIconCar,/**<车*/
-    eIconCalendar,/**<日历*/
-    eIconAlarm,/**<报警器*/
-    eIconBluetooth,/**<蓝牙*/
+    // 安全safe icon
+    eIconDial,
+    eIconDisabledAccess,
+    eIconDown,
+    eIconExit,
+    eIconExitLeft,
+    eIconExportRight,
+    eIconFireescapeStairs,
+    eIconFireExtinguisher,
+    eIconFire,
+    eIconHydrant,
+    eIconLeft,
+    eIconLifeladder,
+    eIconMedicalCare,
+    eIconRight,
+    eIconUp,
+
+    // 表情expression icon
+    eIconAngry,
+    eIconBlink,
+    eIconCry,
+    eIconCute,
+    eIconDepressed,
+    eIconDizzy,
+    eIconEmbarrassed,
+    eIconFunny,
+    eIconHappy,
+    eIconKind,
+    eIconLike,
+    eIconPlayful,
+    eIconResentful,
+    eIconSad,
+    eIconSerious,
+    eIconShy,
+    eIconSmile,
+    eIconSurprised,
+    eIconTear,
+    eIconTired,
+
+    // 传感器sensor icon
+    eIconAlcohol,
+    eIconAntennaReceiver,
+    eIconAntenna,
+    eIconBattery,
+    eIconBluetooth,
+    eIconBulb,
+    eIconCarbonDioxide,
+    eIconColor,
+    eIconCompass,
+    eIconDistance,
+    eIconDust,
+    eIconHeartRate,
+    eIconLiquid,
+    eIconMicrophone,
+    eIconMountain,
+    eIconPressure,
+    eIconRaindrops,
+    eIconThermometer,
+    eIconWeigh,
+    eIconWifi,
+    eIconWind,
+
+    // 动物animal icon
+    eIconBee,
+    eIconBird,
+    eIconButterfly,
+    eIconCaterpillar,
+    eIconChick,
+    eIconChicken,
+    eIconChipmunk,
+    eIconCoccinellaSeptempunctata,
+    eIconCow,
+    eIconDog,
+    eIconDolphin,
+    eIconDragon,
+    eIconElephant,
+    eIconHorse,
+    eIconMonkey,
+    eIconOwl,
+    eIconPig,
+    eIconRabbit,
+    eIconRooster,
+    eIconSheep,
+    eIconSnail,
+    eIconSnake,
+    eIconTurtle,
+    eIconUnicorn,
+    eIconWasp,
+    eIconWorm,
+
+    // 环境与自然Environment and Nature icon
+    eIconBiofuel,
+    eIconCarElectric,
+    eIconDesertLandscape,
+    eIconDirections,
+    eIconEarth,
+    eIconEcoAccumulatorBattery,
+    eIconGlassRecycle,
+    eIconGlobalWarming,
+    eIconGreenPower,
+    eIconGreenEnergy,
+    eIconGreenhouse,
+    eIconIcebergMelting,
+    eIconLandscape,
+    eIconNoPlastic,
+    eIconNoSewage,
+    eIconProtectEarth,
+    eIconRainLandscape,
+    eIconRecyclingCar,
+    eIconRelaxLandscape,
+    eIconSolar,
+    eIconTap,
+    eIconTrash,
+    eIconTreeLandscape,
+    eIconWaterRecycle,
+    eIconWinterForest,
+
+    // 季节 season icon
+    eIconBeachBed,
+    eIconBeachUmbrella8,
+    eIconChristmasStocking,
+    eIconCoconut,
+    eIconFan,
+    eIconFireplace,
+    eIconGlove,
+    eIconHat,
+    eIconIceCream,
+    eIconLifeBuoy,
+    eIconSanta,
+    eIconShorts,
+    eIconSlipper,
+    eIconSnowman,
+    eIconSunny,
+    eIconSweater,
+    eIconSwimming,
+    eIconSwimwear,
+    eIconThanksgiving,
+    eIconThermometerSnow,
+    eIconWatermelon,
+
+    // 交通工具 transport icon
+    eIconAirplane,
+    eIconAmbulance,
+    eIconAutomobile,
+    eIconBicycle,
+    eIconBus,
+    eIconBusStop,
+    eIconDeliveryTruck,
+    eIconFireEngine,
+    eIconHelicopter,
+    eIconHighSpeedRailway,
+    eIconHorizontalTrafficLight,
+    eIconKickScooter,
+    eIconMotorScooter,
+    eIconMotorway,
+    eIconOncomingTaxi,
+    eIconPoliceCar,
+    eIconTractor,
+    eIconVerticalTrafficLight,
+
+    // 农业Agriculture icon
+    eIconBarn,
+    eIconBarrier,
+    eIconBoots,
+    eIconCutWood,
+    eIconEggs,
+    eIconFertilizer,
+    eIconFruits,
+    eIconMilkContainer,
+    eIconPlant,
+    eIconSheafOfRice,
+    eIconSprout,
+    eIconStorageBucket,
+    eIconTool,
+    eIconTractor2,
+    eIconVegetables,
+    eIconWateringCan,
+    eIconWellWater,
+    eIconWheelbarrow,
+
+    // 人物形象 people icon
+    eIconDesigner,
+    eIconDiver,
+    eIconDoctor,
+    eIconLabScientist,
+    eIconMagicianMale,
+    eIconNurse,
+    eIconPhotographerMale,
+    eIconPolice,
+    eIconProgrammerMale,
+    eIconSoldier,
+    eIconSuccessGoalBusinessman,
+    eIconSurgeon,
+    eIconTeacher,
+
+    // 食物 food icon
+    eIconAvocado,
+    eIconBanana,
+    eIconBeerMug,
+    eIconBentoBox,
+    eIconBirthdayCake,
+    eIconBread,
+    eIconCake,
+    eIconCarrot,
+    eIconCheeseWedge,
+    eIconCherry,/**<樱桃*/
+    eIconChocolateBar,/**<巧克力*/
+    eIconCutOfMeat,/**<肉*/
+    eIconEarOfCorn,/**<玉米*/
+    eIconEgg,/**<鸡蛋*/
+    eIconFrenchFries,/**<薯条*/
+    eIconGrapes,/**<葡萄*/
+    eIconGreenSalad,/**<绿沙拉*/
+    eIconHamburger,/**<汉堡包*/
+    eIconHotBeverage,/**<热饮料*/
+    eIconPeach,/**<桃子*/
+    eIconPineapple,/**<菠萝*/
+    eIconPopcorn,/**<爆米花*/
+    eIconPotato,/**<土豆*/
+    eIconRedApple,/**<红苹果*/
+    eIconSalad,/**<沙拉*/
+    eIconShaomai,/**<烧卖*/
+    eIconSandwich,/**<三明治*/
+    eIconShortcake,/**<短蛋糕*/
+    eIconStrawberry,/**<草莓*/
+
+    //数字图形图标
+    eIconArrowDown,/**<向下箭头*/
+    eIconArrowLeft,/**<向左箭头*/
+    eIconArrowRight,/**<向右箭头*/
+    eIconArrowUp,/**<向上箭头*/
+    eIconDiamond,/**<菱形*/
+    eIconEight,/**<数字8*/
+    eIconFive,/**<数字5*/
+    eIconFivePointedStar,/**<五角星*/
+    eIconHeart,/**<心形*/
+    eIconNine,/**<数字9*/
+    eIconFour,/**<数字4*/
+    eIconOctagon,/**<八边形*/
+    eIconOne,/**<数字1*/
+    eIconPentagon,/**<五边形*/
+    eIconRectangle,/**<矩形*/
+    eIconSeven,/**<数字7*/
+    eIconSix,/**<数字6*/
+    eIconSquare,/**<正方形*/
+    eIconThree,/**<数字3*/
+    eIconTriangle,/**<三角形*/
+    eIconTwo,/**<数字2*/
+    eIconWindmillShape,/**<风车形*/
+    eIconZero,/**<数字0*/
 
     //天气图标
-    eIconRainbow,/**<彩虹*/
-    eIconRains,/**<大雨*/
     eIconCloudy,/**<多云*/
-    eIconWindy,/**<刮风*/
-    eIconSun,/**<晴*/
-    eIconLightning,/**<闪电*/
-    eIconSnows,/**<雪花*/
-    eIconOvercast,/**<阴天*/
-    eIconUmbrella,/**<雨伞*/
     eIconMoon,/**<月亮*/
+    eIconLightning,/**<闪电*/
+    eIconMoonCloudy,/**<多云夜晚*/
+    eIconRainUmbrella,/**<下雨有伞*/
+    eIconRainbow1,/**<彩虹1*/
+    eIconRainbow2,/**<彩虹2*/
+    eIconRainy,/**<下雨*/
+    eIconSnow,/**<雪*/
+    eIconSnowy,/**<有雪的天气*/
+    eIconSunnyCloudy,/**<晴天多云*/
+    eIconWhirlwind,/**<旋风*/
+
+    // 音乐图标
+    eIconAccordion,
+    eIconBassDrum,
+    eIconCDDiskDVD,
+    eIconCello,
+    eIconElectricGuitar,
+    eIconFlute,
+    eIconGuitar,
+    eIconHarmonica,
+    eIconHarp,
+    eIconHeadphones,
+    eIconMelodica,
+    eIconMusic,
+    eIconMusicStereo,
+    eIconMusicTurntable,
+    eIconMuteSoundOff,
+    eIconPiano,
+    eIconSaxophone,
+    eIconSpeakerAudio,
+    eIconTrumpet,
+    eIconXylophone,
+
+    // 运动图标
+    eIconBadminton,
+    eIconBasketball,
+    eIconBowling,
+    eIconChess,
+    eIconCycling,
+    eIconDarts,
+    eIconDiving,
+    eIconDumbbell,
+    eIconGolf,
+    eIconIceHockey,
+    eIconKarate,
+    eIconPingPong,
+    eIconRunning,
+    eIconSoccer,
+    eIconTennis,
+    eIconYoga,
+
+    // 植物图标
+    eIconBranch,
+    eIconCactus1,
+    eIconCactus2,
+    eIconCactus3,
+    eIconDeciduousTree,
+    eIconDecorativePottedPlants,
+    eIconFlower,
+    eIconGrass,
+    eIconGrass1,
+    eIconLeaf,
+    eIconPalmTree,
+    eIconPottedPlantFlower,
+    eIconRose,
+    eIconRose1,
+    eIconSunflower,
+    eIconSunflower1,
+    eIconTulips,
+
   }sLcdIcon_t;
 
   /**
@@ -218,7 +494,7 @@ public:
     */
   struct controlinf {
     uint32_t number; /**<控件编号 */
-    uint8_t id; /**<控件id,不同的控件有不同的作用*/
+    uint16_t id; /**<控件id,不同的控件有不同的作用*/
     int16_t x; /**<控件所在位置的x坐标*/
     int16_t y; /**<控件所在位置的y坐标*/
     int16_t width; /**<控件宽度 */
@@ -394,7 +670,7 @@ public:
    * @param size 图标大小缩放系数
    * @return 图标控件的对象
    */
-  sControlinf_t* drawIcon(int16_t x, int16_t y, uint8_t id, uint16_t size = 255);
+  sControlinf_t* drawIcon(int16_t x, int16_t y, uint16_t id, uint16_t size = 255);
 
   /**
    * @fn drawDiskImg

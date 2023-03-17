@@ -209,7 +209,7 @@ void DFRobot_LcdDisplay::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_
   free(cmd);
 }
 
-DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawIcon(int16_t x, int16_t y, uint8_t id, uint16_t size)
+DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawIcon(int16_t x, int16_t y, uint16_t id, uint16_t size)
 {
   sControlinf_t* icon = (sControlinf_t*)malloc(sizeof(sControlinf_t));
   if (icon == NULL) {
@@ -233,13 +233,14 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawIcon(int16_t x, int16
   if (size < 128) size = 128;
   uint8_t* cmd = creatCommand(CMD_OF_DRAWICON, CMDLEN_OF_DRAWICON);
   cmd[4] = icon->number;
-  cmd[5] = icon->id;
-  cmd[6] = x >> 8;
-  cmd[7] = x & 0xFF;
-  cmd[8] = y >> 8;
-  cmd[9] = y & 0xFF;
-  cmd[10] = size >> 8;
-  cmd[11] = size & 0xFF;
+  cmd[5] = icon->id >> 8;
+  cmd[6] = icon->id & 0xFF;
+  cmd[7] = x >> 8;
+  cmd[8] = x & 0xFF;
+  cmd[9] = y >> 8;
+  cmd[10] = y & 0xFF;
+  cmd[11] = size >> 8;
+  cmd[12] = size & 0xFF;
 
   writeCommand(cmd, CMDLEN_OF_DRAWICON);
   free(cmd);
@@ -289,7 +290,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawDiskImg(int16_t x, in
   writeCommand(cmd, 12 + length);
   free(cmd);
 
-  delay(1000);   // u盘图片需要读取解析, 显示较慢
+  delay(1500);   // u盘图片需要读取解析, 显示较慢
 
   return img;
 }
@@ -1227,7 +1228,7 @@ void DFRobot_LcdDisplay::lvglDelete(sControlinf_t* obj)
       break;
     }
   }
-  delay(300);   // 确保删除成功
+  delay(500);   // 确保删除成功
 
 }
 uint8_t* DFRobot_LcdDisplay::creatCommand(uint8_t cmd, uint8_t len)
@@ -1268,8 +1269,16 @@ void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
     _pWire->write(_pBuf[i]);
 
   }
+  _pWire->write(0xAA);
+  _pWire->write(0x55);
+  delay(1);
   _pWire->endTransmission();
-  delay(20);
+// #if defined(ESP32)
+//   _pWire->endTransmission(true);
+// #else
+//   _pWire->endTransmission(false);
+// #endif
+  delay(100);
 
 }
 void DFRobot_Lcd_IIC::readACK(uint8_t* pBuf, uint16_t len)
