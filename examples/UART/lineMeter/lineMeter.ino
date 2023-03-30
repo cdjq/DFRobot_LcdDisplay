@@ -1,4 +1,4 @@
-/**！
+/**!
  * @file lineMeter.ino
  * @brief 创建线形仪表控件
  * @details 创建三个线形仪表控件,并分别控制显示不同的值

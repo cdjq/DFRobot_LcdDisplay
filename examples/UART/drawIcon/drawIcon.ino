@@ -1,5 +1,5 @@
 
-/**！
+/**!
  * @file drawIcon.ino
  * @brief 图标显示示例示例
  * @details 通过不同的图标编号来显示不同的值

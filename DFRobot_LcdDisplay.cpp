@@ -12,16 +12,18 @@
 #include "DFRobot_LcdDisplay.h"
 #include <Wire.h>
 #include <Arduino.h>
+
 uint8_t wordLen[10];
+
 DFRobot_LcdDisplay::DFRobot_LcdDisplay()
 {
 }
+
 bool DFRobot_LcdDisplay::begin()
 {
-
-
   return true;
 }
+
 void DFRobot_LcdDisplay::setBackLight(bool on)
 {
   uint8_t* cmd = creatCommand(CMD_OF_SETBACKLIGHT, CMDLEN_OF_SETBACKLIGHT);
@@ -34,9 +36,21 @@ void DFRobot_LcdDisplay::setBackLight(bool on)
   writeCommand(cmd, CMDLEN_OF_SETBACKLIGHT);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAWPIXEL, CMDLEN_OF_DRAWPIXEL);
+  // Serial.print("(");
+  // Serial.print(x);
+  // Serial.print(",");
+  // Serial.print(y);
+  // Serial.print(")");
+  if (320 <= x) {
+    x = 319;
+  }
+  if (240 <= y) {
+    y = 239;
+  }
   cmd[4] = x >> 8;
   cmd[5] = x & 0xFF;
   cmd[6] = y >> 8;
@@ -46,6 +60,7 @@ void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint16_t color)
   writeCommand(cmd, CMDLEN_OF_DRAWPIXEL);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::fillScreen(uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_FILLSCREEN, CMDLEN_OF_FILLSCREEN);
@@ -55,6 +70,7 @@ void DFRobot_LcdDisplay::fillScreen(uint16_t color)
   writeCommand(cmd, CMDLEN_OF_FILLSCREEN);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAWLINE, CMDLEN_OF_DRAWLINE);
@@ -71,6 +87,7 @@ void DFRobot_LcdDisplay::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1
   writeCommand(cmd, CMDLEN_OF_DRAWLINE);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAWRECT, CMDLEN_OF_DRAWRECT);
@@ -87,6 +104,7 @@ void DFRobot_LcdDisplay::drawRect(int16_t x, int16_t y, int16_t w, int16_t h, ui
   writeCommand(cmd, CMDLEN_OF_DRAWRECT);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_FILLRECT, CMDLEN_OF_FILLRECT);
@@ -103,6 +121,7 @@ void DFRobot_LcdDisplay::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, ui
   writeCommand(cmd, CMDLEN_OF_FILLRECT);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::drawRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
   int16_t radius, uint16_t color)
 {
@@ -121,6 +140,7 @@ void DFRobot_LcdDisplay::drawRoundRect(int16_t x0, int16_t y0, int16_t w, int16_
   writeCommand(cmd, CMDLEN_OF_DRAWROUNDRECT);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::fillRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
   int16_t radius, uint16_t color)
 {
@@ -139,6 +159,7 @@ void DFRobot_LcdDisplay::fillRoundRect(int16_t x0, int16_t y0, int16_t w, int16_
   writeCommand(cmd, CMDLEN_OF_FILLROUNDRECT);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAWCIRCLE, CMDLEN_OF_DRAWCIRCLE);
@@ -152,6 +173,7 @@ void DFRobot_LcdDisplay::drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t 
   writeCommand(cmd, CMDLEN_OF_DRAWCIRCLE);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_FILLCIRCLE, CMDLEN_OF_FILLCIRCLE);
@@ -166,6 +188,7 @@ void DFRobot_LcdDisplay::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t 
   free(cmd);
 
 }
+
 void DFRobot_LcdDisplay::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
   int16_t x2, int16_t y2, uint16_t color)
 {
@@ -187,6 +210,7 @@ void DFRobot_LcdDisplay::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_
   writeCommand(cmd, CMDLEN_OF_DRAWTRIANGLE);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
   int16_t x2, int16_t y2, uint16_t color)
 {
@@ -243,6 +267,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawIcon(int16_t x, int16
   cmd[12] = size & 0xFF;
 
   writeCommand(cmd, CMDLEN_OF_DRAWICON);
+  delay(100);
   free(cmd);
 
   return icon;
@@ -332,6 +357,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatSlider(uint16_t x, u
 
   return slider;
 }
+
 void DFRobot_LcdDisplay::setSliderValue(sControlinf_t* obj, uint8_t value)
 {
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLSLIDER, CMDLEN_CHANGE_LVGLSLIDER_VALUE);
@@ -343,14 +369,10 @@ void DFRobot_LcdDisplay::setSliderValue(sControlinf_t* obj, uint8_t value)
 
   writeCommand(cmd, CMDLEN_CHANGE_LVGLSLIDER_VALUE);
   free(cmd);
-
-
-
 }
 
-DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatBar(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color)
+DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatBar(uint16_t x, uint16_t y, uint16_t width, uint8_t height, uint16_t color)
 {
-
   sControlinf_t* bar = (sControlinf_t*)malloc(sizeof(sControlinf_t));
   if (bar == NULL) {
     DBG("BAR malloc fail !");
@@ -376,10 +398,11 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatBar(uint16_t x, uint
   cmd[7] = x & 0xFF;
   cmd[8] = y >> 8;
   cmd[9] = y & 0xFF;
-  cmd[10] = width;
-  cmd[11] = height;
-  cmd[12] = color >> 8;
-  cmd[13] = color & 0xFF;
+  cmd[10] = width >> 8;
+  cmd[11] = width & 0xFF;
+  cmd[12] = height;
+  cmd[13] = color >> 8;
+  cmd[14] = color & 0xFF;
 
   writeCommand(cmd, CMDLEN_DRAW_LVGLBAR);
   free(cmd);
@@ -422,9 +445,7 @@ uint8_t DFRobot_LcdDisplay::getNumber(uint8_t id)
     }
   }
   return number;
-
 }
-
 
 DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatGauge(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color)
 {
@@ -462,7 +483,6 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatGauge(uint16_t x, ui
   free(cmd);
 
   return gauge;
-
 }
 
 void DFRobot_LcdDisplay::setGaugeScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end)
@@ -488,11 +508,7 @@ void DFRobot_LcdDisplay::setGaugeScale(sControlinf_t* obj, uint16_t angle, int16
   cmd1[9] = end & 0xFF;
   writeCommand(cmd1, CMDLEN_CHANGE_LVGLGAUGE_RANGE);
   free(cmd1);
-
 }
-
-
-
 
 void DFRobot_LcdDisplay::setGaugeValue(sControlinf_t* obj, uint16_t value)
 {
@@ -506,7 +522,8 @@ void DFRobot_LcdDisplay::setGaugeValue(sControlinf_t* obj, uint16_t value)
   free(cmd);
 
 }
-DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatCompass(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color)
+
+DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatCompass(uint16_t x, uint16_t y, uint8_t width, uint8_t height)
 {
 
   sControlinf_t* compass = (sControlinf_t*)malloc(sizeof(sControlinf_t));
@@ -517,7 +534,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatCompass(uint16_t x, 
   compass->y = y;
   compass->width = width;
   compass->height = height;
-  compass->color = color;
+  // compass->color = color;
   compass->id = 3;
   compass->number = getNumber(1);
   compass->inf = NULL;
@@ -536,14 +553,15 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatCompass(uint16_t x, 
   cmd[9] = y & 0xFF;
   cmd[10] = width;
   cmd[11] = height;
-  cmd[12] = color >> 8;
-  cmd[13] = color & 0xFF;
+  cmd[12] = 0;
+  cmd[13] = 0;
 
   writeCommand(cmd, CMDLEN_DRAW_LVGLCOMPASS);
   free(cmd);
 
   return compass;
 }
+
 void DFRobot_LcdDisplay::setCompassScale(sControlinf_t* obj, uint16_t scale)
 {
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCOMPASS, CMDLEN_CHANGE_LVGLCOMPASS_VALUE);
@@ -558,7 +576,6 @@ void DFRobot_LcdDisplay::setCompassScale(sControlinf_t* obj, uint16_t scale)
 
 DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatArc(uint16_t x, uint16_t y, uint8_t width, uint8_t height)
 {
-
   sControlinf_t* arc = (sControlinf_t*)malloc(sizeof(sControlinf_t));
   if (arc == NULL) {
     DBG("BAR malloc fail !");
@@ -567,8 +584,8 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatArc(uint16_t x, uint
   arc->y = y;
   arc->width = width;
   arc->height = height;
-  arc->color = 0xF800;
-  arc->id = 3;
+  arc->color = RED_RGB565;
+  arc->id = 3;   // 没用？
   arc->number = getNumber(1);
   arc->inf = NULL;
   sControlinf_t* obj = &head;
@@ -586,8 +603,8 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatArc(uint16_t x, uint
   cmd[9] = y & 0xFF;
   cmd[10] = width;
   cmd[11] = height;
-  cmd[12] = 0xf8;
-  cmd[13] = 0;
+  cmd[12] = arc->color >> 8;
+  cmd[13] = arc->color & 0xFF;
 
   writeCommand(cmd, CMDLEN_DRAW_LVGLARC);
   free(cmd);
@@ -608,8 +625,8 @@ void DFRobot_LcdDisplay::setArcRotation(sControlinf_t* obj, uint16_t rotation)
 
   writeCommand(cmd, CMDLEN_CHANGE_LVGLARC_ROTATION);
   free(cmd);
-
 }
+
 void DFRobot_LcdDisplay::reset()
 {
   uint8_t* cmd = creatCommand(CMD_RESET_LVGL, CMDLEN_RESET_LVGL);
@@ -686,53 +703,60 @@ uint8_t DFRobot_LcdDisplay::utf8toUnicode(uint8_t* utf8, uint16_t& uni)
   }
   return lenght;
 }
-void DFRobot_LcdDisplay::drawStringHepler(uint8_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color, uint16_t fgColor)
+
+void DFRobot_LcdDisplay::drawStringHepler(uint16_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color, uint16_t fgColor)
 {
 
 
-  uint8_t* cmd = creatCommand(CMD_OF_DRAWSTRING, lenght + 12);
+  uint8_t* cmd = creatCommand(CMD_OF_DRAWSTRING, lenght + 13);
   if (cmd == NULL) {
     DBG("cmd null");
   }
-  cmd[4] = x;
-  cmd[5] = y;
+  cmd[4] = x >> 8;
+  cmd[5] = x & 0xFF;
+  cmd[6] = y;
 
-  cmd[6] = type;
-  cmd[7] = color >> 8;
-  cmd[8] = color & 0xFF;
-  cmd[9] = fgColor >> 8;
-  cmd[10] = fgColor & 0xFF;
-  cmd[11] = _font;
+  cmd[7] = type;
+  cmd[8] = color >> 8;
+  cmd[9] = color & 0xFF;
+  cmd[10] = fgColor >> 8;
+  cmd[11] = fgColor & 0xFF;
+  cmd[12] = _font;
   for (uint8_t i = 0;i < lenght;i++) {
-    cmd[12 + i] = uni[i];
+    cmd[13 + i] = uni[i];
+    Serial.print(uni[i]);
+    Serial.print(" ");
   }
-  writeCommand(cmd, lenght + 12);
+  writeCommand(cmd, lenght + 13);
   free(cmd);
 
 }
-void DFRobot_LcdDisplay::drawStringHepler(uint8_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color)
+
+void DFRobot_LcdDisplay::drawStringHepler(uint16_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color)
 {
 
 
-  uint8_t* cmd = creatCommand(CMD_OF_DRAWSTRING2, lenght + 10);
+  uint8_t* cmd = creatCommand(CMD_OF_DRAWSTRING2, lenght + 11);
   if (cmd == NULL) {
     DBG("cmd null");
   }
-  cmd[4] = x;
-  cmd[5] = y;
+  cmd[4] = x >> 8;
+  cmd[5] = x & 0xFF;
+  cmd[6] = y;
 
-  cmd[6] = type;
-  cmd[7] = color >> 8;
-  cmd[8] = color & 0xFF;
-  cmd[9] = _font;
+  cmd[7] = type;
+  cmd[8] = color >> 8;
+  cmd[9] = color & 0xFF;
+  cmd[10] = _font;
   for (uint8_t i = 0;i < lenght;i++) {
-    cmd[10 + i] = uni[i];
+    cmd[11 + i] = uni[i];
   }
-  writeCommand(cmd, lenght + 10);
+  writeCommand(cmd, lenght + 11);
   free(cmd);
 
 }
-void DFRobot_LcdDisplay::drawString(uint8_t x, uint8_t y, String str, uint8_t type, uint16_t color)
+
+void DFRobot_LcdDisplay::drawString(uint16_t x, uint8_t y, String str, uint8_t type, uint16_t color)
 {
 
   uint8_t uni[36] = { 0 };
@@ -740,7 +764,7 @@ void DFRobot_LcdDisplay::drawString(uint8_t x, uint8_t y, String str, uint8_t ty
   int16_t length = str.length();
   uint8_t data[136] = { 0 };
   uint8_t* dataPtr = data;
-  uint16_t unicode;
+  uint16_t unicode = 0;
   uint8_t lenght = 0;
   if (dataPtr == NULL) {
     DBG("data null");
@@ -748,7 +772,7 @@ void DFRobot_LcdDisplay::drawString(uint8_t x, uint8_t y, String str, uint8_t ty
   uint16_t x1 = x;
   uint16_t y1 = y;
 
-  for (uint8_t i = 0;i < length;i++) {
+  for (uint8_t i = 0; i < length; i++) {
     data[i] = str[i];
   }
 
@@ -765,29 +789,32 @@ void DFRobot_LcdDisplay::drawString(uint8_t x, uint8_t y, String str, uint8_t ty
       drawStringHepler(x1, y1, uni, lenght, type, color);
       lenght = 0;
       if ((type == 0) && (_font == eChinese)) {
-        x1 += 10 * (24);
+        x1 += 10 * (25);
       } else if ((type == 1) && (_font == eChinese)) {
-        x1 += 10 * (15);
+        x1 += 10 * (13);
       } else if ((type == 0) && (_font == eAscii)) {
-        x1 += 10 * (15);
+        x1 += 10 * (12);
       } else if ((type == 1) && (_font == eAscii)) {
-        x1 += 10 * (9);
+        x1 += 10 * (6);
       } else if (_font == eAlb) {
-        x1 += 10 * (18);
+        x1 += 10 * (16);
+      } else if (_font == eShiftJis || _font == eKorean || _font == eKhmer) {
+        x1 += 10 * (24);
       } else {
-        x1 += 10 * (11);
+        x1 += 10 * (8);
       }
 
     }
   }
   if (lenght == 0) return;
   drawStringHepler(x1, y1, uni, lenght, type, color);
-
 }
+
 void DFRobot_LcdDisplay::setFont(eLcdFont_t font)
 {
   _font = font;
 }
+
 void DFRobot_LcdDisplay::lvglInit(uint16_t bg_color)
 {
   uint8_t* cmd = creatCommand(CMD_INIT_LVGL, CMDLEN_INIT_LVGL);
@@ -796,8 +823,9 @@ void DFRobot_LcdDisplay::lvglInit(uint16_t bg_color)
   cmd[6] = bg_color & 0xFF;
   writeCommand(cmd, CMDLEN_INIT_LVGL);
   free(cmd);
-  delay(600);
+  delay(1000);
 }
+
 uint16_t DFRobot_LcdDisplay::getWordLen(uint8_t* utf8, uint8_t len)
 {
   uint16_t index = 0;
@@ -844,6 +872,7 @@ uint16_t DFRobot_LcdDisplay::getWordLen(uint8_t* utf8, uint8_t len)
   }
   return length;
 }
+
 DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatStations(uint16_t x, uint16_t y, uint16_t zoo, uint16_t color, String str)
 {
   sControlinf_t* station = (sControlinf_t*)malloc(sizeof(sControlinf_t));
@@ -894,6 +923,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatStations(uint16_t x,
   drawString(/*x=*/x1, y1, str,/*字体大小*/1,/*前景色*/color);
   return station;
 }
+
 void DFRobot_LcdDisplay::setStationValue(sControlinf_t* obj, String value)
 {
   uint8_t len = value.length();
@@ -908,20 +938,16 @@ void DFRobot_LcdDisplay::setStationValue(sControlinf_t* obj, String value)
   writeCommand(cmd, len + 7);
   free(cmd);
   //return 1;
-
 }
 
-
-
-void DFRobot_LcdDisplay::drawString(uint8_t x, uint8_t y, String str, uint8_t type, uint16_t color, uint16_t bgColor)
+void DFRobot_LcdDisplay::drawString(uint16_t x, uint8_t y, String str, uint8_t type, uint16_t color, uint16_t bgColor)
 {
-
   uint8_t uni[36] = { 0 };
 
   int16_t length = str.length();
   uint8_t data[136] = { 0 };
   uint8_t* dataPtr = data;
-  uint16_t unicode;
+  uint16_t unicode = 0;
   uint8_t lenght = 0;
   if (dataPtr == NULL) {
     DBG("data null");
@@ -929,7 +955,8 @@ void DFRobot_LcdDisplay::drawString(uint8_t x, uint8_t y, String str, uint8_t ty
   uint16_t x1 = x;
   uint16_t y1 = y;
 
-  for (uint8_t i = 0;i < length;i++) {
+    Serial.println(length);
+  for (uint8_t i = 0; i < length; i++) {
     data[i] = str[i];
   }
 
@@ -942,21 +969,23 @@ void DFRobot_LcdDisplay::drawString(uint8_t x, uint8_t y, String str, uint8_t ty
 
     dataPtr += len1;
 
-    if (lenght == 20) {
+    if (lenght == 18) {
       drawStringHepler(x1, y1, uni, lenght, type, color, bgColor);
       lenght = 0;
       if ((type == 0) && (_font == eChinese)) {
-        x1 += 10 * (24);
+        x1 += 9 * (25);
       } else if ((type == 1) && (_font == eChinese)) {
-        x1 += 10 * (12);
+        x1 += 9 * (13);
       } else if ((type == 0) && (_font == eAscii)) {
-        x1 += 10 * (12);
+        x1 += 9 * (12);
       } else if ((type == 1) && (_font == eAscii)) {
-        x1 += 10 * (6);
+        x1 += 9 * (6);
       } else if (_font == eAlb) {
-        x1 += 10 * (16);
+        x1 += 9 * (16);
+      } else if (_font == eShiftJis || _font == eKorean || _font == eKhmer) {
+        x1 += 9 * (24);
       } else {
-        x1 += 10 * (8);
+        x1 += 9 * (8);
       }
 
     }
@@ -985,9 +1014,10 @@ void DFRobot_LcdDisplay::drawLcdTime(uint8_t x, uint8_t y, uint8_t hour, uint8_t
   }
   time1 += String(seconds);
 
+  setFont(eAscii);
   drawString(x, y, time1, fontSize, color, bgColor);
-
 }
+
 void DFRobot_LcdDisplay::drawLcdDate(uint8_t x, uint8_t y, uint8_t month, uint8_t day, uint8_t weeks, uint8_t fontSize, uint16_t color, uint16_t bgColor)
 {
   String date = "";
@@ -1016,8 +1046,8 @@ void DFRobot_LcdDisplay::drawLcdDate(uint8_t x, uint8_t y, uint8_t month, uint8_
   } else if (weeks == 7) {
     date += "日";
   }
+  setFont(eAscii);
   drawString(x, y, date, fontSize, color, bgColor);
-
 }
 
 DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatLineMeter(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color)
@@ -1058,39 +1088,41 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatLineMeter(uint16_t x
   return lineMeter;
 }
 
-
 DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatChart(String strX, String strY, uint8_t type)
 {
-
   sControlinf_t* chart = (sControlinf_t*)malloc(sizeof(sControlinf_t));
   if (chart == NULL) {
     DBG("BAR malloc fail !");
   }
-  chart->x = 0;
+  chart->x = 0;   // 图表位置 暂时照旧写死
   chart->y = 0;
-  chart->width = 160;
-  chart->height = 128;
-  chart->color = 0;
+  chart->width = 320;   // 图表长宽 暂时照旧写死
+  chart->height = 240;
+  chart->color = 0;   // 没用？
   chart->id = 1;
   chart->number = getNumber(1);
+
   chart->inf = NULL;
   sControlinf_t* obj = &head;
   while (obj->inf != NULL) {
     obj = obj->inf;
   }
   obj->inf = chart;
+
   setChartTickTexts(chart, strX, strY);
   delay(20);
+
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, CMDLEN_DRAW_LVGLCHART);
   cmd[4] = chart->number;
-  cmd[5] = 0;
-  cmd[6] = 0;
-  cmd[7] = 0;
-  cmd[8] = 0;
-  cmd[9] = 0;
-  cmd[10] = 160;
-  cmd[11] = 128;
-  cmd[12] = type;
+  cmd[5] = 0;   // 0 : 建立图表的指令类型
+  cmd[6] = 0;   // 没用？
+  cmd[7] = 0;   // 没用？
+  cmd[8] = chart->x;
+  cmd[9] = chart->y;
+  cmd[10] = (chart->width >> 8) & 0xff;
+  cmd[11] = chart->width & 0xff;
+  cmd[12] = chart->height;
+  cmd[13] = type;
 
 
   writeCommand(cmd, CMDLEN_DRAW_LVGLCHART);
@@ -1098,12 +1130,13 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatChart(String strX, S
 
   return chart;
 }
+
 uint8_t DFRobot_LcdDisplay::creatChartSerie(sControlinf_t* obj, uint16_t color)
 {
 
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, CMDLEN_CHANGE_LVGLCHART_SERIE);
   cmd[4] = obj->number;
-  cmd[5] = 1;
+  cmd[5] = 1;   // 1 : 创建图表系列的指令类型
   cmd[6] = obj->id;
   obj->id = obj->id + 1;
   cmd[7] = color >> 8;
@@ -1121,10 +1154,10 @@ uint8_t DFRobot_LcdDisplay::setChartTickTexts(sControlinf_t* obj, String xtext, 
   uint8_t len_y = ytext.length();
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, len_x + 7);
   cmd[4] = obj->number;
-  cmd[5] = 3;
-  cmd[6] = 1;
-  for (uint8_t i = 7;i < len_x + 7;i++) {
-    cmd[i] = xtext[i - 7];
+  cmd[5] = 3;   // 3 : 存储标签信息的指令类型
+  cmd[6] = 1;   // 添加x轴标签
+  for (uint8_t i = 0;i < len_x;i++) {
+    cmd[7 + i] = xtext[i];
   }
   writeCommand(cmd, len_x + 7);
   free(cmd);
@@ -1135,9 +1168,9 @@ uint8_t DFRobot_LcdDisplay::setChartTickTexts(sControlinf_t* obj, String xtext, 
   uint8_t* cmd1 = creatCommand(CMD_DRAW_LVGLCHART, len_y + 7);
   cmd1[4] = obj->number;
   cmd1[5] = 3;
-  cmd1[6] = 2;
-  for (uint8_t i = 7;i < len_y + 7;i++) {
-    cmd1[i] = ytext[i - 7];
+  cmd1[6] = 2;   // 添加y轴标签
+  for (uint8_t i = 0;i < len_y;i++) {
+    cmd1[7 + i] = ytext[i];
   }
 
   writeCommand(cmd1, len_y + 7);
@@ -1149,7 +1182,7 @@ uint8_t DFRobot_LcdDisplay::addChartPoint(sControlinf_t* obj, uint8_t id, uint16
 {
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, CMDLEN_CHANGE_LVGLCHART_POINT);
   cmd[4] = obj->number;
-  cmd[5] = 2;
+  cmd[5] = 2;   // 2 : 增加图表系列点的指令类型
   cmd[6] = id;
   cmd[7] = value >> 8;
   cmd[8] = value & 0xFF;
@@ -1159,17 +1192,17 @@ uint8_t DFRobot_LcdDisplay::addChartPoint(sControlinf_t* obj, uint8_t id, uint16
   return 1;
 }
 
-
-
 uint8_t DFRobot_LcdDisplay::addChart(sControlinf_t* obj, uint8_t id, uint16_t point[], uint8_t len)
 {
 
-  for (uint8_t i; i < len;i++) {
+  for (uint8_t i = 0; i < len;i++) {
     addChartPoint(obj, id, point[i]);
-
+    delay(100);
+    
   }
   return 1;
 }
+
 void DFRobot_LcdDisplay::setMeterValue(sControlinf_t* obj, uint16_t value)
 {
 
@@ -1182,6 +1215,7 @@ void DFRobot_LcdDisplay::setMeterValue(sControlinf_t* obj, uint16_t value)
   writeCommand(cmd, CMDLEN_CHANGE_LVGLMETER_VALUE);
   free(cmd);
 }
+
 void DFRobot_LcdDisplay::setMeterScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end)
 {
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLLINEMETER, CMDLEN_CHANGE_LVGLMETER_SCALE);
@@ -1231,6 +1265,7 @@ void DFRobot_LcdDisplay::lvglDelete(sControlinf_t* obj)
   delay(500);   // 确保删除成功
 
 }
+
 uint8_t* DFRobot_LcdDisplay::creatCommand(uint8_t cmd, uint8_t len)
 {
   uint8_t* data = (uint8_t*)malloc(sizeof(uint8_t) * len);
@@ -1244,18 +1279,21 @@ uint8_t* DFRobot_LcdDisplay::creatCommand(uint8_t cmd, uint8_t len)
   data[3] = cmd;
   return data;
 }
+
 DFRobot_Lcd_IIC::DFRobot_Lcd_IIC(TwoWire* pWire, uint8_t addr)
 {
   _deviceAddr = addr;
   _pWire = pWire;
 
 }
+
 bool DFRobot_Lcd_IIC::begin()
 {
   _pWire->begin();
   setBackLight(true);
   return true;
 }
+
 void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
 {
 
@@ -1271,16 +1309,17 @@ void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
   }
   _pWire->write(0xAA);
   _pWire->write(0x55);
-  delay(1);
+  // delay(1);
   _pWire->endTransmission();
-// #if defined(ESP32)
-//   _pWire->endTransmission(true);
-// #else
-//   _pWire->endTransmission(false);
-// #endif
-  delay(100);
+  // #if defined(ESP32)
+  //   _pWire->endTransmission(true);
+  // #else
+  //   _pWire->endTransmission(false);
+  // #endif
+  delay(50);
 
 }
+
 void DFRobot_Lcd_IIC::readACK(uint8_t* pBuf, uint16_t len)
 {
   if (pBuf == NULL) {
@@ -1296,25 +1335,27 @@ void DFRobot_Lcd_IIC::readACK(uint8_t* pBuf, uint16_t len)
 }
 
 
-DFRobot_Lcd_UART::DFRobot_Lcd_UART()
+DFRobot_Lcd_UART::DFRobot_Lcd_UART(Stream& s)
 {
-
+  _s = &s;
 }
-bool DFRobot_Lcd_UART::begin(Stream& s_)
+
+bool DFRobot_Lcd_UART::begin()
 {
-  // warning: the compiler can assume that the address of 's_' will never be NULL
-  // if (&s_ == NULL) {
+  // warning: the compiler can assume that the address of 's' will never be NULL
+  // if (&s == NULL) {
   //   return false;
   // }
-  s = &s_;
   return true;
 }
+
 void DFRobot_Lcd_UART::writeCommand(uint8_t* pBuf, uint16_t len)
 {
   uint8_t* _pBuf = (uint8_t*)pBuf;
-  s->write((uint8_t*)_pBuf, len);
-  delay(20);
+  _s->write((uint8_t*)_pBuf, len);
+  delay(50);
 }
+
 void DFRobot_Lcd_UART::readACK(uint8_t* pBuf, uint16_t len)
 {
   HYY_LCD_UNUSED(pBuf);
@@ -1324,8 +1365,8 @@ void DFRobot_Lcd_UART::readACK(uint8_t* pBuf, uint16_t len)
 
   while (true) {
 
-    if (s->available()) {
-      uint8_t data = s->read();
+    if (_s->available()) {
+      uint8_t data = _s->read();
       HYY_LCD_UNUSED(data);
       // return data;   // 消除警告，此函数未调用
     }

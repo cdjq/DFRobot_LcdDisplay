@@ -1,5 +1,5 @@
 
-/**！
+/**!
  * @file  UDiskImg.ino
  * @brief  显示u盘的图片
  * @details  通过不同的路径名来显示不同的图片(屏幕最大尺寸320*240);
@@ -13,16 +13,50 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-DFRobot_Lcd_IIC lcd;
-DFRobot_Lcd_IIC::sControlinf_t* img1;
-DFRobot_Lcd_IIC::sControlinf_t* img2;
+#define I2C_COMMUNICATION  // I2C通信。如果你想使用UART通信，注释掉这行代码。
 
+#ifdef  I2C_COMMUNICATION
+  /**
+    * 使用 i2c 接口
+    */
+  DFRobot_Lcd_IIC lcd(&Wire, /*I2CAddr*/ 0x2c);
+#else
+  /**
+    * 使用 uart 接口
+    */
+  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266))
+    #include <SoftwareSerial.h>
+    SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
+    #define FPSerial softSerial
+  #else
+    #define FPSerial Serial1
+  #endif
+  DFRobot_Lcd_UART lcd(FPSerial);
+#endif
+
+DFRobot_LcdDisplay::sControlinf_t* img1;
+DFRobot_LcdDisplay::sControlinf_t* img2;
+
+/**
+ * User-selectable macro definition color
+ * BLACK_RGB565 BLUE_RGB565 RED_RGB565 GREEN_RGB565 CYAN_RGB565 MAGENTA_RGB565
+ * YELLOW_RGB565 WHITE_RGB565 NAVY_RGB565 DARKGREEN_RGB565 DARKCYAN_RGB565 MAROON_RGB565
+ * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
+ * GREENYELLOW_RGB565 DCYAN_RGB565
+ */
 void setup(void)
 {
+  #ifndef  I2C_COMMUNICATION
+    #if (defined ESP32)
+      FPSerial.begin(9600, SERIAL_8N1, /*rx =*/D2, /*tx =*/D3);
+    #else
+      FPSerial.begin(9600);
+    #endif
+  #endif
+
   Serial.begin(115200);
+
   lcd.begin();
-  //复位屏幕
-  lcd.reset();
   //初始化
   lcd.lvglInit(/*显示背景色*/WHITE_RGB565);
   delay(3000);

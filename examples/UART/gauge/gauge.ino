@@ -1,5 +1,5 @@
 
-/**！
+/**!
  * @file gauge.ino
  * @brief 表盘控件
  * @details 可用于如速度,压力的显示

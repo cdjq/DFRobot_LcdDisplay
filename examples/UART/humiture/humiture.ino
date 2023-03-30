@@ -1,4 +1,4 @@
-/**！
+/**!
  * @file humiture.ino
  * @brief 气象站综合示例
  * @details 可以显示天气,日期,时间,温度,湿度

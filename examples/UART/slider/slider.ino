@@ -1,4 +1,4 @@
-/**！
+/**!
  * @file slider.ino
  * @brief 创建滑条控件
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)

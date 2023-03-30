@@ -1,5 +1,5 @@
 
-/**！
+/**!
  * @file multipleBar.ino
  * @brief 进度条控件示例
  * @details 创建三个角度控件,并分别控制每个控件显示不同的值

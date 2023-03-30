@@ -212,7 +212,7 @@ To use this library, please download the library file first, and paste it into t
    * @param color 进度条的颜色
    * @return 进度条控件的对象
    */
-  sControlinf_t *creatBar(uint16_t x,uint16_t y,uint8_t width,uint8_t height, uint16_t color);
+  sControlinf_t *creatBar(uint16_t x,uint16_t y,uint16_t width,uint8_t height, uint16_t color);
   
   /**
    * @fn setBar
@@ -288,10 +288,9 @@ To use this library, please download the library file first, and paste it into t
    * @param y 控件所在y轴坐标
    * @param width  控件的宽度
    * @param height 控件的高度
-   * @param color 控件的颜色
    * @return 指南针控件的对象
    */
-  sControlinf_t *creatCompass(uint16_t x,uint16_t y,uint8_t width,uint8_t height, uint16_t color);
+  sControlinf_t *creatCompass(uint16_t x,uint16_t y,uint8_t width,uint8_t height);
 
   /**
    * @fn creatArc

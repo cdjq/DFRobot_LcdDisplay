@@ -210,7 +210,7 @@
    * @param color 进度条的颜色
    * @return 进度条控件的对象
    */
-  sControlinf_t *creatBar(uint16_t x,uint16_t y,uint8_t width,uint8_t height, uint16_t color);
+  sControlinf_t *creatBar(uint16_t x,uint16_t y,uint16_t width,uint8_t height, uint16_t color);
   
   /**
    * @fn setBar
@@ -254,7 +254,7 @@
   
   
   /**
-   * @fn creatCompass
+   * @fn setCompassScale
    * @brief 设置指南针指针的角度
    * @param obj 指南针的对象
    * @param scale 指针角度(0~360)
@@ -262,7 +262,7 @@
   void setCompassScale(sControlinf_t* obj,uint16_t scale);
   
   /**
-   * @fn creatCompass
+   * @fn setGaugeScale
    * @brief 设置表盘的参数
    * @param obj 表盘的对象
    * @param angle angle of the scale (0..360)

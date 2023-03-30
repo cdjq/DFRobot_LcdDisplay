@@ -66,13 +66,13 @@
 #define CMDLEN_OF_HEAD_LEN         3
 
 #define CMDLEN_DRAW_LVGLSLIDER       14
-#define CMDLEN_DRAW_LVGLBAR          14
+#define CMDLEN_DRAW_LVGLBAR          15
 #define CMDLEN_DRAW_LVGLARC          14
 #define CMDLEN_DRAW_LVGLGAUGE        14
 #define CMDLEN_DRAW_LVGLSTATION      14
 #define CMDLEN_DRAW_LVGLCOMPASS      14
 #define CMDLEN_DRAW_LVGLMETER        14
-#define CMDLEN_DRAW_LVGLCHART        13
+#define CMDLEN_DRAW_LVGLCHART        14
 
 #define CMDLEN_CHANGE_LVGLARC_ROTATION       9
 #define CMDLEN_CHANGE_LVGLBAR_VALUE          9
@@ -487,12 +487,11 @@ public:
 
 
 
-  struct controlinf;
   /**
     * @struct sControlinf_t
     * @brief 指向不同的控件的对象
     */
-  struct controlinf {
+  typedef struct controlinf {
     uint32_t number; /**<控件编号 */
     uint16_t id; /**<控件id,不同的控件有不同的作用*/
     int16_t x; /**<控件所在位置的x坐标*/
@@ -501,8 +500,7 @@ public:
     int16_t height; /**<控件高度*/
     uint16_t color; /**<控件颜色*/
     struct controlinf* inf; /**<下一个控件指针 */
-  };
-  typedef struct controlinf sControlinf_t;
+  }sControlinf_t;
 
 public:
   /**
@@ -714,7 +712,7 @@ public:
    * @param color 进度条的颜色
    * @return 进度条控件的对象
    */
-  sControlinf_t* creatBar(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color);
+  sControlinf_t* creatBar(uint16_t x, uint16_t y, uint16_t width, uint8_t height, uint16_t color);
 
   /**
    * @fn setBar
@@ -790,10 +788,9 @@ public:
    * @param y 控件所在y轴坐标
    * @param width  控件的宽度
    * @param height 控件的高度
-   * @param color 控件的颜色
    * @return 指南针控件的对象
    */
-  sControlinf_t* creatCompass(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color);
+  sControlinf_t* creatCompass(uint16_t x, uint16_t y, uint8_t width, uint8_t height);
 
   /**
    * @fn creatArc
@@ -827,6 +824,14 @@ public:
   sControlinf_t* creatStations(uint16_t x, uint16_t y, uint16_t zoo, uint16_t color, String str);
 
   /**
+   * @fn setStationValue
+   * @brief 设置气象站控件
+   * @param obj 气象站控件的对象
+   * @param value 气象监测值, 如温度
+   */
+  void setStationValue(sControlinf_t* obj, String value);
+
+  /**
    * @fn addChart
    * @brief Allocate and add a data series to the chart
    * @param obj 图表控件的对象
@@ -835,14 +840,6 @@ public:
    * @param len  数组长度
    */
   uint8_t addChart(sControlinf_t* obj, uint8_t id, uint16_t point[], uint8_t len);
-
-  /**
-   * @fn setStationValue
-   * @brief 设置气象站控件
-   * @param obj 气象站控件的对象
-   * @param value 气象监测值, 如温度
-   */
-  void setStationValue(sControlinf_t* obj, String value);
 
   /**
    * @fn creatLineMeter
@@ -883,7 +880,7 @@ public:
    * @param type 文字大小(只适用于eChinse和eAscii),0(24大小),1(12大小)
    * @param color 文字的颜色
    */
-  void drawString(uint8_t x, uint8_t y, String str, uint8_t type, uint16_t color);
+  void drawString(uint16_t x, uint8_t y, String str, uint8_t type, uint16_t color);
 
   /**
    * @fn drawString(uint8_t x, uint8_t y, String str, uint8_t type, uint16_t color, uint16_t bgColor)
@@ -895,7 +892,7 @@ public:
    * @param color 文字的颜色
    * @param bgColor 文字背景的颜色
    */
-  void drawString(uint8_t x, uint8_t y, String str, uint8_t type, uint16_t color, uint16_t bgColor);
+  void drawString(uint16_t x, uint8_t y, String str, uint8_t type, uint16_t color, uint16_t bgColor);
 
   /**
    * @fn drawLcdTime
@@ -947,12 +944,12 @@ private:
   uint8_t addChartPoint(sControlinf_t* obj, uint8_t id, uint16_t value);
   uint8_t utf8toUnicode(uint8_t* utf8, uint16_t& uni);
   uint8_t setChartTickTexts(sControlinf_t* obj, String xtext, String ytext);
-  void drawStringHepler(uint8_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color, uint16_t fgColor);
-  void drawStringHepler(uint8_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color);
+  void drawStringHepler(uint16_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color, uint16_t fgColor);
+  void drawStringHepler(uint16_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color);
   uint8_t getNumber(uint8_t id);
   uint8_t* creatCommand(uint8_t cmd, uint8_t len);
-  virtual void    writeCommand(uint8_t* pBuf, uint16_t len);
-  virtual void    readACK(uint8_t* pBuf, uint16_t len);
+  virtual void    writeCommand(uint8_t* pBuf, uint16_t len) = 0;
+  virtual void    readACK(uint8_t* pBuf, uint16_t len) = 0;
 };
 
 
@@ -992,18 +989,18 @@ public:
    * @brief 构造函数
    * @return None
    */
-  DFRobot_Lcd_UART();
+  DFRobot_Lcd_UART(Stream& s);
   /**
    * @fn begin
    * @brief 初始化函数,初始化UART控制器,打开屏幕背光
-   * @param s_ 传入UART对象
+   * @param s 传入UART对象
    * @retval true 成功
    * @retval false 失败
    */
-  bool begin(Stream& s_);
+  bool begin();
 
 private:
-  Stream* s;
+  Stream* _s;
   void writeCommand(uint8_t* pBuf, uint16_t len);
   void readACK(uint8_t* pBuf, uint16_t len);
 };

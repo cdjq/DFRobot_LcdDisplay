@@ -1,4 +1,4 @@
-/**！
+/**!
  * @file station.ino
  * @brief 创建气象站控件
  * @details 当前只支持温度显示

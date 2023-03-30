@@ -1,4 +1,4 @@
-/**！
+/**!
  * @file grapics.ino
  * @brief 显示基本图形
  * @details 可以显示的基本图形有,点,线,圆,矩形,三角形等
@@ -16,37 +16,73 @@
  * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
  * GREENYELLOW_RGB565 DCYAN_RGB565
  */
-
 #include "DFRobot_LcdDisplay.h"
-DFRobot_Lcd_IIC lcd;
 
-void setup(void){
+#define I2C_COMMUNICATION  // I2C通信。如果你想使用UART通信，注释掉这行代码。
+
+#ifdef  I2C_COMMUNICATION
+  /**
+    * 使用 i2c 接口
+    */
+  DFRobot_Lcd_IIC lcd(&Wire, /*I2CAddr*/ 0x2c);
+#else
+  /**
+    * 使用 uart 接口
+    */
+  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266))
+    #include <SoftwareSerial.h>
+    SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
+    #define FPSerial softSerial
+  #else
+    #define FPSerial Serial1
+  #endif
+  DFRobot_Lcd_UART lcd(FPSerial);
+#endif
+
+DFRobot_LcdDisplay::sControlinf_t* gauge;
+
+/**
+ * User-selectable macro definition color
+ * BLACK_RGB565 BLUE_RGB565 RED_RGB565 GREEN_RGB565 CYAN_RGB565 MAGENTA_RGB565
+ * YELLOW_RGB565 WHITE_RGB565 NAVY_RGB565 DARKGREEN_RGB565 DARKCYAN_RGB565 MAROON_RGB565
+ * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
+ * GREENYELLOW_RGB565 DCYAN_RGB565
+ */
+void setup(void)
+{
+  #ifndef  I2C_COMMUNICATION
+    #if (defined ESP32)
+      FPSerial.begin(9600, SERIAL_8N1, /*rx =*/D2, /*tx =*/D3);
+    #else
+      FPSerial.begin(9600);
+    #endif
+  #endif
+
+  Serial.begin(115200);
 
   lcd.begin();
 }
 
 void loop(void){
 
-    testDrawPixel();
-    testLine();
-    testFastLines(PURPLE_RGB565,YELLOW_RGB565);       
-    testRects(BLACK_RGB565,WHITE_RGB565);
-    testRoundRects();
-    testCircles(24,BLUE_RGB565);
-    testTriangles(YELLOW_RGB565);
+  testDrawPixel();
+  testLine();
+  testFastLines(PURPLE_RGB565,YELLOW_RGB565);
+  testRects(BLACK_RGB565,WHITE_RGB565);
+  testRoundRects();
+  testCircles(24,BLUE_RGB565);
+  testTriangles(YELLOW_RGB565);
 }
 
-
-
-
 /* Test to draw a pixel*/
-void testDrawPixel() {
+void testDrawPixel()
+{
   //Clear screen
   lcd.fillScreen(BLACK_RGB565);
   int x = 0;
-  int y = 128;
-  for(int i = 0; i <= 160/2; i += 10){
-    for (x = 160 - i; x >= i; x-=10 ){
+  int y = 0;
+  for(int i = 0; i <= 240/2; i += 10){
+    for (x = i; x <= 320 - i - 10; x += 10){   // 上
       /*
        * @ brief draw a pixel
        * @ param x coordinate
@@ -54,23 +90,20 @@ void testDrawPixel() {
        * c pixel color
        */
       lcd.drawPixel(x, y, ORANGE_RGB565);
-      delay(10);
     }
-  
-    for (y = 128 - i; y >= i; y-=10){
+
+    for (y = i; y <= 240 - i - 10; y += 10) {   // 右
       lcd.drawPixel(x, y, ORANGE_RGB565);
-      delay(10);
     }
-  
-    for (x = i; x <= 160 - i + 1; x+=10 ){
+
+    for (x = 320 - i; x >= i + 10; x -= 10) {   // 下
       lcd.drawPixel(x, y, ORANGE_RGB565);
-      delay(10);
     }
-  
-    for (y = i; y <= 128 - i + 1; y+=10){
+
+    for (y = 240 - i; y >= i + 20; y -= 10) {   // 左
       lcd.drawPixel(x, y, ORANGE_RGB565);
-      delay(10);
     }
+    lcd.drawPixel(x, y, ORANGE_RGB565);
   }
 }
 
@@ -79,7 +112,7 @@ void testLine(){
 // 0x00FF is the color data in the format of RGB565
   uint16_t color = 0x00FF;
   lcd.fillScreen(BLACK_RGB565);
-  for (int16_t x=0; x < 160; x+=6) {
+  for (int16_t x=0; x < 320; x+=6) {
     /*
      * @ brief draw a line
      * @ param x0 The x-coordinate of the first vertex
@@ -88,32 +121,32 @@ void testLine(){
      *         y1 The y-coordinate of the second vertex
      *         c line color
      */
-    lcd.drawLine(/*x0=*/160/*Screen width*//2, /*y0=*/128/*Screen height*//2, /*x1=*/x, /*y1=*/0, /*c=*/color+=0x0700);
+    lcd.drawLine(/*x0=*/320/*Screen width*//2, /*y0=*/240/*Screen height*//2, /*x1=*/x, /*y1=*/0, /*c=*/color+=0x0700);
   }
-  for (int16_t y=0; y < 128; y+=6) {
-    lcd.drawLine(160/2, 128/2, 160, y, color+=0x0700);
+  for (int16_t y=0; y < 240; y+=6) {
+    lcd.drawLine(320/2, 240/2, 320, y, color+=0x0700);
   }
  
-  for (int16_t x = 160; x >= 0; x-=6) {
-    lcd.drawLine(160/2, 128/2, x,128, color+=0x0700);
+  for (int16_t x = 320; x >= 0; x-=6) {
+    lcd.drawLine(320/2, 240/2, x,240, color+=0x0700);
   }
   
-  for (int16_t y = 128; y >= 0; y-=6) {
-    lcd.drawLine(160/2, 128/2, 0, y, color+=0x0700);
+  for (int16_t y = 240; y >= 0; y-=6) {
+    lcd.drawLine(320/2, 240/2, 0, y, color+=0x0700);
   }
 }
 
 /* Test to fast draw line(need to set delay), only horizontal line and vertical line */
 void testFastLines(uint16_t color1, uint16_t color2) {
-  for (int16_t y=0; y < 128; y+=4) {
+  for (int16_t y=0; y < 240; y+=4) {
 
-    lcd.drawLine(/*x=*/0, /*y=*/y, /*w=*/160,y,/*c=*/color2);
+    lcd.drawLine(/*x=*/0, /*y=*/y, /*w=*/320, y, /*c=*/color2);
     delay(30);
   }
   
-  for(int16_t x=0; x < 160; x+=3) {
+  for(int16_t x=0; x < 320; x+=3) {
 
-    lcd.drawLine(/*x=*/x, /*y=*/0, /*h=*/x,128, /*c=*/color1);
+    lcd.drawLine(/*x=*/x, /*y=*/0, /*h=*/x, 240, /*c=*/color1);
     delay(30);
   }
 }
@@ -121,8 +154,8 @@ void testFastLines(uint16_t color1, uint16_t color2) {
 /* Test to draw a rectangle*/
 void testRects(uint16_t color1, uint16_t color2) { 
     lcd.fillScreen(BLACK_RGB565);
-    int16_t x=160-12;
-    for (; x > 100; x-=160/40) {
+    int16_t x=320-12;
+    for (; x > 100; x-=320/40) {
       /*
        * @ brief draw a hollow rectangle
        * @ param x The x-coordinate of the vertex 
@@ -131,7 +164,7 @@ void testRects(uint16_t color1, uint16_t color2) {
        * @ param h longitudinal side length
        * @ param color Fill color, RGB color with 565 structure
        */
-      lcd.drawRect(/*x=*/160/2 -x/2, /*y=*/128/2 -x/2 , /*w=*/x, /*h=*/x, /*color=*/color2+=0x0F00);
+      lcd.drawRect(/*x=*/320/2 -x/2, /*y=*/240/2 -x/2 , /*w=*/x, /*h=*/x, /*color=*/color2+=0x0F00);
       delay(100);
     }
   
@@ -143,10 +176,10 @@ void testRects(uint16_t color1, uint16_t color2) {
      * @ param h longitudinal side length
      * @ param color Fill color, RGB color with 565 structure
      */
-    lcd.fillRect(/*x=*/160/2 -x/2, /*y=*/128/2 -x/2 , /*w=*/x, /*h=*/x, /*color=*/color2);
+    lcd.fillRect(/*x=*/320/2 -x/2, /*y=*/240/2 -x/2 , /*w=*/x, /*h=*/x, /*color=*/color2);
     delay(100);
-    for(; x > 6; x-=160/40){
-      lcd.drawRect(160/2 -x/2, 128/2 -x/2 , x, x, color1);
+    for(; x > 6; x-=320/40){
+      lcd.drawRect(320/2 -x/2, 240/2 -x/2 , x, x, color1);
       delay(100);
     }
 }
@@ -159,8 +192,8 @@ void testRoundRects() {
   int i;
   int x = 0;
   int y = 0;
-  int w = 160-3;
-  int h = 128-3;
+  int w = 320-3;
+  int h = 240-3;
   for(i = 0 ; i <= 16; i+=2) {
     /*
      * @ brief Draw a hollow rounded rectangle
@@ -202,8 +235,8 @@ void testRoundRects() {
 /* Test to draw a circle */
 void testCircles(uint8_t radius, uint16_t color) {
   lcd.fillScreen(BLACK_RGB565);
-  for (int16_t x=radius; x <=160-radius; x+=radius*2) {
-    for (int16_t y=radius; y <=128-radius; y+=radius*2) {
+  for (int16_t x=radius; x <=320-radius; x+=radius*2) {
+    for (int16_t y=radius; y <=240-radius; y+=radius*2) {
       /*
        * @ brief Draw a hollow circle
        * @ param x0 The x-coordinate of the center point
@@ -231,7 +264,7 @@ void testCircles(uint8_t radius, uint16_t color) {
 void testTriangles(uint16_t color){
   lcd.fillScreen(BLACK_RGB565);
   
-  for (int16_t i=0; i <=160; i+=24)
+  for (int16_t i=0; i <=320; i+=24)
     /*
      * @ brief Draw a hollow triangle
      * @ param x0 The x-coordinate of the start vertex
@@ -242,16 +275,16 @@ void testTriangles(uint16_t color){
      * @ param y2 The y-coordinate of the third vertex
      * @ param color border color, 565 structure RGB color
      */
-    lcd.drawTriangle(/*x0=*/i,/*y0=*/0,/*x1=*/0,/*y1=*/128-i,/*x2=*/160-i,/*y2=*/128, /*color=*/color);
+    lcd.drawTriangle(/*x0=*/i,/*y0=*/0,/*x1=*/0,/*y1=*/240-i,/*x2=*/320-i,/*y2=*/240, /*color=*/color);
   
-  for (int16_t i=0; i <160; i+=24)
-    lcd.drawTriangle(160,i*4/3,0,128-i*4/3,i,0, color);
+  for (int16_t i=0; i <320; i+=24)
+    lcd.drawTriangle(320,i*4/3,0,240-i*4/3,i,0, color);
 
-  for (int16_t i=0; i <160; i+=24)
-    lcd.drawTriangle(160,i*4/3,i,0,160-i,128, color);
+  for (int16_t i=0; i <320; i+=24)
+    lcd.drawTriangle(320,i*4/3,i,0,320-i,240, color);
 
   color = RED_RGB565;
-  for (int16_t i=0; i <=160; i+=24)
+  for (int16_t i=0; i <=320; i+=24)
      /*
       * @ brief Draw a filled triangle
       * @ param x0 The x-coordinate of the start vertex
@@ -262,13 +295,13 @@ void testTriangles(uint16_t color){
       * @ param y2 The y-coordinate of the third vertex
       * @ param color Fill color, RGB color with 565 structure
       */
-    lcd.fillTriangle(/*x0=*/i,/*y0=*/0,/*x1=*/0,/*y1=*/128-i,/*x2=*/160-i,/*y2=*/128, /*color=*/color+=100);
+    lcd.fillTriangle(/*x0=*/i,/*y0=*/0,/*x1=*/0,/*y1=*/240-i,/*x2=*/320-i,/*y2=*/240, /*color=*/color+=100);
   
-  for (int16_t i=0; i <160; i+=24)
-    lcd.fillTriangle(160,i*4/3,0,128-i*4/3,i,0, color+=100);
+  for (int16_t i=0; i <320; i+=24)
+    lcd.fillTriangle(320,i*4/3,0,240-i*4/3,i,0, color+=100);
 
-  for (int16_t i=0; i <160; i+=24)
-    lcd.fillTriangle(160,i*4/3,i,0,160-i,128, color+=100);
+  for (int16_t i=0; i <320; i+=24)
+    lcd.fillTriangle(320,i*4/3,i,0,320-i,240, color+=100);
 }
 
 

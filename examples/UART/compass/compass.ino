@@ -1,5 +1,5 @@
 
-/**！
+/**!
  * @file compass.ino
  * @brief 指南针控件示例
  * @details 可通过传感器的得到的方位值来,设置指针的指向
@@ -47,7 +47,7 @@ void setup(void){
   //初始化
   lcd.lvglInit(/*bg_color=*/1);
   //创建指南针控件
-  compss = lcd.creatCompass(/*x=*/16,/*y=*/0,/*width=*/128,/*height*/128,/*颜色*/0xf8);
+  compss = lcd.creatCompass(/*x=*/16,/*y=*/0,/*width=*/128,/*height*/128);
   //设置指南针指针角度
 
 }
