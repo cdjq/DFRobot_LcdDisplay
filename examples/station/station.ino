@@ -1,5 +1,5 @@
 /**!
- * @file humiture.ino
+ * @file station.ino
  * @brief 气象站综合示例
  * @details 可以显示天气,日期,时间,温度,湿度,风速
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)

@@ -312,18 +312,6 @@ To use this library, please download the library file first, and paste it into t
   void setArcRotation(sControlinf_t* obj,uint16_t rotation);
 
   /**
-   * @fn creatStations
-   * @brief 创建一个气象站控件
-   * @param x 控件所在x轴坐标
-   * @param y 控件所在y轴坐标
-   * @param zoo  控件大小缩放指数(128~512)
-   * @param color 控件的颜色
-   * @param str 气象站图标里面的文字
-   * @return 气象站控件的对象
-   */
-  sControlinf_t *creatStations(uint16_t x,uint16_t y,uint16_t zoo,uint16_t color,String str);
-
-  /**
    * @fn addChart
    * @brief Allocate and add a data series to the chart
    * @param obj 图表控件的对象
@@ -332,14 +320,6 @@ To use this library, please download the library file first, and paste it into t
    * @param len  数组长度
    */
   uint8_t addChart(sControlinf_t* obj,uint8_t id,uint16_t point[],uint8_t len);
-  
-  /**
-   * @fn setStationValue
-   * @brief 设置气象站控件
-   * @param obj 气象站控件的对象
-   * @param value 气象监测值, 如温度
-   */
-  void setStationValue(sControlinf_t* obj,String value);
 
   /**
    * @fn creatLineMeter
@@ -396,7 +376,7 @@ To use this library, please download the library file first, and paste it into t
   
   /**
    * @fn drawLcdTime
-   * @brief 在屏幕上显示当前时间
+   * @brief 在屏幕上显示设置的时间
    * @param x 起始位置的x坐标
    * @param y 起始位置的y坐标
    * @param hour 小时
@@ -410,7 +390,7 @@ To use this library, please download the library file first, and paste it into t
 
   /**
    * @fn drawLcdDate
-   * @brief 在屏幕上显示当前日期
+   * @brief 在屏幕上显示设置的日期
    * @param x 起始位置的x坐标
    * @param y 起始位置的y坐标
    * @param month 月份

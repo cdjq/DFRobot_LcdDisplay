@@ -485,8 +485,6 @@ public:
     eKorean,/**<韩文*/
   }eLcdFont_t;
 
-
-
   /**
     * @struct sControlinf_t
     * @brief 指向不同的控件的对象
@@ -716,7 +714,7 @@ public:
 
   /**
    * @fn setBar
-   * @brief 创建一个滑条控件
+   * @brief 设置进度条值,可带单位,但必须由数字开始
    * @param obj 滑条控件的对象
    * @param str 滑条的值
    */
@@ -734,13 +732,22 @@ public:
 
   /**
    * @fn creatChartSerie
-   * @brief 在图表中创建折线图或柱状图
+   * @brief 在图表中创建折线图或柱状图序列
    * @param obj 图表控件的对象
    * @param color 折线图/柱状图的颜色
    * @return 返回图的编号
    */
   uint8_t creatChartSerie(sControlinf_t* obj, uint16_t color);
 
+  /**
+   * @fn addChart
+   * @brief 分配数据序列并将其添加到图表中
+   * @param obj 图表控件的对象
+   * @param id the allocated data series
+   * @param point 曲线图/柱状图需要数据的数组
+   * @param len  数组长度
+   */
+  uint8_t addChart(sControlinf_t* obj, uint8_t id, uint16_t point[], uint8_t len);
 
   /**
    * @fn creatGauge
@@ -754,15 +761,6 @@ public:
    */
   sControlinf_t* creatGauge(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color);
 
-
-  /**
-   * @fn setCompassScale
-   * @brief 设置指南针指针的角度
-   * @param obj 指南针的对象
-   * @param scale 指针角度(0~360)
-   */
-  void setCompassScale(sControlinf_t* obj, uint16_t scale);
-
   /**
    * @fn setGaugeScale
    * @brief 设置表盘的参数
@@ -775,7 +773,7 @@ public:
 
   /**
    * @fn setGaugeValue
-   * @brief Set the value of a needle
+   * @brief 设置表盘指示的值
    * @param obj 表盘的对象
    * @param value the new value
    */
@@ -791,6 +789,14 @@ public:
    * @return 指南针控件的对象
    */
   sControlinf_t* creatCompass(uint16_t x, uint16_t y, uint8_t width, uint8_t height);
+
+  /**
+   * @fn setCompassScale
+   * @brief 设置指南针指针的角度
+   * @param obj 指南针的对象
+   * @param scale 指针角度(0~360)
+   */
+  void setCompassScale(sControlinf_t* obj, uint16_t scale);
 
   /**
    * @fn creatArc
@@ -812,36 +818,6 @@ public:
   void setArcRotation(sControlinf_t* obj, uint16_t rotation);
 
   /**
-   * @fn creatStations
-   * @brief 创建一个气象站控件
-   * @param x 控件所在x轴坐标
-   * @param y 控件所在y轴坐标
-   * @param zoo  控件大小缩放指数(128~512)
-   * @param color 控件的颜色
-   * @param str 气象站图标里面的文字
-   * @return 气象站控件的对象
-   */
-  sControlinf_t* creatStations(uint16_t x, uint16_t y, uint16_t zoo, uint16_t color, String str);
-
-  /**
-   * @fn setStationValue
-   * @brief 设置气象站控件
-   * @param obj 气象站控件的对象
-   * @param value 气象监测值, 如温度
-   */
-  void setStationValue(sControlinf_t* obj, String value);
-
-  /**
-   * @fn addChart
-   * @brief Allocate and add a data series to the chart
-   * @param obj 图表控件的对象
-   * @param id the allocated data series
-   * @param point 曲线图/柱状图需要数据的数组
-   * @param len  数组长度
-   */
-  uint8_t addChart(sControlinf_t* obj, uint8_t id, uint16_t point[], uint8_t len);
-
-  /**
    * @fn creatLineMeter
    * @brief 创建一个线形仪表控件
    * @param x 控件所在x轴坐标
@@ -854,22 +830,22 @@ public:
   sControlinf_t* creatLineMeter(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color);
 
   /**
-   * @fn setMeterValue
-   * @brief Set a new value on the line meter
-   * @param obj pointer to a line meter object
-   * @param value new value
-   */
-  void setMeterValue(sControlinf_t* obj, uint16_t value);
-
-  /**
    * @fn setMeterScale
-   * @brief Set a new value on the line meter
+   * @brief 设置线形仪表控件的参数
    * @param obj pointer to a line meter object
    * @param angle angle of the scale (0..360)
    * @param start minimum value
    * @param end maximum value
    */
   void setMeterScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end);
+
+  /**
+   * @fn setMeterValue
+   * @brief 在线路仪表上设置一个新值
+   * @param obj pointer to a line meter object
+   * @param value new value
+   */
+  void setMeterValue(sControlinf_t* obj, uint16_t value);
 
   /**
    * @fn drawString(uint8_t x, uint8_t y, String str, uint8_t type, uint16_t color)
@@ -896,7 +872,7 @@ public:
 
   /**
    * @fn drawLcdTime
-   * @brief 在屏幕上显示当前时间
+   * @brief 在屏幕上显示设置的时间
    * @param x 起始位置的x坐标
    * @param y 起始位置的y坐标
    * @param hour 小时
@@ -910,7 +886,7 @@ public:
 
   /**
    * @fn drawLcdDate
-   * @brief 在屏幕上显示当前日期
+   * @brief 在屏幕上显示设置的日期
    * @param x 起始位置的x坐标
    * @param y 起始位置的y坐标
    * @param month 月份
@@ -923,19 +899,39 @@ public:
   void drawLcdDate(uint8_t x, uint8_t y, uint8_t month, uint8_t day, uint8_t weeks, uint8_t fontSize, uint16_t color, uint16_t bgColor);
 
   /**
-   * @fn reset
-   * @brief 复位显示屏,显示屏复位后,创建的lvlg控件全部删除,显示的内容也一并清楚
-   */
-  void reset();
-  /**
    * @fn lvglDelete
    * @brief 指定某个已创建的控件进行删除
    * @param obj 要删除对象的控件
    */
   void lvglDelete(sControlinf_t* obj);
 
+  /**
+   * @fn reset
+   * @brief 复位显示屏,显示屏复位后,创建的lvlg控件全部删除,显示的内容也一并清楚
+   */
+  void reset();
 
 private:
+  /**
+   * @fn creatStations
+   * @brief 创建一个气象站控件
+   * @param x 控件所在x轴坐标
+   * @param y 控件所在y轴坐标
+   * @param zoo  控件大小缩放指数(128~512)
+   * @param color 控件的颜色
+   * @param str 气象站图标里面的文字
+   * @return 气象站控件的对象
+   */
+  sControlinf_t* creatStations(uint16_t x, uint16_t y, uint16_t zoo, uint16_t color, String str);
+
+  /**
+   * @fn setStationValue
+   * @brief 设置气象站控件
+   * @param obj 气象站控件的对象
+   * @param value 气象监测值, 如温度
+   */
+  void setStationValue(sControlinf_t* obj, String value);
+
   TwoWire* _pWire;
   sControlinf_t head;
   eLcdFont_t _font = eAscii;
