@@ -823,7 +823,7 @@ void DFRobot_LcdDisplay::lvglInit(uint16_t bg_color)
   cmd[6] = bg_color & 0xFF;
   writeCommand(cmd, CMDLEN_INIT_LVGL);
   free(cmd);
-  delay(1000);
+  delay(2000);
 }
 
 uint16_t DFRobot_LcdDisplay::getWordLen(uint8_t* utf8, uint8_t len)
@@ -1197,8 +1197,7 @@ uint8_t DFRobot_LcdDisplay::addChart(sControlinf_t* obj, uint8_t id, uint16_t po
 
   for (uint8_t i = 0; i < len;i++) {
     addChartPoint(obj, id, point[i]);
-    delay(100);
-    
+    delay(200);
   }
   return 1;
 }
@@ -1290,6 +1289,12 @@ DFRobot_Lcd_IIC::DFRobot_Lcd_IIC(TwoWire* pWire, uint8_t addr)
 bool DFRobot_Lcd_IIC::begin()
 {
   _pWire->begin();
+  if (_pWire == NULL) return false;
+  _pWire->begin();
+  _pWire->setClock(100000);
+  _pWire->beginTransmission(_deviceAddr);
+  if (_pWire->endTransmission() != 0) return false;
+
   setBackLight(true);
   return true;
 }
@@ -1301,12 +1306,14 @@ void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
     DBG("pBuf ERROR!! : null pointer");
   }
 
+  DBG(len);
   uint8_t* _pBuf = (uint8_t*)pBuf;
   _pWire->beginTransmission(_deviceAddr);
-  for (uint16_t i = 0; i < len; i++) {
-    _pWire->write(_pBuf[i]);
+  // for (uint16_t i = 0; i < len; i++) {
+  //   _pWire->write(_pBuf[i]);
 
-  }
+  // }
+  _pWire->write(_pBuf, len);
   _pWire->write(0xAA);
   _pWire->write(0x55);
   // delay(1);
@@ -1343,9 +1350,9 @@ DFRobot_Lcd_UART::DFRobot_Lcd_UART(Stream& s)
 bool DFRobot_Lcd_UART::begin()
 {
   // warning: the compiler can assume that the address of 's' will never be NULL
-  // if (&s == NULL) {
-  //   return false;
-  // }
+  if (_s == NULL) {
+    return false;
+  }
   return true;
 }
 

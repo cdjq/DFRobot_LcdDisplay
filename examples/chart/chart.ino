@@ -60,7 +60,8 @@ void setup(void)
 
   lcd.begin();
   lcd.lvglInit(GREEN_RGB565);
-  chart = lcd.creatChart(/*x轴刻度标签*/"Jan\nFeb\nMar\nApr\nMay", /*y轴刻度标签*/"100\n80\n60\n40\n20\n0", /*图标样式*/3);
+  /*图表样式:1-折线图,2-折线图带阴影,3-柱状图*/
+  chart = lcd.creatChart(/*x轴刻度标签*/"Jan\nFeb\nMar\nApr\nMay", /*y轴刻度标签*/"100\n80\n60\n40\n20\n0", /*图表样式:1-3*/3);
 
   //Allocate and add a data series to the chart
   id1 = lcd.creatChartSerie(chart, /*颜色*/RED_RGB565);

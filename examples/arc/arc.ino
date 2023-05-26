@@ -65,8 +65,12 @@ void setup(void)
 void loop(void)
 {
   //控制角度控件的角度
-  lcd.setArcRotation(arc, /*角度*/10);
+  lcd.setArcRotation(arc, /*角度*/0);
   delay(2000);
   lcd.setArcRotation(arc, 60);
+  delay(2000);
+  lcd.setArcRotation(arc, 160);
+  delay(2000);
+  lcd.setArcRotation(arc, 260);
   delay(2000);
 }

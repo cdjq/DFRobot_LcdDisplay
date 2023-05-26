@@ -60,7 +60,7 @@ void setup(void)
   //创建一个表盘控件
   gauge = lcd.creatGauge(/*x=*/35,/*y = */19,/*width*/90,/*height*/90,/*颜色*/NAVY_RGB565);
   //设置表盘参数
-  lcd.setGaugeScale(gauge,/*angle of the scale*/270,/*起始值*/0,/*终止值*/100);
+  lcd.setGaugeScale(gauge,/*angle of the scale*/360,/*起始值*/0,/*终止值*/100);
 }
 
 void loop(void)

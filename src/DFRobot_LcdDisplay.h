@@ -16,7 +16,7 @@
 #include <String.h>
 
 #ifndef ENABLE_DBG
- // # define ENABLE_DBG   //!< Open this macro and you can see the details of the program
+ # define ENABLE_DBG   //!< Open this macro and you can see the details of the program
 # ifdef ENABLE_DBG
 #   ifdef DBG
 #    undef DBG
@@ -203,6 +203,8 @@ public:
     eIconWeigh,
     eIconWifi,
     eIconWind,
+    eIconLight,
+    eIconUVLight,
 
     // 动物animal icon
     eIconBee,

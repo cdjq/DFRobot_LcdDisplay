@@ -99,17 +99,17 @@ void loop(void)
 {
   //显示当前时间
   lcd.drawLcdTime(10, 10, hour, Minute, second, 0, ORANGE_RGB565, WHITE_RGB565);
-  lcd.setBar(bar1, String(25) + " ℃");
+  lcd.setBar(bar1, String(25) + " °C");
   lcd.setBar(bar2, String(80) + " %");
   lcd.setBar(bar3, String(10) + " m/s");
   delay(300);
 
-  lcd.setBar(bar1, String(28) + " ℃");
+  lcd.setBar(bar1, String(28) + " °C");
   lcd.setBar(bar2, String(60) + " %");
   lcd.setBar(bar3, String(15) + " m/s");
   delay(300);
 
-  lcd.setBar(bar1, String(30) + " ℃");
+  lcd.setBar(bar1, String(30) + " °C");
   lcd.setBar(bar2, String(50) + " %");
   lcd.setBar(bar3, String(20) + " m/s");
   delay(400);
