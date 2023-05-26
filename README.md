@@ -426,7 +426,6 @@ Arduino MEGA2560        |      √       |              |             |
 Arduino Leonardo|      √       |              |             | 
 Micro:bit        |      √       |              |             | 
 FireBeetle-M0        |      √       |              |             | 
-Raspberry Pi      |      √       |              |             | 
 
 
 
