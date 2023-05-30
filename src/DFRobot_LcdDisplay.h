@@ -1,12 +1,13 @@
 /*!
  * @file DFRobot_LcdDisplay.h
  * @brief Define the infrastructure of the DFRobot_LcdDisplay class
- * @details 该库能驱动DFR0997屏幕,通过IIC接口和UART接口便可以方便地驱动彩色屏幕
+ * @details The library supports driving DFR0997 screens through both I2C and UART interfaces. It provides convenient functions to control and drive the color screen.
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @License     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @version  V1.0
- * @date  2022-03-1
+ * @date  2023-05-29
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #ifndef DFROBOT_LCDDISPLAY_H_
@@ -16,7 +17,7 @@
 #include <String.h>
 
 #ifndef ENABLE_DBG
- # define ENABLE_DBG   //!< Open this macro and you can see the details of the program
+//  # define ENABLE_DBG   //!< Open this macro and you can see the details of the program
 # ifdef ENABLE_DBG
 #   ifdef DBG
 #    undef DBG
@@ -109,7 +110,7 @@
 #define CMD_OF_DRAWICON         20
 #define CMD_OF_DRAWSTRING       21
 #define CMD_OF_DRAWSTRING2      22
-#define CMD_OF_DRAWDISKIMG      23   // hyy
+#define CMD_OF_DRAWDISKIMG      23
 
 #define CMD_DRAW_LVGLSLIDER     31
 #define CMD_DRAW_LVGLBAR        32
@@ -128,8 +129,8 @@
 #define CMD_HEADER_HIGH         0x55
 #define CMD_HEADER_LOW          0xaa
 
-#ifndef HYY_LCD_UNUSED
-#define HYY_LCD_UNUSED(x) ((void) x)
+#ifndef LCD_UNUSED
+#define LCD_UNUSED(x) ((void) x)
 #endif
 
 
@@ -139,10 +140,10 @@ public:
 
   /**
    * @enum sLcdIcon_t
-   * @brief 表示不同的图标,当要显示图标时,选择对应的枚举即可
+   * @brief To display different icons using the library, you can select the corresponding enum for the desired icon.
    */
   typedef enum {
-    // 安全safe icon
+    // safe icons
     eIconDial,
     eIconDisabledAccess,
     eIconDown,
@@ -159,7 +160,7 @@ public:
     eIconRight,
     eIconUp,
 
-    // 表情expression icon
+    // expression icons
     eIconAngry,
     eIconBlink,
     eIconCry,
@@ -181,7 +182,7 @@ public:
     eIconTear,
     eIconTired,
 
-    // 传感器sensor icon
+    // sensor icons
     eIconAlcohol,
     eIconAntennaReceiver,
     eIconAntenna,
@@ -206,7 +207,7 @@ public:
     eIconLight,
     eIconUVLight,
 
-    // 动物animal icon
+    // animal icons
     eIconBee,
     eIconBird,
     eIconButterfly,
@@ -234,7 +235,7 @@ public:
     eIconWasp,
     eIconWorm,
 
-    // 环境与自然Environment and Nature icon
+    // Environment and Nature icons
     eIconBiofuel,
     eIconCarElectric,
     eIconDesertLandscape,
@@ -261,7 +262,7 @@ public:
     eIconWaterRecycle,
     eIconWinterForest,
 
-    // 季节 season icon
+    // season icons
     eIconBeachBed,
     eIconBeachUmbrella8,
     eIconChristmasStocking,
@@ -284,7 +285,7 @@ public:
     eIconThermometerSnow,
     eIconWatermelon,
 
-    // 交通工具 transport icon
+    // transport icons
     eIconAirplane,
     eIconAmbulance,
     eIconAutomobile,
@@ -304,7 +305,7 @@ public:
     eIconTractor,
     eIconVerticalTrafficLight,
 
-    // 农业Agriculture icon
+    // Agriculture icons
     eIconBarn,
     eIconBarrier,
     eIconBoots,
@@ -324,7 +325,7 @@ public:
     eIconWellWater,
     eIconWheelbarrow,
 
-    // 人物形象 people icon
+    // people icons
     eIconDesigner,
     eIconDiver,
     eIconDoctor,
@@ -339,7 +340,7 @@ public:
     eIconSurgeon,
     eIconTeacher,
 
-    // 食物 food icon
+    // food icons
     eIconAvocado,
     eIconBanana,
     eIconBeerMug,
@@ -349,67 +350,67 @@ public:
     eIconCake,
     eIconCarrot,
     eIconCheeseWedge,
-    eIconCherry,/**<樱桃*/
-    eIconChocolateBar,/**<巧克力*/
-    eIconCutOfMeat,/**<肉*/
-    eIconEarOfCorn,/**<玉米*/
-    eIconEgg,/**<鸡蛋*/
-    eIconFrenchFries,/**<薯条*/
-    eIconGrapes,/**<葡萄*/
-    eIconGreenSalad,/**<绿沙拉*/
-    eIconHamburger,/**<汉堡包*/
-    eIconHotBeverage,/**<热饮料*/
-    eIconPeach,/**<桃子*/
-    eIconPineapple,/**<菠萝*/
-    eIconPopcorn,/**<爆米花*/
-    eIconPotato,/**<土豆*/
-    eIconRedApple,/**<红苹果*/
-    eIconSalad,/**<沙拉*/
-    eIconShaomai,/**<烧卖*/
-    eIconSandwich,/**<三明治*/
-    eIconShortcake,/**<短蛋糕*/
-    eIconStrawberry,/**<草莓*/
+    eIconCherry,
+    eIconChocolateBar,
+    eIconCutOfMeat,
+    eIconEarOfCorn,
+    eIconEgg,
+    eIconFrenchFries,
+    eIconGrapes,
+    eIconGreenSalad,
+    eIconHamburger,
+    eIconHotBeverage,
+    eIconPeach,
+    eIconPineapple,
+    eIconPopcorn,
+    eIconPotato,
+    eIconRedApple,
+    eIconSalad,
+    eIconShaomai,
+    eIconSandwich,
+    eIconShortcake,
+    eIconStrawberry,
 
-    //数字图形图标
-    eIconArrowDown,/**<向下箭头*/
-    eIconArrowLeft,/**<向左箭头*/
-    eIconArrowRight,/**<向右箭头*/
-    eIconArrowUp,/**<向上箭头*/
-    eIconDiamond,/**<菱形*/
-    eIconEight,/**<数字8*/
-    eIconFive,/**<数字5*/
-    eIconFivePointedStar,/**<五角星*/
-    eIconHeart,/**<心形*/
-    eIconNine,/**<数字9*/
-    eIconFour,/**<数字4*/
-    eIconOctagon,/**<八边形*/
-    eIconOne,/**<数字1*/
-    eIconPentagon,/**<五边形*/
-    eIconRectangle,/**<矩形*/
-    eIconSeven,/**<数字7*/
-    eIconSix,/**<数字6*/
-    eIconSquare,/**<正方形*/
-    eIconThree,/**<数字3*/
-    eIconTriangle,/**<三角形*/
-    eIconTwo,/**<数字2*/
-    eIconWindmillShape,/**<风车形*/
-    eIconZero,/**<数字0*/
+    // Numeric graphic icons
+    eIconArrowDown,
+    eIconArrowLeft,
+    eIconArrowRight,
+    eIconArrowUp,
+    eIconDiamond,
+    eIconEight,
+    eIconFive,
+    eIconFivePointedStar,
+    eIconHeart,
+    eIconNine,
+    eIconFour,
+    eIconOctagon,
+    eIconOne,
+    eIconPentagon,
+    eIconRectangle,
+    eIconSeven,
+    eIconSix,
+    eIconSquare,
+    eIconThree,
+    eIconTriangle,
+    eIconTwo,
+    eIconWindmillShape,
+    eIconZero,
 
-    //天气图标
-    eIconCloudy,/**<多云*/
-    eIconMoon,/**<月亮*/
-    eIconLightning,/**<闪电*/
-    eIconMoonCloudy,/**<多云夜晚*/
-    eIconRainUmbrella,/**<下雨有伞*/
-    eIconRainbow1,/**<彩虹1*/
-    eIconRainbow2,/**<彩虹2*/
-    eIconRainy,/**<下雨*/
-    eIconSnow,/**<雪*/
-    eIconSnowy,/**<有雪的天气*/
-    eIconSunnyCloudy,/**<晴天多云*/
-    eIconWhirlwind,/**<旋风*/
+    // Weather icons
+    eIconCloudy,
+    eIconMoon,
+    eIconLightning,
+    eIconMoonCloudy,
+    eIconRainUmbrella,
+    eIconRainbow1,
+    eIconRainbow2,
+    eIconRainy,
+    eIconSnow,
+    eIconSnowy,
+    eIconSunnyCloudy,
+    eIconWhirlwind,
 
-    // 音乐图标
+    // Music icons
     eIconAccordion,
     eIconBassDrum,
     eIconCDDiskDVD,
@@ -431,7 +432,7 @@ public:
     eIconTrumpet,
     eIconXylophone,
 
-    // 运动图标
+    // Sports icons
     eIconBadminton,
     eIconBasketball,
     eIconBowling,
@@ -449,7 +450,7 @@ public:
     eIconTennis,
     eIconYoga,
 
-    // 植物图标
+    // Plant icons
     eIconBranch,
     eIconCactus1,
     eIconCactus2,
@@ -472,48 +473,50 @@ public:
 
   /**
    * @enum eLcdFont_t
-   * @brief 当使用字体,把以下枚举传入setFont()函数,选择不同的字体
+   * @brief When using fonts, pass the following enums to the setFont() function to select different fonts
    */
   typedef enum {
-    eChinese,/**<中文*/
-    eShiftJis,/**<日文*/
+    eChinese,/**<Chinese*/
+    eShiftJis,/**<Japanese*/
     eAscii,/**<ACSII*/
-    eGreece,/**<希腊文*/
-    eCyrillic,/**<西里尔文*/
-    eHebrew,/**<希伯来文*/
-    eThailand,/**<不等宽希腊文*/
-    eAlb,/**<阿拉伯文*/
-    eKhmer,/**<高棉文*/
-    eKorean,/**<韩文*/
+    eGreece,/**<Greek*/
+    eCyrillic,/**<Cyrillic*/
+    eHebrew,/**<Hebrew*/
+    eThailand,/**<Greek for unequal width*/
+    eAlb,/**<Arabic*/
+    eKhmer,/**<khmer*/
+    eKorean,/**<Korean*/
   }eLcdFont_t;
 
   /**
     * @struct sControlinf_t
-    * @brief 指向不同的控件的对象
+    * @brief Objects that point to different controls
     */
   typedef struct controlinf {
-    uint32_t number; /**<控件编号 */
-    uint16_t id; /**<控件id,不同的控件有不同的作用*/
-    int16_t x; /**<控件所在位置的x坐标*/
-    int16_t y; /**<控件所在位置的y坐标*/
-    int16_t width; /**<控件宽度 */
-    int16_t height; /**<控件高度*/
-    uint16_t color; /**<控件颜色*/
-    struct controlinf* inf; /**<下一个控件指针 */
+    uint32_t number; /**<Control ID */
+    uint16_t id; /**<Control ID, different controls have different functionalities.*/
+    int16_t x; /**<X coordinate of the control's position.*/
+    int16_t y; /**<Y coordinate of the control's position.*/
+    int16_t width; /**<Control width */
+    int16_t height; /**<Control height*/
+    uint16_t color; /**<Color Control*/
+    struct controlinf* inf; /**<The next control pointer */
   }sControlinf_t;
 
 public:
   /**
    * @fn DFRobot_LcdDisplay
-   * @brief 构造函数
+   * @brief constructor
    * @return None
    */
   DFRobot_LcdDisplay();
 
   /**
    * @fn begin
-   * @brief 初始化函数
-   * @return true(成功)/false(失败)
+   * @brief initialization function
+   * @return Boolean type, initialized state
+   * @retval true succeed
+   * @retval false failed
    */
   bool begin();
   /**
@@ -527,246 +530,246 @@ public:
 
   /**
    * @fn lvglInit
-   * @brief 初始化lvgl,但是用lvgl的控件或者图标时,需要调用此函数
-   * @param bg_color lvgl背景颜色
+   * @brief To initialize LVGL
+   * @param bg_color The color of the screen after initialization
    */
   void lvglInit(uint16_t bg_color = 0xffee);
 
   /**
    * @fn setFont
-   * @brief 设置字体, 方便计算一连串字体的显示位置
-   * @param font 字体种类, eLcdFont_t
+   * @brief Set font for easy calculation of consecutive font display positions.
+   * @param font font type, eLcdFont_t
    */
   void setFont(eLcdFont_t font);
   /**
    * @fn fillScreen
-   * @brief Function to refresh screen
+   * @brief Fill the entire screen
    * @param color color to fill screen, RGB565 format
    */
   void fillScreen(uint16_t color);
 
   /**
    * @fn setBackLight
-   * @brief 设置屏幕背光
-   * @param on true(打开)/false(关闭)
+   * @brief Set screen backlight.
+   * @param on true(on)/false(off)
    */
   void setBackLight(bool on);
 
   /**
    * @fn drawLine
-   * @brief 在屏幕上画一条直线
-   * @param x0 直线起点x坐标
-   * @param y0 直线起点y坐标
-   * @param x1 直线终点x坐标
-   * @param y1 直线终点y坐标
+   * @brief Draw a straight line on the screen.
+   * @param x0 Start X-coordinate of the line.
+   * @param y0 Start Y-coordinate of the line.
+   * @param x1 End X-coordinate of the line.
+   * @param y1 End Y-coordinate of the line.
    * @param color the color of the line, RGB565 format
    */
   void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
 
   /**
    * @fn drawRect
-   * @brief 在屏幕上画矩形
-   * @param x 矩形起点x坐标
-   * @param y 矩形起点y坐标
-   * @param w  矩形的宽度
-   * @param h  矩形的高度
-   * @param color 矩形颜色
+   * @brief Draw rectangles on the screen
+   * @param x Start of rectangle x coordinate
+   * @param y Start of rectangle y coordinate
+   * @param w  Width of a rectangle
+   * @param h  Height of rectangle
+   * @param color Rectangular color
    */
   void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
 
   /**
    * @fn fillRect
-   * @brief 在屏幕上填充矩形
-   * @param x 矩形起点x坐标
-   * @param y 矩形起点y坐标
-   * @param w  矩形的宽度
-   * @param h  矩形的高度
-   * @param color 矩形颜色
+   * @brief Fill a rectangle on the screen
+   * @param x Start of rectangle x coordinate
+   * @param y Start of rectangle y coordinate
+   * @param w  Width of a rectangle
+   * @param h  Height of rectangle
+   * @param color Rectangular color
    */
   void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
 
   /**
    * @fn drawRoundRect
-   * @brief 在屏幕上画圆角矩形
-   * @param x0 矩形起点x坐标
-   * @param y0 矩形起点y坐标
-   * @param w  矩形的宽度
-   * @param h  矩形的高度
-   * @param radius  圆角半径
-   * @param color 矩形颜色
+   * @brief Draw rounded rectangles on the screen
+   * @param x0 Start of rectangle x coordinate
+   * @param y0 Start of rectangle y coordinate
+   * @param w  Width of a rectangle
+   * @param h  Height of rectangle
+   * @param radius  Radius of the rounded corners
+   * @param color Rectangular color
    */
   void drawRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
     int16_t radius, uint16_t color);
 
   /**
    * @fn fillRoundRect
-   * @brief 在屏幕上填充圆角矩形
-   * @param x0 矩形起点x坐标
-   * @param y0 矩形起点y坐标
-   * @param w  矩形的宽度
-   * @param h  矩形的高度
-   * @param radius  圆角半径
-   * @param color 矩形颜色
+   * @brief Fill a rounded rectangle on the screen
+   * @param x0 Start of rectangle x coordinate
+   * @param y0 Start of rectangle y coordinate
+   * @param w  Width of a rectangle
+   * @param h  Height of rectangle
+   * @param radius  Radius of the rounded corners
+   * @param color Rectangular color
    */
   void fillRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
     int16_t radius, uint16_t color);
 
   /**
    * @fn drawCircle
-   * @brief 在屏幕画圆
-   * @param x0 圆心x坐标
-   * @param y0 圆心y坐标
-   * @param r  圆的半径
-   * @param color 圆的颜色
+   * @brief Draw circles on the screen
+   * @param x0 Center of the circle x coordinate
+   * @param y0 Center of the circle y coordinate
+   * @param r  Radius of the circle
+   * @param color Color of the circle
    */
   void drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
 
   /**
    * @fn fillCircle
-   * @brief 在屏幕填充圆
-   * @param x0 圆心x坐标
-   * @param y0 圆心y坐标
-   * @param r  圆的半径
-   * @param color 圆的颜色
+   * @brief Fill the circle on the screen
+   * @param x0 Center of the circle x coordinate
+   * @param y0 Center of the circle y coordinate
+   * @param r  Radius of the circle
+   * @param color Color of the circle
    */
   void fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
 
   /**
    * @fn drawTriangle
-   * @brief 在屏幕画一个三角形
-   * @param x0 三角形第一个点的x坐标
-   * @param y0 三角形第一个点的y坐标
-   * @param x1 三角形第二个点的x坐标
-   * @param y1 三角形第二个点的y坐标
-   * @param x2 三角形第三个点的x坐标
-   * @param y2 三角形第三个点的y坐标
-   * @param color 圆的颜色
+   * @brief Draw a triangle on the screen
+   * @param x0 The x-coordinate of the first point of the triangle
+   * @param y0 The y-coordinate of the first point of the triangle
+   * @param x1 The x-coordinate of the second point of the triangle
+   * @param y1 The y-coordinate of the second point of the triangle
+   * @param x2 The x-coordinate of the third point of the triangle
+   * @param y2 The y-coordinate of the third point of the triangle
+   * @param color Color of the circle
    */
   void drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
     int16_t x2, int16_t y2, uint16_t color);
 
   /**
    * @fn fillTriangle
-   * @brief 在屏幕填充一个三角形
-   * @param x0 三角形第一个点的x坐标
-   * @param y0 三角形第一个点的y坐标
-   * @param x1 三角形第二个点的x坐标
-   * @param y1 三角形第二个点的y坐标
-   * @param x2 三角形第三个点的x坐标
-   * @param y2 三角形第三个点的y坐标
-   * @param color 圆的颜色
+   * @brief Fill a triangle on the screen
+   * @param x0 The x-coordinate of the first point of the triangle
+   * @param y0 The y-coordinate of the first point of the triangle
+   * @param x1 The x-coordinate of the second point of the triangle
+   * @param y1 The y-coordinate of the second point of the triangle
+   * @param x2 The x-coordinate of the third point of the triangle
+   * @param y2 The y-coordinate of the third point of the triangle
+   * @param color Color of the circle
    */
   void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
     int16_t x2, int16_t y2, uint16_t color);
 
   /**
    * @fn drawIcon
-   * @brief 绘制一个图标
-   * @param x 图标第一个点的x坐标
-   * @param y 图标第一个点的y坐标
-   * @param id 图标对应的编号
-   * @param size 图标大小缩放系数
-   * @return 图标控件的对象
+   * @brief Draw an icon
+   * @param x The x-coordinate of the first point of the icon
+   * @param y The y-coordinate of the first point of the icon
+   * @param id The icon's corresponding number
+   * @param size Icon scaling factor
+   * @return Icon control handle
    */
   sControlinf_t* drawIcon(int16_t x, int16_t y, uint16_t id, uint16_t size = 255);
 
   /**
    * @fn drawDiskImg
-   * @brief 绘制u盘里面的图片(bmp或者png)
-   * @param x 图片第一个点的x坐标
-   * @param y 图片第一个点的y坐标
-   * @param str 图片完整文件名, 如 "/img/cat.bmp"
-   * @param size 图片大小缩放系数
-   * @return 图片控件的对象
-   * @note 因ram较小, bmp 和 png 的规格有限制
+   * @brief Used to draw the pictures inside the USB drive (in BMP or PNG format).
+   * @param x The x-coordinate of the first point in the picture
+   * @param y The y-coordinate of the first point in the picture
+   * @param str The full file name of the image, such as "/img/cat.bmp"
+   * @param size Scale factor for image resizing
+   * @return The object of the picture control
+   * @note The size of bmp and png is limited due to the small ram
    */
   sControlinf_t* drawDiskImg(int16_t x, int16_t y, String str, uint16_t size = 255);
 
   /**
    * @fn creatSlider
-   * @brief 创建一个滑条控件
-   * @param x 滑条的x坐标
-   * @param y 滑条的y坐标
-   * @param width 滑条的宽度
-   * @param height 滑条的高度
-   * @param color 滑条的颜色
-   * @return 滑条控件的对象
+   * @brief Create a slider control
+   * @param x The x-coordinate of the slider
+   * @param y The y-coordinate of the slider
+   * @param width The width of the slider
+   * @param height The height of the slide bar
+   * @param color The color of the slider
+   * @return Slider control handle
    */
   sControlinf_t* creatSlider(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color);
 
   /**
    * @fn setSliderValue
-   * @brief 设置滑条的值
-   * @param obj 滑条控件的对象
-   * @param value 滑条的值
+   * @brief Sets the slider value
+   * @param obj Slider control handle
+   * @param value The value of the slider
    */
   void setSliderValue(sControlinf_t* obj, uint8_t value);
 
   /**
    * @fn creatBar
-   * @brief 创建一个进度条控件
-   * @param x 进度条的x坐标
-   * @param y 进度条的y坐标
-   * @param width 进度条的宽度
-   * @param height 进度条的高度
-   * @param color 进度条的颜色
-   * @return 进度条控件的对象
+   * @brief Create a progress bar control
+   * @param x The x coordinate of the progress bar
+   * @param y The y coordinate of the progress bar
+   * @param width Width of the progress bar
+   * @param height Height of the progress bar
+   * @param color Color of the progress bar
+   * @return Progress bar control handle
    */
   sControlinf_t* creatBar(uint16_t x, uint16_t y, uint16_t width, uint8_t height, uint16_t color);
 
   /**
    * @fn setBar
-   * @brief 设置进度条值,可带单位,但必须由数字开始
-   * @param obj 滑条控件的对象
-   * @param str 滑条的值
+   * @brief Set the value of the progress bar, which can include a unit but must start with a number
+   * @param obj Progress bar control handle
+   * @param str Value of the progress bar
    */
   void setBar(sControlinf_t* obj, String str);
 
   /**
    * @fn creatChart
-   * @brief 创建一个图表控件
-   * @param strX 图表x轴上的标签
-   * @param strY 图表y轴上的标签
-   * @param type 图表的类型(折线图/柱状图)
-   * @return 图表控件的对象
+   * @brief Create a chart control
+   * @param strX Label on the x axis of the chart
+   * @param strY Label on the y axis of the chart
+   * @param type Type of chart (line chart / bar chart)
+   * @return chart control handle
    */
   sControlinf_t* creatChart(String strX, String strY, uint8_t type);
 
   /**
    * @fn creatChartSerie
-   * @brief 在图表中创建折线图或柱状图序列
-   * @param obj 图表控件的对象
-   * @param color 折线图/柱状图的颜色
-   * @return 返回图的编号
+   * @brief Create a line chart or bar chart sequence in the chart
+   * @param obj chart control handle
+   * @param color Color of line chart/bar chart
+   * @return Return the index of the series
    */
   uint8_t creatChartSerie(sControlinf_t* obj, uint16_t color);
 
   /**
    * @fn addChart
-   * @brief 分配数据序列并将其添加到图表中
-   * @param obj 图表控件的对象
+   * @brief Assign a data sequence and add it to the chart
+   * @param obj chart control handle
    * @param id the allocated data series
-   * @param point 曲线图/柱状图需要数据的数组
-   * @param len  数组长度
+   * @param point A graph/bar chart requires an array of data
+   * @param len  array length
    */
   uint8_t addChart(sControlinf_t* obj, uint8_t id, uint16_t point[], uint8_t len);
 
   /**
    * @fn creatGauge
-   * @brief 创建一个表盘控件
-   * @param x 控件所在x轴坐标
-   * @param y 控件所在y轴坐标
-   * @param width  控件的宽度
-   * @param height 控件的高度
-   * @param color 控件的颜色
-   * @return 表盘控件的对象
+   * @brief Create a dial control
+   * @param x The x-axis coordinate of the control
+   * @param y The y-axis coordinate of the control
+   * @param width  Control width
+   * @param height Control height
+   * @param color Control color
+   * @return dial control handle
    */
   sControlinf_t* creatGauge(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color);
 
   /**
    * @fn setGaugeScale
-   * @brief 设置表盘的参数
-   * @param obj 表盘的对象
+   * @brief Setting the parameters of the dial control
+   * @param obj dial control handle
    * @param angle angle of the scale (0..360)
    * @param start minimum value
    * @param end maximum value
@@ -775,65 +778,65 @@ public:
 
   /**
    * @fn setGaugeValue
-   * @brief 设置表盘指示的值
-   * @param obj 表盘的对象
+   * @brief Sets the value indicated by the dial
+   * @param obj dial control handle
    * @param value the new value
    */
   void setGaugeValue(sControlinf_t* obj, uint16_t value);
 
   /**
    * @fn creatCompass
-   * @brief 创建一个指南针控件
-   * @param x 控件所在x轴坐标
-   * @param y 控件所在y轴坐标
-   * @param width  控件的宽度
-   * @param height 控件的高度
-   * @return 指南针控件的对象
+   * @brief Creating a compass control
+   * @param x The x-axis coordinate of the control
+   * @param y The y-axis coordinate of the control
+   * @param width  Control width
+   * @param height Control height
+   * @return compass control handle
    */
   sControlinf_t* creatCompass(uint16_t x, uint16_t y, uint8_t width, uint8_t height);
 
   /**
    * @fn setCompassScale
-   * @brief 设置指南针指针的角度
-   * @param obj 指南针的对象
-   * @param scale 指针角度(0~360)
+   * @brief Setting the angle of the compass pointer
+   * @param obj compass control handle
+   * @param scale Pointer angle(0~360)
    */
   void setCompassScale(sControlinf_t* obj, uint16_t scale);
 
   /**
    * @fn creatArc
-   * @brief 创建一个角度控件
-   * @param x 控件所在x轴坐标
-   * @param y 控件所在y轴坐标
-   * @param width  控件的宽度
-   * @param height 控件的高度
-   * @return 角度控件的对象
+   * @brief Creating an angle control
+   * @param x The x-axis coordinate of the control
+   * @param y The y-axis coordinate of the control
+   * @param width  Control width
+   * @param height Control height
+   * @return Handle of the angle control
    */
   sControlinf_t* creatArc(uint16_t x, uint16_t y, uint8_t width, uint8_t height);
 
   /**
    * @fn setArcRotation
-   * @brief 设置角度控件数值
-   * @param obj 角度控件的对象
+   * @brief Set the value of the angle control
+   * @param obj Handle of the angle control
    * @param rotation the new value
    */
   void setArcRotation(sControlinf_t* obj, uint16_t rotation);
 
   /**
    * @fn creatLineMeter
-   * @brief 创建一个线形仪表控件
-   * @param x 控件所在x轴坐标
-   * @param y 控件所在y轴坐标
-   * @param width  控件的宽度
-   * @param height 控件的高度
-   * @param color 控件的颜色
-   * @return 线形仪表控件的对象
+   * @brief Create a linear gauge control
+   * @param x The x-axis coordinate of the control
+   * @param y The y-axis coordinate of the control
+   * @param width  Control width
+   * @param height Control height
+   * @param color Control color
+   * @return linear gauge control handle
    */
   sControlinf_t* creatLineMeter(uint16_t x, uint16_t y, uint8_t width, uint8_t height, uint16_t color);
 
   /**
    * @fn setMeterScale
-   * @brief 设置线形仪表控件的参数
+   * @brief Sets parameters for the linear meter control
    * @param obj pointer to a line meter object
    * @param angle angle of the scale (0..360)
    * @param start minimum value
@@ -843,7 +846,7 @@ public:
 
   /**
    * @fn setMeterValue
-   * @brief 在线路仪表上设置一个新值
+   * @brief Set a new value on the line meter
    * @param obj pointer to a line meter object
    * @param value new value
    */
@@ -851,86 +854,86 @@ public:
 
   /**
    * @fn drawString(uint8_t x, uint8_t y, String str, uint8_t type, uint16_t color)
-   * @brief 在屏幕上显示文字
-   * @param x 起始位置的x坐标
-   * @param y 起始位置的y坐标
-   * @param str 要显示的文字
-   * @param type 文字大小(只适用于eChinse和eAscii),0(24大小),1(12大小)
-   * @param color 文字的颜色
+   * @brief Display text on the screen
+   * @param x The x-coordinate of the starting position
+   * @param y The y-coordinate of the starting position
+   * @param str The text to display
+   * @param type Text size (only applicable to eChinese and eAscii): 0 (24px size), 1 (12px size)
+   * @param color Color of text
    */
   void drawString(uint16_t x, uint8_t y, String str, uint8_t type, uint16_t color);
 
   /**
    * @fn drawString(uint8_t x, uint8_t y, String str, uint8_t type, uint16_t color, uint16_t bgColor)
-   * @brief 在屏幕上显示文字
-   * @param x 起始位置的x坐标
-   * @param y 起始位置的y坐标
-   * @param str 要显示的文字
-   * @param type 文字大小(只适用于eChinse和eAscii),0(24大小),1(12大小)
-   * @param color 文字的颜色
-   * @param bgColor 文字背景的颜色
+   * @brief Display text on the screen
+   * @param x The x-coordinate of the starting position
+   * @param y The y-coordinate of the starting position
+   * @param str The text to display
+   * @param type Text size (only applicable to eChinese and eAscii): 0 (24px size), 1 (12px size)
+   * @param color Color of text
+   * @param bgColor The color of the text background
    */
   void drawString(uint16_t x, uint8_t y, String str, uint8_t type, uint16_t color, uint16_t bgColor);
 
   /**
    * @fn drawLcdTime
-   * @brief 在屏幕上显示设置的时间
-   * @param x 起始位置的x坐标
-   * @param y 起始位置的y坐标
-   * @param hour 小时
-   * @param Minute 分钟
-   * @param seconds 秒
-   * @param fontSize 字体大小
-   * @param color 字体颜色
-   * @param bgColor 字体背景颜色
+   * @brief Displays the set time on the screen
+   * @param x The x-coordinate of the starting position
+   * @param y The y-coordinate of the starting position
+   * @param hour hour
+   * @param Minute minute
+   * @param seconds second
+   * @param fontSize font size
+   * @param color Color of text
+   * @param bgColor The color of the text background
    */
   void drawLcdTime(uint8_t x, uint8_t y, uint8_t hour, uint8_t Minute, uint8_t seconds, uint8_t fontSize, uint16_t color, uint16_t bgColor);
 
   /**
    * @fn drawLcdDate
-   * @brief 在屏幕上显示设置的日期
-   * @param x 起始位置的x坐标
-   * @param y 起始位置的y坐标
-   * @param month 月份
-   * @param day 天数
-   * @param weeks 星期数
-   * @param fontSize 字体大小
-   * @param color 字体颜色
-   * @param bgColor 字体背景颜色
+   * @brief Displays the set date on the screen
+   * @param x The x-coordinate of the starting position
+   * @param y The y-coordinate of the starting position
+   * @param month month
+   * @param day day
+   * @param weeks weekday
+   * @param fontSize font size
+   * @param color Color of text
+   * @param bgColor The color of the text background
    */
   void drawLcdDate(uint8_t x, uint8_t y, uint8_t month, uint8_t day, uint8_t weeks, uint8_t fontSize, uint16_t color, uint16_t bgColor);
 
   /**
    * @fn lvglDelete
-   * @brief 指定某个已创建的控件进行删除
-   * @param obj 要删除对象的控件
+   * @brief Delete a specific control that has been created.
+   * @param obj Delete the handle of a control object
    */
   void lvglDelete(sControlinf_t* obj);
 
   /**
    * @fn reset
-   * @brief 复位显示屏,显示屏复位后,创建的lvlg控件全部删除,显示的内容也一并清楚
+   * @brief Reset the display screen. After the display screen is reset, all the created lvgl controls will be deleted, and the displayed content will be cleared as well.
    */
   void reset();
 
 private:
   /**
    * @fn creatStations
-   * @brief 创建一个气象站控件
-   * @param x 控件所在x轴坐标
-   * @param y 控件所在y轴坐标
-   * @param zoo  控件大小缩放指数(128~512)
-   * @param color 控件的颜色
-   * @param str 气象站图标里面的文字
-   * @return 气象站控件的对象
+   * @brief Create a weather station control
+   * @param x The x-axis coordinate of the control
+   * @param y The y-axis coordinate of the control
+   * @param zoo  Control size scaling index(128~512)
+   * @param color Control color
+   * @param str The text inside the weather station icon
+   * @return Weather station control of the object
    */
   sControlinf_t* creatStations(uint16_t x, uint16_t y, uint16_t zoo, uint16_t color, String str);
 
   /**
    * @fn setStationValue
-   * @brief 设置气象站控件
-   * @param obj 气象站控件的对象
-   * @param value 气象监测值, 如温度
+   * @brief Set the weather station control
+   * @param obj Weather station control of the object
+   * @param value Meteorological monitoring values, such as temperature
    */
   void setStationValue(sControlinf_t* obj, String value);
 
@@ -956,19 +959,19 @@ class DFRobot_Lcd_IIC: public DFRobot_LcdDisplay
 public:
   /**
    * @fn DFRobot_Lcd_IIC
-   * @brief 构造函数
-   * @param pWire I2C控制器对象
-   * @param addr I2C地址,默认为0x2c
+   * @brief constructor
+   * @param pWire I2C controller object
+   * @param addr I2C address. The default value is 0x2c
    * @return None
    */
   DFRobot_Lcd_IIC(TwoWire* pWire = &Wire, uint8_t addr = 0x2c);
 
   /**
    * @fn begin
-   * @brief 初始化函数,初始化I2C控制器,打开屏幕背光
-   * @return 布尔类型
-   * @retval true 成功
-   * @retval false 失败
+   * @brief Initialize the function to initialize the I2C controller and turn on the screen backlight
+   * @return Boolean type, initialized state
+   * @retval true succeed
+   * @retval false failed
    */
   bool begin();
 
@@ -984,16 +987,17 @@ class DFRobot_Lcd_UART: public DFRobot_LcdDisplay
 public:
   /**
    * @fn DFRobot_Lcd_UART
-   * @brief 构造函数
+   * @brief constructor
    * @return None
    */
   DFRobot_Lcd_UART(Stream& s);
   /**
    * @fn begin
-   * @brief 初始化函数,初始化UART控制器,打开屏幕背光
-   * @param s 传入UART对象
-   * @retval true 成功
-   * @retval false 失败
+   * @brief Initialize the function to initialize the UART controller and turn on the screen backlight
+   * @param s Passing a UART object
+   * @return Boolean type, initialized state
+   * @retval true succeed
+   * @retval false failed
    */
   bool begin();
 

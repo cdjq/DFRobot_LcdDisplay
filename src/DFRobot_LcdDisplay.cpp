@@ -1,12 +1,13 @@
 /*!
  * @file DFRobot_LcdDisplay.cpp
  * @brief Define the infrastructure of the DFRobot_LcdDisplay class
- * @details 该库能驱动DFR0997屏幕,通过IIC接口和UART接口便可以方便地驱动彩色屏幕
+ * @details This library can drive the DFR0997 display, and it can easily drive the color screen through both the I2C interface and UART interface
  * @copyright   Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @License     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @version  V1.0
- * @date  2022-03-1
+ * @date  2023-05-29
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
@@ -40,11 +41,6 @@ void DFRobot_LcdDisplay::setBackLight(bool on)
 void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAWPIXEL, CMDLEN_OF_DRAWPIXEL);
-  // Serial.print("(");
-  // Serial.print(x);
-  // Serial.print(",");
-  // Serial.print(y);
-  // Serial.print(")");
   if (320 <= x) {
     x = 319;
   }
@@ -294,7 +290,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawDiskImg(int16_t x, in
   if (size > 512) size = 512;
   if (size < 128) size = 128;
 
-  int16_t length = pathStr.length() - 4;   // 减去后缀, 节约传输字节数
+  int16_t length = pathStr.length() - 4;   // Remove the suffix to save on transmission byte count
   if (20 <= length) {
     DBG("The path name is too long. Shorten the path name");
     return NULL;
@@ -315,7 +311,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawDiskImg(int16_t x, in
   writeCommand(cmd, 12 + length);
   free(cmd);
 
-  delay(1500);   // u盘图片需要读取解析, 显示较慢
+  delay(1500);   // Reading and parsing images from a USB drive is slow, resulting in slow display
 
   return img;
 }
@@ -432,7 +428,7 @@ void DFRobot_LcdDisplay::setBar(sControlinf_t* obj, String str)
 
 uint8_t DFRobot_LcdDisplay::getNumber(uint8_t id)
 {
-  HYY_LCD_UNUSED(id);
+  LCD_UNUSED(id);
   uint16_t number = 1;
   sControlinf_t* obj = &head;
   sControlinf_t* last;
@@ -585,7 +581,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatArc(uint16_t x, uint
   arc->width = width;
   arc->height = height;
   arc->color = RED_RGB565;
-  arc->id = 3;   // 没用？
+  arc->id = 3;   
   arc->number = getNumber(1);
   arc->inf = NULL;
   sControlinf_t* obj = &head;
@@ -724,8 +720,6 @@ void DFRobot_LcdDisplay::drawStringHepler(uint16_t x, uint8_t y, uint8_t* uni, u
   cmd[12] = _font;
   for (uint8_t i = 0;i < lenght;i++) {
     cmd[13 + i] = uni[i];
-    Serial.print(uni[i]);
-    Serial.print(" ");
   }
   writeCommand(cmd, lenght + 13);
   free(cmd);
@@ -920,7 +914,7 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatStations(uint16_t x,
   int16_t x1 = x + (zoo1 - word) / 2 - (zoo1 - 100) / 2;
   int16_t y1 = y + (zoo1) / 2 + (10 * zoo) / 256 - (zoo1 - 100) / 2;
   delay(300);
-  drawString(/*x=*/x1, y1, str,/*字体大小*/1,/*前景色*/color);
+  drawString(/*x=*/x1, y1, str,/*font size*/1,/*前景色*/color);
   return station;
 }
 
@@ -955,7 +949,6 @@ void DFRobot_LcdDisplay::drawString(uint16_t x, uint8_t y, String str, uint8_t t
   uint16_t x1 = x;
   uint16_t y1 = y;
 
-    Serial.println(length);
   for (uint8_t i = 0; i < length; i++) {
     data[i] = str[i];
   }
@@ -1094,11 +1087,11 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatChart(String strX, S
   if (chart == NULL) {
     DBG("BAR malloc fail !");
   }
-  chart->x = 0;   // 图表位置 暂时照旧写死
+  chart->x = 0;   // Chart position 
   chart->y = 0;
-  chart->width = 320;   // 图表长宽 暂时照旧写死
+  chart->width = 320;   // Chart length and width 
   chart->height = 240;
-  chart->color = 0;   // 没用？
+  chart->color = 0;   
   chart->id = 1;
   chart->number = getNumber(1);
 
@@ -1114,9 +1107,9 @@ DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatChart(String strX, S
 
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, CMDLEN_DRAW_LVGLCHART);
   cmd[4] = chart->number;
-  cmd[5] = 0;   // 0 : 建立图表的指令类型
-  cmd[6] = 0;   // 没用？
-  cmd[7] = 0;   // 没用？
+  cmd[5] = 0;   // 0 : The type of instruction to create the chart
+  cmd[6] = 0;   
+  cmd[7] = 0;   
   cmd[8] = chart->x;
   cmd[9] = chart->y;
   cmd[10] = (chart->width >> 8) & 0xff;
@@ -1136,7 +1129,7 @@ uint8_t DFRobot_LcdDisplay::creatChartSerie(sControlinf_t* obj, uint16_t color)
 
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, CMDLEN_CHANGE_LVGLCHART_SERIE);
   cmd[4] = obj->number;
-  cmd[5] = 1;   // 1 : 创建图表系列的指令类型
+  cmd[5] = 1;   // 1 : Type of instruction to create a chart series
   cmd[6] = obj->id;
   obj->id = obj->id + 1;
   cmd[7] = color >> 8;
@@ -1154,8 +1147,8 @@ uint8_t DFRobot_LcdDisplay::setChartTickTexts(sControlinf_t* obj, String xtext, 
   uint8_t len_y = ytext.length();
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, len_x + 7);
   cmd[4] = obj->number;
-  cmd[5] = 3;   // 3 : 存储标签信息的指令类型
-  cmd[6] = 1;   // 添加x轴标签
+  cmd[5] = 3;   // 3 : The type of instruction that stores label information
+  cmd[6] = 1;   // Add the X-axis label
   for (uint8_t i = 0;i < len_x;i++) {
     cmd[7 + i] = xtext[i];
   }
@@ -1168,7 +1161,7 @@ uint8_t DFRobot_LcdDisplay::setChartTickTexts(sControlinf_t* obj, String xtext, 
   uint8_t* cmd1 = creatCommand(CMD_DRAW_LVGLCHART, len_y + 7);
   cmd1[4] = obj->number;
   cmd1[5] = 3;
-  cmd1[6] = 2;   // 添加y轴标签
+  cmd1[6] = 2;   // Add the Y-axis label
   for (uint8_t i = 0;i < len_y;i++) {
     cmd1[7 + i] = ytext[i];
   }
@@ -1182,7 +1175,7 @@ uint8_t DFRobot_LcdDisplay::addChartPoint(sControlinf_t* obj, uint8_t id, uint16
 {
   uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, CMDLEN_CHANGE_LVGLCHART_POINT);
   cmd[4] = obj->number;
-  cmd[5] = 2;   // 2 : 增加图表系列点的指令类型
+  cmd[5] = 2;   // 2 : Added instruction type for chart series points
   cmd[6] = id;
   cmd[7] = value >> 8;
   cmd[8] = value & 0xFF;
@@ -1252,7 +1245,7 @@ void DFRobot_LcdDisplay::lvglDelete(sControlinf_t* obj)
   // uint16_t number = 1;
   sControlinf_t* objDel = &head;
   sControlinf_t* last;
-  while (1) {
+  while (objDel->inf != NULL) {
     last = objDel;
     objDel = objDel->inf;
     if (obj->number == objDel->number) {
@@ -1261,7 +1254,7 @@ void DFRobot_LcdDisplay::lvglDelete(sControlinf_t* obj)
       break;
     }
   }
-  delay(500);   // 确保删除成功
+  delay(500);   // Make sure to delete succeed
 
 }
 
@@ -1309,20 +1302,10 @@ void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
   DBG(len);
   uint8_t* _pBuf = (uint8_t*)pBuf;
   _pWire->beginTransmission(_deviceAddr);
-  // for (uint16_t i = 0; i < len; i++) {
-  //   _pWire->write(_pBuf[i]);
-
-  // }
   _pWire->write(_pBuf, len);
   _pWire->write(0xAA);
   _pWire->write(0x55);
-  // delay(1);
   _pWire->endTransmission();
-  // #if defined(ESP32)
-  //   _pWire->endTransmission(true);
-  // #else
-  //   _pWire->endTransmission(false);
-  // #endif
   delay(50);
 
 }
@@ -1365,8 +1348,8 @@ void DFRobot_Lcd_UART::writeCommand(uint8_t* pBuf, uint16_t len)
 
 void DFRobot_Lcd_UART::readACK(uint8_t* pBuf, uint16_t len)
 {
-  HYY_LCD_UNUSED(pBuf);
-  HYY_LCD_UNUSED(len);
+  LCD_UNUSED(pBuf);
+  LCD_UNUSED(len);
 
   long long current = millis();
 
@@ -1374,11 +1357,9 @@ void DFRobot_Lcd_UART::readACK(uint8_t* pBuf, uint16_t len)
 
     if (_s->available()) {
       uint8_t data = _s->read();
-      HYY_LCD_UNUSED(data);
-      // return data;   // 消除警告，此函数未调用
+      LCD_UNUSED(data);
     }
     if ((millis() - current) > 1000) break;
   }
   DBG("read error");
-  // return 0xFF;   // 消除警告，此函数未调用
 }

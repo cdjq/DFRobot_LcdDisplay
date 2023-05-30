@@ -1,28 +1,30 @@
 /**!
  * @file station.ino
- * @brief 气象站综合示例
- * @details 可以显示天气,日期,时间,温度,湿度,风速
+ * @brief Comprehensive example of weather station
+ * @details Can display the weather, date, time, temperature, humidity, wind speed
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @version  V1.0
- * @date  2022-07-20
+ * @date  2023-05-29
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
 #include <MsTimer2.h>
 
-#define I2C_COMMUNICATION  // I2C通信。如果你想使用UART通信，注释掉这行代码。
+#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 #ifdef  I2C_COMMUNICATION
  /**
-   * 使用 i2c 接口
+   * Using the I2C interface.
    */
 DFRobot_Lcd_IIC lcd(&Wire, /*I2CAddr*/ 0x2c);
 #else
  /**
-   * 使用 uart 接口
+   * Using the UART interface.
    */
-#if ((defined ARDUINO_AVR_UNO) || (defined ESP8266))
+#if ((defined ARDUINO_AVR_UNO) || (defined ESP8266) || (defined ARDUINO_BBC_MICROBIT_V2))
 #include <SoftwareSerial.h>
 SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
 #define FPSerial softSerial
@@ -36,7 +38,7 @@ DFRobot_LcdDisplay::sControlinf_t * bar1, * bar2, * bar3;
 
 uint8_t hour = 9, Minute = 8, second = 56;
 
-void flash()   //中断处理函数，处理时间的改变
+void flash()   //Interrupt handler that handles changes in time
 {
   second++;
   if (second > 59) {
@@ -71,33 +73,33 @@ void setup(void)
   lcd.begin();
   lcd.lvglInit(YELLOW_RGB565);
 
-  //创建图标, 记得先显示图标, 图标对"点线字符"等, 会有干扰覆盖作用
+  //Create the icon, remember to display the icon first, icon on the "dot and line character", there will be interference coverage
   lcd.drawIcon(25, 100, DFRobot_LcdDisplay::eIconRainy, 200);
   lcd.drawIcon(140, 30, DFRobot_LcdDisplay::eIconThermometer, 200);
   lcd.drawIcon(135, 90, DFRobot_LcdDisplay::eIconRaindrops, 200);
   lcd.drawIcon(115, 155, DFRobot_LcdDisplay::eIconWind, 200);
 
-  //显示当前时间
+  //Show the current time
   lcd.drawLcdTime(10, 10, hour, Minute, second, 0, ORANGE_RGB565, WHITE_RGB565);
-  //显示当前日期
+  //Show the current date
   lcd.drawLcdDate(10, 50, 3, 29, 3, 1, LIGHTGREY_RGB565, WHITE_RGB565);
-  //显示当前天气
+  //Show current weather
   lcd.drawString(38, 170, "大雨", 0, RED_RGB565, DARKGREEN_RGB565);
 
-  //创建温度显示的进度条
+  //Create a progress bar for the temperature display
   bar1 = lcd.creatBar(180, 60, 80, 20, RED_RGB565);
-  //创建湿度显示的进度条
+  //Create a progress bar for displaying humidity
   bar2 = lcd.creatBar(180, 120, 80, 20, BLUE_RGB565);
-  //创建风速显示的进度条
+  //Create a progress bar for the wind speed display
   bar3 = lcd.creatBar(180, 180, 80, 20, GREEN_RGB565);
 
-  MsTimer2::set(1000, flash);        // 中断设置函数，每 1000ms 进入一次中断
-  MsTimer2::start();                //开始计时
+  MsTimer2::set(1000, flash);        // Interrupt setting function, enter interrupt every 1000ms
+  MsTimer2::start();                // start counting
 }
 
 void loop(void)
 {
-  //显示当前时间
+  //Show the current time
   lcd.drawLcdTime(10, 10, hour, Minute, second, 0, ORANGE_RGB565, WHITE_RGB565);
   lcd.setBar(bar1, String(25) + " °C");
   lcd.setBar(bar2, String(80) + " %");

@@ -1,10 +1,11 @@
 # DFRobot_LcdDisplay
-- [中文版](./README_CN.md)
+- [English Version](./README.md)
 
   该产品是一块I2C驱动和UART的tft显示屏,屏幕里面内置固件,集成了部分lvgl控件,和GDL图形显示
 并在硬件上集成了一块GT30L24A3W字库芯片,支持多个国家的语言显示,并且在固件芯片上内置
 了大量常用的图标。
-![产品效果图](./resources/images/SEN0001.jpg)
+![产品效果图](./resources/images/DFR0997.png)
+
 ## 产品链接（https://www.dfrobot.com.cn）
     SKU: DFR0997
    
@@ -18,20 +19,20 @@
 * [Credits](#credits)
 
 ## 概述
-  
 提供一个Arduino库,来驱动显示屏(DFR0997)
 
 ## 库安装
 要使用此库，请先下载库文件，并将其粘贴到\Arduino\libraries目录，然后打开示例文件夹并在文件夹中运行演示。
+
 ## 方法
 
 ```C++
   /**
    * @fn drawPixel
-   * @brief Function to draw a pixel 
-   * @param x X-coordinate position of the pixel
-   * @param y Y-coordinate position of the pixel
-   * @param color The color of pixels, RGB565 format
+   * @brief 绘制像素点
+   * @param x 像素点的x坐标位置
+   * @param y 像素点的y坐标位置
+   * @param color 像素点的色彩，RGB565格式
    */
   void drawPixel(int16_t x, int16_t y, uint16_t color);
   
@@ -50,8 +51,8 @@
   void setFont(eLcdFont_t font);
   /**
    * @fn fillScreen
-   * @brief Function to refresh screen
-   * @param color color to fill screen, RGB565 format
+   * @brief 填充整个屏幕
+   * @param color屏幕填充的色彩，RGB565格式
    */
   void fillScreen(uint16_t color);
   
@@ -69,7 +70,7 @@
    * @param y0 直线起点y坐标
    * @param x1 直线终点x坐标
    * @param y1 直线终点y坐标
-   * @param color the color of the line, RGB565 format
+   * @param color 线段的颜色，RGB565格式
    */
   void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
   
@@ -181,6 +182,18 @@
   sControlinf_t * drawIcon(int16_t x,int16_t y,uint8_t id,uint16_t size = 255);
   
   /**
+   * @fn drawDiskImg
+   * @brief 绘制u盘里面的图片(bmp或者png)
+   * @param x 图片第一个点的x坐标
+   * @param y 图片第一个点的y坐标
+   * @param str 图片完整文件名, 如 "/img/cat.bmp"
+   * @param size 图片大小缩放系数
+   * @return 图片控件的对象
+   * @note 因ram较小, bmp 和 png 的规格有限制
+   */
+  sControlinf_t* drawDiskImg(int16_t x, int16_t y, String str, uint16_t size = 255);
+
+  /**
    * @fn creatSlider
    * @brief 创建一个滑条控件
    * @param x 滑条的x坐标
@@ -265,17 +278,17 @@
    * @fn setGaugeScale
    * @brief 设置表盘的参数
    * @param obj 表盘的对象
-   * @param angle angle of the scale (0..360)
-   * @param start minimum value
-   * @param end maximum value
+   * @param angle 刻度角 (0..360)
+   * @param start 起始值
+   * @param end 终止值
    */
   void setGaugeScale(sControlinf_t* obj,uint16_t angle,int16_t start,int16_t end);
 
   /**
    * @fn setGaugeValue
-   * @brief Set the value of a needle
-   * @param obj 表盘的对象
-   * @param value the new value
+   * @brief 设置表盘指针的值
+   * @param obj 表盘对象
+   * @param value 新的指针值
    */
   void setGaugeValue(sControlinf_t* obj,uint16_t value);
 
@@ -306,15 +319,15 @@
    * @fn setArcRotation
    * @brief 设置角度控件数值
    * @param obj 角度控件的对象
-   * @param rotation the new value
+   * @param rotation 新的角度值
    */
   void setArcRotation(sControlinf_t* obj,uint16_t rotation);
 
   /**
    * @fn addChart
-   * @brief Allocate and add a data series to the chart
+   * @brief 分配并添加一个数据序列到图表中
    * @param obj 图表控件的对象
-   * @param id the allocated data series
+   * @param id 分配的数据序列
    * @param point 曲线图/柱状图需要数据的数组
    * @param len  数组长度
    */
@@ -334,19 +347,19 @@
 
   /**
    * @fn setMeterValue
-   * @brief Set a new value on the line meter
-   * @param obj pointer to a line meter object
-   * @param value new value
+   * @brief 在线形仪表控件上设置一个新值
+   * @param obj 指向线形仪表控件对象的指针
+   * @param value 新的值
    */
   void setMeterValue(sControlinf_t* obj,uint16_t value);
   
   /**
    * @fn setMeterScale
-   * @brief Set a new value on the line meter
-   * @param obj pointer to a line meter object
-   * @param angle angle of the scale (0..360)
-   * @param start minimum value
-   * @param end maximum value
+   * @brief 设置线形仪表控件的刻度
+   * @param obj 指向线形仪表控件对象的指针
+   * @param angle 刻度角 (0..360)
+   * @param start 起始值
+   * @param end 终止值
    */
   void setMeterScale(sControlinf_t* obj,uint16_t angle,int16_t start,int16_t end);
   
@@ -430,7 +443,7 @@ FireBeetle-M0        |      √       |              |             |
 
 ## 历史
 
-- 2022/08/08 - Version 1.0.0 released.
+- 2023/05/29 - 1.0.0 版本
 
 ## 创作者
 

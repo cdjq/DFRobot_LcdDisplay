@@ -1,29 +1,31 @@
 
 /**!
  * @file drawIcon.ino
- * @brief 图标显示示例示例
- * @details 通过不同的图标编号来显示不同的图标
+ * @brief Icon Display Example
+ * @details Displaying different icons based on different icon numbers.
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @version  V1.0
- * @date  2022-07-20
+ * @date  2023-05-29
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C通信。如果你想使用UART通信，注释掉这行代码。
+#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
-    * 使用 i2c 接口
+    * Using the I2C interface.
     */
   DFRobot_Lcd_IIC lcd(&Wire, /*I2CAddr*/ 0x2c);
 #else
   /**
-    * 使用 uart 接口
+    * Using the UART interface.
     */
-  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266))
+  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266) || (defined ARDUINO_BBC_MICROBIT_V2))
     #include <SoftwareSerial.h>
     SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
     #define FPSerial softSerial
@@ -33,50 +35,50 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-// 已经烧入固件里面的图标
-#if 0   // 注释, 只能是0
-// 传感器sensor icon
+// Icons that are already burned into the firmware.
+#if 0   // This is a comment. To avoid compilation errors, it can only be 0.
+// sensor icons
 eIconAlcohol, eIconAntennaReceiver, eIconAntenna, eIconBattery, eIconBluetooth, eIconBulb, eIconCarbonDioxide,
 eIconColor, eIconCompass, eIconDistance, eIconDust, eIconHeartRate, eIconLiquid, eIconMicrophone, eIconMountain,
 eIconPressure, eIconRaindrops, eIconThermometer, eIconWeigh, eIconWifi, eIconWind, eIconLight, eIconUVLight,
 
-// 表情expression icon
+// expression icons
 eIconAngry, eIconBlink, eIconCry, eIconCute, eIconDepressed, eIconDizzy, eIconEmbarrassed, eIconFunny,
 eIconHappy, eIconKind, eIconLike, eIconPlayful, eIconResentful, eIconSad, eIconSerious, eIconShy, eIconSmile, eIconSurprised,
 eIconTear, eIconTired,
 
-// 环境与自然Environment and Nature icon
+// Environment and Nature icons
 eIconBiofuel, eIconCarElectric, eIconDesertLandscape, eIconDirections, eIconEarth, eIconEcoAccumulatorBattery,
 eIconGlassRecycle, eIconGlobalWarming, eIconGreenPower, eIconGreenEnergy, eIconGreenhouse, eIconIcebergMelting,
 eIconLandscape, eIconNoPlastic, eIconNoSewage, eIconProtectEarth, eIconRainLandscape, eIconRecyclingCar,
 eIconRelaxLandscape, eIconSolar, eIconTap, eIconTrash, eIconTreeLandscape, eIconWaterRecycle, eIconWinterForest,
 
-// 季节 season icon
+// season icons
 eIconBeachBed, eIconBeachUmbrella8, eIconChristmasStocking, eIconCoconut, eIconFan, eIconFireplace, eIconGlove,
 eIconHat, eIconIceCream, eIconLifeBuoy, eIconSanta, eIconShorts, eIconSlipper, eIconSnowman, eIconSunny,
 eIconSweater, eIconSwimming, eIconSwimwear, eIconThanksgiving, eIconThermometerSnow, eIconWatermelon,
 
-//天气图标
+// Weather icons
 eIconCloudy,    eIconMoon,    eIconLightning,    eIconMoonCloudy,
 eIconRainUmbrella,    eIconRainbow1,    eIconRainbow2,    eIconRainy,
 eIconSnow,    eIconSnowy,    eIconSunnyCloudy,    eIconWhirlwind,
 
-// 运动图标
+// Sports icons
 eIconBadminton, eIconBasketball, eIconBowling, eIconChess, eIconCycling, eIconDarts, eIconDiving, eIconDumbbell,
 eIconGolf, eIconIceHockey, eIconKarate, eIconPingPong, eIconRunning, eIconSoccer, eIconTennis, eIconYoga,
 
-// 动物animal icon
+// animal icons
 eIconBee, eIconBird, eIconButterfly, eIconCaterpillar, eIconChick, eIconChicken, eIconChipmunk,
 eIconCoccinellaSeptempunctata, eIconCow, eIconDog, eIconDolphin, eIconDragon, eIconElephant, eIconHorse,
 eIconMonkey, eIconOwl, eIconPig, eIconRabbit, eIconRooster, eIconSheep, eIconSnail, eIconSnake, eIconTurtle,
 eIconUnicorn, eIconWasp, eIconWorm,
 
-// 植物图标
+// Plant icons
 eIconBranch, eIconCactus1, eIconCactus2, eIconCactus3, eIconDeciduousTree, eIconDecorativePottedPlants, eIconFlower,
 eIconGrass, eIconGrass1, eIconLeaf, eIconPalmTree, eIconPottedPlantFlower, eIconRose, eIconRose1, eIconSunflower,
 eIconSunflower1, eIconTulips,
 
-// 食物 food icon
+// food icons
 eIconAvocado, eIconBanana, eIconBeerMug, eIconBentoBox, eIconBirthdayCake, eIconBread, eIconCake, eIconCarrot,
 eIconCheeseWedge, eIconCherry, eIconChocolateBar, eIconCutOfMeat, eIconEarOfCorn,
 eIconEgg, eIconFrenchFries, eIconGrapes, eIconGreenSalad, eIconHamburger,
@@ -84,32 +86,32 @@ eIconHotBeverage, eIconPeach, eIconPineapple, eIconPopcorn, eIconPotato,
 eIconRedApple, eIconSalad, eIconShaomai, eIconSandwich, eIconShortcake,
 eIconStrawberry,
 
-// 安全safe icon
+// safe icons
 eIconDial, eIconDisabledAccess, eIconDown, eIconExit, eIconExitLeft, eIconExportRight, eIconFireescapeStairs,
 eIconFireExtinguisher, eIconFire, eIconHydrant, eIconLeft, eIconLifeladder, eIconMedicalCare, eIconRight, eIconUp,
 
-// 交通工具 transport icon
+// transport icons
 eIconAirplane, eIconAmbulance, eIconAutomobile, eIconBicycle, eIconBus, eIconBusStop, eIconDeliveryTruck,
 eIconFireEngine, eIconHelicopter, eIconHighSpeedRailway, eIconHorizontalTrafficLight, eIconKickScooter,
 eIconMotorScooter, eIconMotorway, eIconOncomingTaxi, eIconPoliceCar, eIconTractor, eIconVerticalTrafficLight,
 
-// 农业Agriculture icon
+// Agriculture icons
 eIconBarn, eIconBarrier, eIconBoots, eIconCutWood, eIconEggs, eIconFertilizer, eIconFruits, eIconMilkContainer,
 eIconPlant, eIconSheafOfRice, eIconSprout, eIconStorageBucket, eIconTool, eIconTractor2, eIconVegetables,
 eIconWateringCan, eIconWellWater, eIconWheelbarrow,
 
-// 人物形象 people icon
+// people icons
 eIconDesigner, eIconDiver, eIconDoctor, eIconLabScientist, eIconMagicianMale, eIconNurse, eIconPhotographerMale,
 eIconPolice, eIconProgrammerMale, eIconSoldier, eIconSuccessGoalBusinessman, eIconSurgeon, eIconTeacher,
 
-//数字图形图标
+// Numeric graphic icons
 eIconArrowDown,    eIconArrowLeft,    eIconArrowRight,    eIconArrowUp,
 eIconDiamond,    eIconEight,    eIconFive,    eIconFivePointedStar,    eIconHeart,
 eIconNine,    eIconFour,    eIconOctagon,    eIconOne,    eIconPentagon,
 eIconRectangle,    eIconSeven,    eIconSix,    eIconSquare,    eIconThree,
 eIconTriangle,    eIconTwo,    eIconWindmillShape,    eIconZero,
 
-// 音乐图标
+// Music icons
 eIconAccordion, eIconBassDrum, eIconCDDiskDVD, eIconCello, eIconElectricGuitar, eIconFlute, eIconGuitar,
 eIconHarmonica, eIconHarp, eIconHeadphones, eIconMelodica, eIconMusic, eIconMusicStereo, eIconMusicTurntable,
 eIconMuteSoundOff, eIconPiano, eIconSaxophone, eIconSpeakerAudio, eIconTrumpet, eIconXylophone,
@@ -138,11 +140,11 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
-  //初始化
-  lcd.lvglInit(/*显示背景色*/WHITE_RGB565);
-  //绘制图标
-  //最后一个参数为缩放指数范围为(128~512),128-缩小一倍,512-放大一倍
-  icon1 = lcd.drawIcon(/*x=*/0,/*y =*/0,/*图标编号*/DFRobot_LcdDisplay::eIconDial,/*缩放指数*/128);
+  //Initializing 
+  lcd.lvglInit(/*Displaying the background color*/WHITE_RGB565);
+  // Drawing icons
+  // The last parameter is the scaling factor, ranging from 128 to 512, where 128 represents a 50% reduction and 512 represents a 100% increase in size.
+  icon1 = lcd.drawIcon(/*x=*/0,/*y =*/0,/*Icon number*/DFRobot_LcdDisplay::eIconDial,/*Scaling factor*/128);
   lcd.drawIcon(0, 60, DFRobot_LcdDisplay::eIconDisabledAccess, 128);
   lcd.drawIcon(0, 120, DFRobot_LcdDisplay::eIconAngry, 128);
   lcd.drawIcon(0, 180, DFRobot_LcdDisplay::eIconBlink, 128);

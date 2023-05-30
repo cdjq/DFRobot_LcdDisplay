@@ -1,28 +1,30 @@
 /**!
  * @file chart.ino
- * @brief 创建一个图表
- * @details 创建一个图表,并可以向表里面添加数据来绘制柱状图/折线图
+ * @brief Creating a chart
+ * @details Creating a chart,And being able to add data to the chart to draw a bar chart/line chart.
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @version  V1.0
- * @date  2022-07-20
+ * @date  2023-05-29
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C通信。如果你想使用UART通信，注释掉这行代码。
+#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
-    * 使用 i2c 接口
+    * Using the I2C interface.
     */
   DFRobot_Lcd_IIC lcd(&Wire, /*I2CAddr*/ 0x2c);
 #else
   /**
-    * 使用 uart 接口
+    * Using the UART interface.
     */
-  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266))
+  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266) || (defined ARDUINO_BBC_MICROBIT_V2))
     #include <SoftwareSerial.h>
     SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
     #define FPSerial softSerial
@@ -60,15 +62,18 @@ void setup(void)
 
   lcd.begin();
   lcd.lvglInit(GREEN_RGB565);
-  /*图表样式:1-折线图,2-折线图带阴影,3-柱状图*/
-  chart = lcd.creatChart(/*x轴刻度标签*/"Jan\nFeb\nMar\nApr\nMay", /*y轴刻度标签*/"100\n80\n60\n40\n20\n0", /*图表样式:1-3*/3);
+  /*The actual value range of the y-axis is fixed at 0-100. If you want to display other scales, you can map them proportionally.
+    For example, using the label "10\n8\n6\n4\n2\n0":
+    - For input { 10,90,30,10,90 }, the displayed values would be { 1,9,3,1,9 }.
+    Chart styles: 1. Line chart 2. Line chart with shading 3. Bar chart*/
+  chart = lcd.creatChart(/*X-axis tick labels*/"Jan\nFeb\nMar\nApr\nMay", /*Y-axis tick labels*/"100\n80\n60\n40\n20\n0", /*Chart style:1-3*/3);
 
   //Allocate and add a data series to the chart
-  id1 = lcd.creatChartSerie(chart, /*颜色*/RED_RGB565);
+  id1 = lcd.creatChartSerie(chart, /*color*/RED_RGB565);
   id2 = lcd.creatChartSerie(chart, BLUE_RGB565);
 
   //Set the value of points from an array
-  lcd.addChart(chart, id1, /*每个点对应的值的数组*/point1, /*构成线的点数*/5);
+  lcd.addChart(chart, id1, /*Array of values corresponding to each point*/point1, /*Number of points forming the line*/5);
   lcd.addChart(chart, id2, point2, 5);
 }
 

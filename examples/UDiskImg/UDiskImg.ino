@@ -1,30 +1,31 @@
 
 /**!
  * @file  UDiskImg.ino
- * @brief  显示u盘的图片
- * @details  通过不同的路径名来显示不同的图片(屏幕最大尺寸320*240);
- * @n  可显示: 16位或者24位(色深)的bmp图片; 小尺寸(70*70以下)png图片
+ * @brief  Displays a picture of a USB flash drive
+ * @details  Display different images with different pathnames (maximum screen size 320*240);
+ * @n  Can display: 16 or 24 bit (color depth) bmp picture; Small size (under 70*70)png image
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license  The MIT License (MIT)
  * @author  [qsjhyy](yihuan.huang@dfrobot.com)
  * @version  V1.0
- * @date  2023-03-01
+ * @date  2023-05-29
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C通信。如果你想使用UART通信，注释掉这行代码。
+#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
-    * 使用 i2c 接口
+    * Using the I2C interface.
     */
   DFRobot_Lcd_IIC lcd(&Wire, /*I2CAddr*/ 0x2c);
 #else
   /**
-    * 使用 uart 接口
+    * Using the UART interface.
     */
-  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266))
+  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266) || (defined ARDUINO_BBC_MICROBIT_V2))
     #include <SoftwareSerial.h>
     SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
     #define FPSerial softSerial
@@ -56,12 +57,12 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
-  //初始化
-  lcd.lvglInit(/*显示背景色*/WHITE_RGB565);
+  //Initializing 
+  lcd.lvglInit(/*Displaying the background color*/WHITE_RGB565);
   delay(3000);
-  // 显示u盘的图片, 可显示: 16位或者24位(色深)的bmp图片(屏幕最大尺寸320*240), 小尺寸(70*70以下)png图片
-  // 最后一个参数为缩放指数范围为(128~512),128-缩小一倍,512-放大一倍
-  img1 = lcd.drawDiskImg(/*x=*/0, /*y=*/0, /*文件路径名(String类型)*/"/sea.bmp", /*缩放指数*/256);
+  // Display USB flash drive pictures. You can display 16-bit or 24-bit (color depth) bmp pictures (maximum screen size 320*240) and small-size png pictures (below 70*70)
+  // The last parameter is the zoom index range of (128~512),128- zoom out by one,512- zoom in by one
+  img1 = lcd.drawDiskImg(/*x=*/0, /*y=*/0, /*File path name (String)*/"/sea.bmp", /* Exponential Scale*/256);
   delay(1000);
   lcd.lvglDelete(img1);
   img2 = lcd.drawDiskImg(0, 0, "/plants.png", 256);

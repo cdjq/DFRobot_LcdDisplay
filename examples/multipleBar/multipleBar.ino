@@ -1,29 +1,31 @@
 
 /**!
  * @file multipleBar.ino
- * @brief 进度条控件示例
- * @details 创建三个进度条控件,并分别控制每个控件显示不同的值
+ * @brief Progress Bar Control Example
+ * @details Creating three progress bar controls and controlling each control to display different values.
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @version  V1.0
- * @date  2022-07-20
+ * @date  2023-05-29
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C通信。如果你想使用UART通信，注释掉这行代码。
+#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
-    * 使用 i2c 接口
+    * Using the I2C interface.
     */
   DFRobot_Lcd_IIC lcd(&Wire, /*I2CAddr*/ 0x2c);
 #else
   /**
-    * 使用 uart 接口
+    * Using the UART interface.
     */
-  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266))
+  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266) || (defined ARDUINO_BBC_MICROBIT_V2))
     #include <SoftwareSerial.h>
     SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
     #define FPSerial softSerial
@@ -33,7 +35,7 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-DFRobot_LcdDisplay::sControlinf_t *bar1, *bar2, *bar3;   // 进度条句柄
+DFRobot_LcdDisplay::sControlinf_t *bar1, *bar2, *bar3;   // Progress bar handle
 
 /**
  * User-selectable macro definition color
@@ -55,17 +57,17 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
-  //初始化
-  lcd.lvglInit(/*显示背景颜色*/CYAN_RGB565);
-  //创建进度条控件
-  bar1 = lcd.creatBar(/*x = */10,/*y = */10,/*width=*/270,/*height=*/50,/*进度条颜色*/ORANGE_RGB565);
+  //Initializing 
+  lcd.lvglInit(/*Displaying the background color*/CYAN_RGB565);
+  //Creating a progress bar control.
+  bar1 = lcd.creatBar(/*x = */10,/*y = */10,/*width=*/270,/*height=*/40,/*progress bar color*/ORANGE_RGB565);
   bar2 = lcd.creatBar(10,90,270,50,YELLOW_RGB565);
   bar3 = lcd.creatBar(10,170,270,50,LIGHTGREY_RGB565);
 }
 
 void loop(void)
 {
-  //设置进度条值,可带单位,但必须由数字开始
+  //Setting the value of the progress bar, which can include a unit, but must start with a number.
   lcd.setBar(bar1,"80°C");
   lcd.setBar(bar2,"10°C");
   lcd.setBar(bar3,"20°C");

@@ -1,29 +1,31 @@
 
 /**!
  * @file compass.ino
- * @brief 指南针控件示例
- * @details 可通过传感器得到的方位值来,设置指针的指向
+ * @brief Compass Control Example
+ * @details Setting the orientation of the compass needle based on the values obtained from a sensor.
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @version  V1.0
- * @date  2022-07-20
+ * @date  2023-05-29
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C通信。如果你想使用UART通信，注释掉这行代码。
+#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
-    * 使用 i2c 接口
+    * Using the I2C interface.
     */
   DFRobot_Lcd_IIC lcd(&Wire, /*I2CAddr*/ 0x2c);
 #else
   /**
-    * 使用 uart 接口
+    * Using the UART interface.
     */
-  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266))
+  #if ((defined ARDUINO_AVR_UNO) || (defined ESP8266) || (defined ARDUINO_BBC_MICROBIT_V2))
     #include <SoftwareSerial.h>
     SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
     #define FPSerial softSerial
@@ -55,29 +57,29 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
-  //初始化
+  //Initializing 
   lcd.lvglInit(/*bg_color=*/GREEN_RGB565);
-  //创建指南针控件
+  //Creating a compass control.
   compss = lcd.creatCompass(/*x=*/16,/*y=*/0,/*width=*/128,/*height*/128);
-  //设置指南针指针角度
 }
 
 void loop(void)
 {
-  lcd.setCompassScale(compss,/*角度*/90);
+  //Setting the angle of the compass needle.
+  lcd.setCompassScale(compss,/*Angle*/90);
   delay(1000);
-  lcd.setCompassScale(compss,/*角度*/120);
+  lcd.setCompassScale(compss,120);
   delay(1000);
-  lcd.setCompassScale(compss,/*角度*/150);
+  lcd.setCompassScale(compss,150);
   delay(1000);
-  lcd.setCompassScale(compss,/*角度*/180);
+  lcd.setCompassScale(compss,180);
   delay(1000);
-  lcd.setCompassScale(compss,/*角度*/210);
+  lcd.setCompassScale(compss,210);
   delay(1000);
-  lcd.setCompassScale(compss,/*角度*/240);
+  lcd.setCompassScale(compss,240);
   delay(1000);
-  lcd.setCompassScale(compss,/*角度*/270);
+  lcd.setCompassScale(compss,270);
   delay(1000);
-  lcd.setCompassScale(compss,/*角度*/300);
+  lcd.setCompassScale(compss,300);
   delay(1000);
 }
