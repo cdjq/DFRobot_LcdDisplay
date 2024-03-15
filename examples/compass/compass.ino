@@ -1,20 +1,6 @@
-
-/**!
- * @file compass.ino
- * @brief Compass Control Example
- * @details Setting the orientation of the compass needle based on the values obtained from a sensor.
- * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
- * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
- * @license     The MIT License (MIT)
- * @author [fengli](li.feng@dfrobot.com)
- * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
- * @version  V1.0
- * @date  2023-05-29
- * @url https://github.com/DFRobot/DFRobot_LcdDisplay
- */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
@@ -35,15 +21,61 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-DFRobot_LcdDisplay::sControlinf_t *compss;
+uint8_t compassId[21];
 
-/**
- * User-selectable macro definition color
- * BLACK_RGB565 BLUE_RGB565 RED_RGB565 GREEN_RGB565 CYAN_RGB565 MAGENTA_RGB565
- * YELLOW_RGB565 WHITE_RGB565 NAVY_RGB565 DARKGREEN_RGB565 DARKCYAN_RGB565 MAROON_RGB565
- * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
- * GREENYELLOW_RGB565 DCYAN_RGB565
- */
+void testCompass(){
+    uint16_t y = 0;
+    uint16_t x = 0;
+    //在（0，0）点创建一个直径为64的指南针
+    compassId[0] = lcd.creatCompass(x, y, 64);
+    //更改这个指南针的坐标，使其移动起来
+    for(uint8_t i = 0; i < 20; i++){
+      lcd.updateCompass(compassId[0], x, y, 64);
+      if((i+1)%5 == 0){
+        y += 64;
+        x = 0;
+      }else{
+        x += 64;
+      }
+      delay(200);
+    }
+    //删除这个指南针
+    lcd.deleteCompass(compassId[0]);
+    delay(200);
+    x = 0;
+    y = 0;
+    //在不同的坐标点上创建指南针，使其满屏显示
+    for(uint8_t i = 0; i < 20; i++){
+      compassId[i] = lcd.creatCompass(x, y, 64);
+      if((i+1)%5 == 0){
+        y += 64;
+        x = 0;
+      }else{
+        x += 64;
+      }
+      delay(200);
+    }
+    delay(1000);
+	//一个一个删除指南针
+    for(uint8_t i = 0; i < 20; i++){
+      lcd.deleteCompass(compassId[i]);
+      delay(200);
+    }
+    //在（0，0）点创建一个直径为64的指南针
+    compassId[0] = lcd.creatCompass(0, 0, 30);
+    //更改这个指南针，使其达到缩放的效果
+    for(uint8_t i = 0 ; i<8; i++){
+        lcd.updateCompass(compassId[0], 0, 0, 30*(i+1));
+        delay(100);
+    }
+    for(uint8_t i = 0; i < 36; i++){
+        lcd.setCompassScale(compassId[0],i*100);
+        delay(50);
+    }
+    lcd.deleteCompass(compassId[0]);
+    delay(2000);
+}
+
 void setup(void)
 {
   #ifndef  I2C_COMMUNICATION
@@ -58,28 +90,14 @@ void setup(void)
 
   lcd.begin();
   //Initializing 
-  lcd.lvglInit(/*bg_color=*/GREEN_RGB565);
-  //Creating a compass control.
-  compss = lcd.creatCompass(/*x=*/16,/*y=*/0,/*width=*/128,/*height*/128);
+  lcd.setBackgroundColor(GREEN);
+  delay(200);
+  testCompass();
 }
+
 
 void loop(void)
 {
-  //Setting the angle of the compass needle.
-  lcd.setCompassScale(compss,/*Angle*/90);
-  delay(1000);
-  lcd.setCompassScale(compss,120);
-  delay(1000);
-  lcd.setCompassScale(compss,150);
-  delay(1000);
-  lcd.setCompassScale(compss,180);
-  delay(1000);
-  lcd.setCompassScale(compss,210);
-  delay(1000);
-  lcd.setCompassScale(compss,240);
-  delay(1000);
-  lcd.setCompassScale(compss,270);
-  delay(1000);
-  lcd.setCompassScale(compss,300);
-  delay(1000);
+	testCompass();
+    delay(2000);
 }

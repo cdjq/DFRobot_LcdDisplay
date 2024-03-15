@@ -13,7 +13,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
@@ -56,12 +56,10 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
-  // Resetting the screen.
-  lcd.reset();
   // Initializing 
   lcd.lvglInit(/*Displaying the background color*/GREEN_RGB565);
   // Creating an angle control
-  arc = lcd.creatArc(/*x=*/30, /*y=*/14, /*width=*/100, /*height=*/100);
+  arc = lcd.creatArc(/*x=*/30, /*y=*/14, /*width=*/200, /*height=*/200);
 }
 
 void loop(void)

@@ -12,7 +12,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
@@ -33,15 +33,56 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-DFRobot_LcdDisplay::sControlinf_t *slider1,  *slider2;
+//填充颜色
+uint32_t sliderColor = 0x00FF00;
+//产生随机颜色
+uint32_t generateRandomColor() {
+    uint8_t r = rand() % 256;
+    uint8_t g = rand() % 256;
+    uint8_t b = rand() % 256;
+    return (r << 16) | (g << 8) | b;
+}
+uint8_t sliderId[11];
+void testSlider(){
+  sliderId[0] = lcd.creatSlider(/*x = */0, /*y = */10, /*width=*/10, /*height=*/200, /*color*/RED);
+  lcd.setSliderValue(sliderId[0],50);
+  for(uint8_t i = 0; i <= 10; i++){
+    sliderColor = generateRandomColor();
+    lcd.updateSlider(sliderId[0],i*31, 10, 10, 200, sliderColor);
+    delay(100);
+  }
 
-/**
- * User-selectable macro definition color
- * BLACK_RGB565 BLUE_RGB565 RED_RGB565 GREEN_RGB565 CYAN_RGB565 MAGENTA_RGB565
- * YELLOW_RGB565 WHITE_RGB565 NAVY_RGB565 DARKGREEN_RGB565 DARKCYAN_RGB565 MAROON_RGB565
- * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
- * GREENYELLOW_RGB565 DCYAN_RGB565
- */
+  for(uint8_t i = 0; i <= 10; i++){
+    sliderColor = generateRandomColor();
+    lcd.updateSlider(sliderId[0],310-i*31, 10, 10, 200, sliderColor);
+    delay(100);
+  }
+  delay(1000);
+  for(uint8_t i = 1; i <= 10; i++){
+    sliderColor = generateRandomColor();
+    sliderId[i] = lcd.creatSlider(i*31, 10, 10, 200 - i*10, sliderColor);
+    delay(100);
+    
+  }
+  delay(1000);
+  for(uint8_t i = 0; i<=10; i++){
+    lcd.setSliderValue(sliderId[i],rand()%100);
+    delay(100);
+  }
+  delay(1000);
+  for(uint8_t i = 0; i<=10; i++){
+    sliderColor = generateRandomColor();
+    lcd.updateSlider(sliderId[i], 10, i*23, 310 -i*20 , 10, sliderColor);
+    delay(100);
+  }
+  delay(1000);
+  for(uint8_t i = 0 ; i <= 10; i++){
+    lcd.deleteSlider(sliderId[i]);
+    delay(100);
+  }
+  
+}
+
 void setup(void)
 {
   #ifndef  I2C_COMMUNICATION
@@ -56,20 +97,12 @@ void setup(void)
 
   lcd.begin();
   //Initializing 
-  lcd.lvglInit(/*Displaying the background color*/WHITE_RGB565);
-
-  //Creating a slider control.
-  slider1 = lcd.creatSlider(/*x*/20,/*y*/60,/*width*/200,/*height*/15,/*颜色*/DCYAN_RGB565);
-  slider2 = lcd.creatSlider(/*x*/20,/*y*/150,/*width*/200,/*height*/15,/*颜色*/ORANGE_RGB565);
+  lcd.setBackgroundColor(WHITE);
+  testSlider();
 }
 
 void loop(void)
 {
-  //Set the slider value range to 0 to 100 %
-  lcd.setSliderValue(slider1,100);
-  lcd.setSliderValue(slider2,20);
-  delay(3000);
-  lcd.setSliderValue(slider1,60);
-  lcd.setSliderValue(slider2,90);
-  delay(3000);
+  testSlider();
+  delay(1000);
 }

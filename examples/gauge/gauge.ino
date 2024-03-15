@@ -4,6 +4,7 @@
  * @brief Dial Control
  * @details Can be used for displaying values such as speed and pressure.
  * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
+ * @n  After scaling the dial widget, the display quality may degrade. Please use appropriate parameters
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
@@ -14,7 +15,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
@@ -35,15 +36,68 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-DFRobot_LcdDisplay::sControlinf_t* gauge;
+uint32_t bgColor = GREEN;
+uint32_t pointerColor = RED;
+uint32_t generateRandomColor() {
+    uint8_t r = rand() % 256;
+    uint8_t g = rand() % 256;
+    uint8_t b = rand() % 256;
+    return (r << 16) | (g << 8) | b;
+}
 
-/**
- * User-selectable macro definition color
- * BLACK_RGB565 BLUE_RGB565 RED_RGB565 GREEN_RGB565 CYAN_RGB565 MAGENTA_RGB565
- * YELLOW_RGB565 WHITE_RGB565 NAVY_RGB565 DARKGREEN_RGB565 DARKCYAN_RGB565 MAROON_RGB565
- * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
- * GREENYELLOW_RGB565 DCYAN_RGB565
- */
+uint8_t gaugeId[13];
+void testGauge(){
+    uint16_t x = 0;
+    uint16_t y = 0;
+    //在（0，0）点创建一个仪表盘
+    gaugeId[0] = lcd.creatGauge(0, 0, 120, 0, 100, pointerColor, bgColor);
+    //设置该仪表盘的值为40
+    lcd.setGaugeValue(gaugeId[0],40);
+    //更改仪表盘的坐标，使其达到移动的效果
+    for(uint8_t i = 0; i < 7; i++){
+      lcd.updateGauge(gaugeId[0], i*32, 0, 120, 0, 100, pointerColor, bgColor);
+      delay(100);
+    }
+    //删除这个仪表盘
+    lcd.deleteGauge(gaugeId[0]);
+    delay(100);
+    //创建多个仪表盘，使用随机指针颜色、随机背景颜色、设置表盘值为随机，使其铺满整个屏幕
+    for(uint8_t i = 0; i < 12; i++){
+      bgColor = generateRandomColor();
+      pointerColor = generateRandomColor();
+      gaugeId[i] = lcd.creatGauge(x, y, 120, 0, 60, pointerColor, bgColor);
+      lcd.setGaugeValue(gaugeId[i],rand()%60);
+      if((i+1)%4 == 0){
+          y += 80;
+          x = 0;
+      }else{
+          x += 80;
+      }
+      delay(100);
+    }
+    delay(1000);
+    //一个一个删除仪表盘
+    for(uint8_t i = 0; i < 12; i++){
+      lcd.deleteGauge(gaugeId[i]);
+      delay(100);
+    }
+    //再创建一个仪表盘
+    gaugeId[0] = lcd.creatGauge(0, 0, 120, 0, 100, pointerColor, bgColor);
+    //更改这个仪表盘的大小，使其达到缩放的现象
+    for(uint8_t i = 0; i < 10; i++){
+      lcd.updateGauge(gaugeId[0], 0, 0, 120+i*12, 0, 100, pointerColor, bgColor);
+      delay(100);
+    }
+    //随机设置该仪表盘的指针值
+    for(uint8_t i = 0; i < 10; i++){
+      lcd.setGaugeValue(gaugeId[0],rand()%100);
+      delay(100);
+    }
+    //删除仪表盘
+    lcd.deleteGauge(gaugeId[0]);
+    delay(1000);
+}
+
 void setup(void)
 {
   #ifndef  I2C_COMMUNICATION
@@ -58,18 +112,12 @@ void setup(void)
 
   lcd.begin();
   //Initializing 
-  lcd.lvglInit(/*Displaying the background color*/CYAN_RGB565);
-  //Creating a dial control.
-  gauge = lcd.creatGauge(/*x=*/35,/*y = */19,/*width*/200,/*height*/200,/*color*/NAVY_RGB565);
-  //Setting the parameters of the dial control.
-  lcd.setGaugeScale(gauge,/*angle of the scale*/180,/*start*/0,/*end*/100);
+  lcd.setBackgroundColor(WHITE);
 }
 
 void loop(void)
 {
-  //Setting the value of the dial control.
-  lcd.setGaugeValue(gauge,/*value*/20);
-  delay(3000);
-  lcd.setGaugeValue(gauge,80);
-  delay(3000);
+  //Setting the value of the gauge.
+  testGauge();
+  delay(1000);
 }

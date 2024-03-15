@@ -13,7 +13,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
@@ -36,18 +36,81 @@
 
 DFRobot_LcdDisplay::sControlinf_t* chart;
 
-uint8_t id1 = 0, id2 = 0;
+uint8_t chartId1 = 0;
+uint8_t chartId2 = 0;
+uint8_t chartId3 = 0;
+uint8_t id1_1 = 0, id1_2 = 0, id2_1 = 0, id2_2 = 0, id3_1 = 0, id3_2 = 0;
 
-uint16_t point1[5] = { 10,90,30,10,90 };
+uint16_t point1[5] = { 10,90,30,0,90 };
 uint16_t point2[5] = { 90,30,80,10,100 };
 
-/**
- * User-selectable macro definition color
- * BLACK_RGB565 BLUE_RGB565 RED_RGB565 GREEN_RGB565 CYAN_RGB565 MAGENTA_RGB565
- * YELLOW_RGB565 WHITE_RGB565 NAVY_RGB565 DARKGREEN_RGB565 DARKCYAN_RGB565 MAROON_RGB565
- * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
- * GREENYELLOW_RGB565 DCYAN_RGB565
- */
+
+void testChart(){
+    //创建一个图表，设置背景颜色为白色，模式为折线图模式
+    chartId1 = lcd.creatChart(/*X-axis tick labels*/"Jan\nFeb\nMar\nApr\nMay", /*Y-axis tick labels*/"100\n80\n60\n40\n20\n0",/*background Color*/ 0xFFFFFF,/*Chart style:1-3*/1);
+	//在这个图表上创建一个颜色为红色的数据系列
+    id1_1 = lcd.creatChartSeries(chartId1, /*color*/0xFF0000);
+	//往这个数据系列上添加5个点
+    lcd.addChartSeriesData(chartId1, id1_1, point2, 5);
+    delay(2000);
+    //更新这个表格的数据系列的颜色为蓝色
+    lcd.updateChartSeries(chartId1, id1_1, 0x0000FF);
+    //更新这个表格为柱状图并且背景设置为绿色
+    lcd.updateChart(chartId1, 0x00FF00, 2);
+	  delay(2000);
+    //更新这个表格的数据系列的颜色为绿色
+    lcd.updateChartSeries(chartId1, id1_1, 0x00FF00);
+    //更新这个表格为折线图并且背景设置为蓝色
+    lcd.updateChart(chartId1, 0x0000FF, 3);
+    //更新第2个点的值，从0开始计数
+    for(uint8_t i = 0; i<5; i++){
+        lcd.updateChartPoint(chartId1, id1_1, 2, 20*i);
+        delay(1000);
+    }
+
+    //创建第二个表格
+    chartId2 = lcd.creatChart("Jun\nJul\nAug\nSep", "100\n80\n60\n40\n20\n0",/*background Color*/ 0xFFFF00,/*Chart style:1-3*/1);
+    //在这个表格上创建一个颜色为红色的数据系列
+    id2_1 = lcd.creatChartSeries(chartId2, /*color*/0xFF0000);
+    //在这个表格上创建一个颜色为蓝色的数据系列
+    id2_2 = lcd.creatChartSeries(chartId2, /*color*/0x0000FF);
+    //给数据系列id2_1添加数据
+    lcd.addChartSeriesData(chartId2, id2_1, point1, 4);
+    //给数据系列id2_2添加数据
+    lcd.addChartSeriesData(chartId2, id2_2, point2, 4);
+    delay(1000);
+
+    //创建第三个表格
+    chartId3 = lcd.creatChart("Jun\nJul\nAug\nSep", "100\n80\n60\n40\n20\n0",/*background Color*/ 0xFFFF00,/*Chart style:1-3*/2);
+    //在这个表格上创建一个颜色为红色的数据系列
+    id3_1 = lcd.creatChartSeries(chartId3, /*color*/0xFF0000);
+    //在这个表格上创建一个颜色为蓝色的数据系列
+    id3_2 = lcd.creatChartSeries(chartId3, /*color*/0x0000FF);
+    //给数据系列id2_1添加数据
+    lcd.addChartSeriesData(chartId3, id3_1, point1, 4);
+    //给数据系列id2_2添加数据
+    lcd.addChartSeriesData(chartId3, id3_2, point2, 4);
+    delay(1000);
+    //设置图表1置顶显示
+    lcd.setTopChart(chartId1);
+    delay(2000);
+    //设置图表2置顶显示
+    lcd.setTopChart(chartId2);
+    delay(2000);
+    //设置图表3置顶显示
+    lcd.setTopChart(chartId3);
+    delay(2000);
+	  //删除图表3
+    lcd.deleteChart(chartId3);
+    delay(1000);
+    //删除图表2
+    lcd.deleteChart(chartId2);
+    delay(1000);
+    //删除图表1
+    lcd.deleteChart(chartId1);
+    delay(1000);
+    
+}
 void setup(void)
 {
   #ifndef  I2C_COMMUNICATION
@@ -59,25 +122,15 @@ void setup(void)
   #endif
 
   Serial.begin(115200);
+  delay(1000);
 
   lcd.begin();
-  lcd.lvglInit(GREEN_RGB565);
-  /*The actual value range of the y-axis is fixed at 0-100. If you want to display other scales, you can map them proportionally.
-    For example, using the label "10\n8\n6\n4\n2\n0":
-    - For input { 10,90,30,10,90 }, the displayed values would be { 1,9,3,1,9 }.
-    Chart styles: 1. Line chart 2. Line chart with shading 3. Bar chart*/
-  chart = lcd.creatChart(/*X-axis tick labels*/"Jan\nFeb\nMar\nApr\nMay", /*Y-axis tick labels*/"100\n80\n60\n40\n20\n0", /*Chart style:1-3*/3);
-
-  //Allocate and add a data series to the chart
-  id1 = lcd.creatChartSerie(chart, /*color*/RED_RGB565);
-  id2 = lcd.creatChartSerie(chart, BLUE_RGB565);
-
-  //Set the value of points from an array
-  lcd.addChart(chart, id1, /*Array of values corresponding to each point*/point1, /*Number of points forming the line*/5);
-  lcd.addChart(chart, id2, point2, 5);
+  lcd.setBackgroundColor(GREEN);
+  
 }
 
 void loop(void)
 {
-  delay(3000);
+	testChart();
+	delay(1000);
 }

@@ -3,6 +3,7 @@
  * @brief Creating a linear gauge control.
  * @details Creating three linear gauge controls and controlling each one to display different values.
  * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
+ * @n  After scaling the dial widget, the display quality may degrade. Please use appropriate parameters
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
@@ -13,7 +14,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
@@ -34,15 +35,59 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-DFRobot_LcdDisplay::sControlinf_t *lineMeter1, *lineMeter2, *lineMeter3;
+uint32_t bgColor = GREEN;
+uint32_t pointerColor = RED;
+uint32_t generateRandomColor() {
+    uint8_t r = rand() % 256;
+    uint8_t g = rand() % 256;
+    uint8_t b = rand() % 256;
+    return (r << 16) | (g << 8) | b;
+}
 
-/**
- * User-selectable macro definition color
- * BLACK_RGB565 BLUE_RGB565 RED_RGB565 GREEN_RGB565 CYAN_RGB565 MAGENTA_RGB565
- * YELLOW_RGB565 WHITE_RGB565 NAVY_RGB565 DARKGREEN_RGB565 DARKCYAN_RGB565 MAROON_RGB565
- * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
- * GREENYELLOW_RGB565 DCYAN_RGB565
- */
+uint8_t lineMeterId[13];
+void testLineMeter(){
+  uint16_t x = 0;
+  uint16_t y = 0;
+  lineMeterId[0] = lcd.creatLineMeter(0, 0, 120, 0, 100, pointerColor, bgColor);
+  lcd.setMeterValue(lineMeterId[0],40);
+  for(uint8_t i = 0; i < 7; i++){
+    lcd.updateLineMeter(lineMeterId[0], i*32, 0, 120, 0, 100, pointerColor, bgColor);
+    delay(100);
+  }
+  lcd.deleteLineMeter(lineMeterId[0]);
+  delay(100);
+  for(uint8_t i = 0; i < 12; i++){
+    bgColor = generateRandomColor();
+    pointerColor = generateRandomColor();
+    lineMeterId[i] = lcd.creatLineMeter(x, y, 80, 0, 60, pointerColor, bgColor);
+    lcd.setMeterValue(lineMeterId[i],rand()%60);
+    if((i+1)%4 == 0){
+        y += 80;
+        x = 0;
+    }else{
+        x += 80;
+    }
+    delay(100);
+  }
+  delay(1000);
+  for(uint8_t i = 0; i < 12; i++){
+    lcd.deleteLineMeter(lineMeterId[i]);
+    delay(100);
+  }
+  lineMeterId[0] = lcd.creatLineMeter(0, 0, 120, 0, 100, pointerColor, bgColor);
+  for(uint8_t i = 0; i < 10; i++){
+    lcd.updateLineMeter(lineMeterId[0], 0, 0, 120+i*12, 0, 100, pointerColor, bgColor);
+    delay(100);
+  }
+
+  for(uint8_t i = 0; i < 10; i++){
+    lcd.setMeterValue(lineMeterId[0],rand()%100);
+    delay(100);
+  }
+  lcd.deleteLineMeter(lineMeterId[0]);
+  delay(1000);
+}
+
 void setup(void)
 {
   #ifndef  I2C_COMMUNICATION
@@ -57,30 +102,12 @@ void setup(void)
 
   lcd.begin();
   //Initializing 
-  lcd.lvglInit(/*Displaying the background color*/CYAN_RGB565);
-
-  //Creating a linear gauge control. 
-  lineMeter1 = lcd.creatLineMeter(/*x*/10,/*y*/100,/*width*/120,/*height*/120,/*color*/CYAN_RGB565);
-  //Setting the parameters of the linear gauge control.
-  lcd.setMeterScale(lineMeter1,/*angle of the scale*/270,/*start of angle*/0,/*end of angle*/100);
-
-  lineMeter2 = lcd.creatLineMeter(100,15,120,120,GREEN_RGB565);
-  lcd.setMeterScale(lineMeter2,270,0,100);
-  lineMeter3 = lcd.creatLineMeter(195,100,120,120,ORANGE_RGB565);
-  lcd.setMeterScale(lineMeter3, 270, 0, 100);
-
+  lcd.setBackgroundColor(WHITE);
 }
 
 void loop(void)
 {
   //Setting the value of the gauge.
-  lcd.setMeterValue(lineMeter1,40);
-  lcd.setMeterValue(lineMeter2,50);
-  lcd.setMeterValue(lineMeter3,70);
-  delay(3000);
-
-  lcd.setMeterValue(lineMeter1,10);
-  lcd.setMeterValue(lineMeter2,40);
-  lcd.setMeterValue(lineMeter3,60);
-  delay(3000);
+  testLineMeter();
+  delay(1000);
 }
