@@ -1,3 +1,14 @@
+/**!
+ * @file chart.ino
+ * @brief Creating a chart
+ * @details Creating a chart,And being able to add data to the chart to draw a bar chart/line chart.
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
+ * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license     The MIT License (MIT)
+ * @version  V1.0
+ * @date  2024-03-19
+ * @url https://github.com/DFRobot/DFRobot_LcdDisplay
+ */
 #include "DFRobot_LcdDisplay.h"
 
 //#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
@@ -21,7 +32,7 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-// 切换背景颜色
+// Switch background color
 void testBackgroundColor(){
     lcd.setBackgroundColor(RED);
     delay(1000);
@@ -33,27 +44,27 @@ void testBackgroundColor(){
     delay(1000);
 }
 
-// 切换背景图片
+// Switch background image
 void testBackgroundImg(){
-    //内部存储的图片
+    // Internal storage of pictures
     lcd.setBackgroundImg(0,"bgDream.png");
     delay(1000);
-    //u盘存储的图片
+    // Usb flash drive to store pictures
     lcd.setBackgroundImg(1,"fish.png");
     delay(1000);
-    //u盘存储的图片
+    // Usb flash drive to store pictures
     lcd.setBackgroundImg(1,"cat.png");
     delay(1000);
-    //内部存储的图片
+    // Internal storage of pictures
     lcd.setBackgroundImg(0,"bgScenery.png");
     delay(1000);
-    //内部存储的图片
+    // Internal storage of pictures
     lcd.setBackgroundImg(0,"bgCity.png");
     delay(1000);
-    //内部存储的图片
+    // Internal storage of pictures
     lcd.setBackgroundImg(0,"bgTechnology.png");
     delay(1000);
-        //内部存储的图片
+    // Internal storage of pictures
     lcd.setBackgroundImg(0,"bgScience.png");
     delay(1000);
 }

@@ -8,8 +8,9 @@
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
  * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
+ * @maintainer [GDuang](yonglei.ren@dfrobot.com)
  * @version  V1.0
- * @date  2023-05-29
+ * @date  2024-03-19
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
@@ -48,19 +49,19 @@ uint8_t lineMeterId[13];
 void testLineMeter(){
     uint16_t x = 0;
     uint16_t y = 0;
-    //在（0，0）点创建一个线性表盘
+    // Creates a linear dials at point (0,0)
     lineMeterId[0] = lcd.creatLineMeter(0, 0, 120, 0, 100, pointerColor, bgColor);
-    //设置该表盘的值为40
+    // Set the value of the linear gauge to 40
     lcd.setMeterValue(lineMeterId[0],40);
-    //更改表盘的坐标，使其达到移动的效果
+    // Change the coordinates of the dials so that it moves
     for(uint8_t i = 0; i < 7; i++){
       lcd.updateLineMeter(lineMeterId[0], i*32, 0, 120, 0, 100, pointerColor, bgColor);
       delay(100);
     }
-    //删除这个线性表盘
+    // Delete this dials
     lcd.deleteLineMeter(lineMeterId[0]);
     delay(100);
-    //创建多个线性表盘，使用随机指针颜色、随机背景颜色、设置表盘值为随机，使其铺满整个屏幕
+    // Create multiple dials, use a random pointer color, a random background color, and set the dials value to random so that it covers the entire screen
     for(uint8_t i = 0; i < 12; i++){
       bgColor = generateRandomColor();
       pointerColor = generateRandomColor();
@@ -71,28 +72,28 @@ void testLineMeter(){
           x = 0;
       }else{
           x += 80;
-      }
+      } 
       delay(100);
     }
     delay(1000);
-    //一个一个删除线性表盘
+    // Remove the linear dial one by one
     for(uint8_t i = 0; i < 12; i++){
       lcd.deleteLineMeter(lineMeterId[i]);
       delay(100);
-    }
-    //再创建一个线性表盘
+    } 
+    // Create another linear dial
     lineMeterId[0] = lcd.creatLineMeter(0, 0, 120, 0, 100, pointerColor, bgColor);
-    //更改这个线性表盘的大小，使其达到缩放的现象
+    // Change the size of this linear dial so that it reaches the scaling phenomenon
     for(uint8_t i = 0; i < 10; i++){
       lcd.updateLineMeter(lineMeterId[0], 0, 0, 120+i*12, 0, 100, pointerColor, bgColor);
       delay(100);
     }
-    //随机设置该表盘的指针值
+    // Set the pointer value of the dial at random
     for(uint8_t i = 0; i < 10; i++){
       lcd.setMeterValue(lineMeterId[0],rand()%100);
       delay(100);
     }
-    //删除表盘
+    // Remove linear dial
     lcd.deleteLineMeter(lineMeterId[0]);
     delay(1000);
 }
@@ -109,16 +110,17 @@ void setup(void)
 
   Serial.begin(115200);
 
+  // Initializing 
   lcd.begin();
+
   lcd.cleanScreen();
   delay(500);
-  //Initializing 
   lcd.setBackgroundColor(WHITE);
 }
 
 void loop(void)
 {
-  //Setting the value of the gauge.
+  // Setting the value of the dial.
   testLineMeter();
   delay(1000);
 }

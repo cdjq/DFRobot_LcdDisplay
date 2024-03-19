@@ -1,3 +1,17 @@
+/**!
+ * @file drawIcon.ino
+ * @brief Icon Display Example
+ * @details Displaying different icons based on different icon numbers.
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
+ * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license     The MIT License (MIT)
+ * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
+ * @maintainer [GDuang](yonglei.ren@dfrobot.com)
+ * @version  V1.0
+ * @date  2024-03-19
+ * @url https://github.com/DFRobot/DFRobot_LcdDisplay
+ */
 #include "DFRobot_LcdDisplay.h"
 
 //#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
@@ -105,15 +119,15 @@ eIconMuteSoundOff, eIconPiano, eIconSaxophone, eIconSpeakerAudio, eIconTrumpet, 
 #endif
 
 
-uint8_t iconId[15]; // 用于存储图标ID的数组
-uint16_t iconNum = 0; // 起始图标编号
-//先控制一个图标的移动和缩放，然后遍历显示完所有的内置图标
+uint8_t iconId[15]; // An array for storing icon ids
+uint16_t iconNum = 0; // Start icon number
+// First control the movement and scaling of an icon, and then iterate through all the built-in ICONS
 void testIcon(){
 	if(iconNum == 0){
-        //在(0,0)处创建一个图标，原尺寸大小显示
+        // Create an icon at (0,0) and display it in full size
         iconId[0] = lcd.drawIcon(0, 0, lcd.eIconHappy, 256);
         delay(200);
-        //把图标移动到（130，90），并更改其缩放大小
+        // Move the icon to (130,90) and change its zoom size
         for(uint8_t i = 0; i < 16; i++){
             lcd.updateIcon(iconId[0], 130, 90, lcd.eIconHappy, i*32);
             delay(100);
@@ -121,31 +135,31 @@ void testIcon(){
         lcd.deleteIcon(iconId[0]);
         delay(100);
     }
-    // 分成3行显示，每行显示5个图标，并存储他们的ID
+    // The display is divided into 3 rows, each row shows 5 ICONS, and stores their ids
     for (uint8_t row = 0; row < 3; row++) {
         for (uint8_t col = 0; col < 5; col++) {
-            uint8_t index = row * 5 + col; // 计算iconId数组中的索引
-            iconId[index] = lcd.drawIcon(64*col, 80*row, iconNum, 256); // 绘制图标并存储ID
+            uint8_t index = row * 5 + col; // Calculates the index in the iconId array
+            iconId[index] = lcd.drawIcon(64*col, 80*row, iconNum, 256); // Draw the icon and store the ID
             iconNum++;
-            if (iconNum >= 294) { // 如果iconNum超过了总图标数，将其重置为0
+            if (iconNum >= 294) { // If iconNum exceeds the total number of ICONS, reset it to 0
                 iconNum = 0;
             }
         }
     }
 
-    // 在删除图标之前延迟以便查看
+    // Delay for viewing before deleting the icon
     delay(1000);
 
-    // 删除已显示的图标
+    // Delete the displayed icon
     for(uint8_t i = 0; i < 15; i++) {
-        lcd.deleteIcon(iconId[i]); // 使用存储的ID删除
+        lcd.deleteIcon(iconId[i]); // Delete using the ID of the storage
     }
     delay(1000);
 }
 
 DFRobot_LcdDisplay::sControlinf_t* icon1;
-uint8_t iconId2[20]; // 用于存储图标ID的数组
-
+uint8_t iconId2[20]; // An array for storing icon ids
+// Show specified ICONS
 void testIcon2(){
   // Drawing icons
   // The last parameter is the scaling factor, ranging from 128 to 512, where 128 represents a 50% reduction and 512 represents a 100% increase in size.
@@ -174,12 +188,12 @@ void testIcon2(){
   iconId2[18] = lcd.drawIcon(256, 120, DFRobot_LcdDisplay::eIconCloudy, 128);
   iconId2[19] = lcd.drawIcon(256, 180, DFRobot_LcdDisplay::eIconAvocado, 128);
 
-  // 在删除图标之前延迟以便查看
+  // Delay for viewing before deleting the icon
   delay(3000);
 
-  // 删除已显示的图标
+  // Delete the displayed icon
   for(uint8_t i = 0; i < 20; i++) {
-      lcd.deleteIcon(iconId2[i]); // 使用存储的ID删除
+      lcd.deleteIcon(iconId2[i]); // Delete using the ID of the storage
   }
   delay(1000);
 }
@@ -202,7 +216,6 @@ void setup(void)
 }
 
 void loop(void){
-    testIcon();
-    // delay(1000);
-    // testIcon2();
+    // testIcon();
+    testIcon2();
 }

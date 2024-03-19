@@ -1,3 +1,16 @@
+/**!
+ * @file compass.ino
+ * @brief Compass Control Example
+ * @details Setting the orientation of the compass needle based on the values obtained from a sensor.
+ * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
+ * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
+ * @license     The MIT License (MIT)
+ * @author [fengli](li.feng@dfrobot.com)
+ * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
+ * @version  V1.0
+ * @date  2024-03-19
+ * @url https://github.com/DFRobot/DFRobot_LcdDisplay
+ */
 #include "DFRobot_LcdDisplay.h"
 
 //#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
@@ -26,9 +39,9 @@ uint8_t compassId[21];
 void testCompass(){
     uint16_t y = 0;
     uint16_t x = 0;
-    //在（0，0）点创建一个直径为64的指南针
+    // Create a compass with a diameter of 64 at point (0,0)
     compassId[0] = lcd.creatCompass(x, y, 64);
-    //更改这个指南针的坐标，使其移动起来
+    // Change the coordinates of this compass to make it move
     for(uint8_t i = 0; i < 20; i++){
       lcd.updateCompass(compassId[0], x, y, 64);
       if((i+1)%5 == 0){
@@ -39,12 +52,12 @@ void testCompass(){
       }
       delay(200);
     }
-    //删除这个指南针
+    // Delete this compass
     lcd.deleteCompass(compassId[0]);
     delay(200);
     x = 0;
     y = 0;
-    //在不同的坐标点上创建指南针，使其满屏显示
+    // Create a compass at different coordinate points and make it appear on the full screen
     for(uint8_t i = 0; i < 20; i++){
       compassId[i] = lcd.creatCompass(x, y, 64);
       if((i+1)%5 == 0){
@@ -56,14 +69,14 @@ void testCompass(){
       delay(200);
     }
     delay(1000);
-	//一个一个删除指南针
+	  // Remove the compass one by one
     for(uint8_t i = 0; i < 20; i++){
       lcd.deleteCompass(compassId[i]);
       delay(200);
     }
-    //在（0，0）点创建一个直径为64的指南针
+    // Create a compass with a diameter of 64 at point (0,0)
     compassId[0] = lcd.creatCompass(0, 0, 30);
-    //更改这个指南针，使其达到缩放的效果
+    // Change the compass so that it scales
     for(uint8_t i = 0 ; i<8; i++){
         lcd.updateCompass(compassId[0], 0, 0, 30*(i+1));
         delay(100);
@@ -88,10 +101,11 @@ void setup(void)
 
   Serial.begin(115200);
 
+  //Initializing 
   lcd.begin();
+
   lcd.cleanScreen();
   delay(200);
-  //Initializing 
   lcd.setBackgroundColor(WHITE);
 
   testCompass();
@@ -101,5 +115,5 @@ void setup(void)
 void loop(void)
 {
 	testCompass();
-    delay(2000);
+  delay(2000);
 }

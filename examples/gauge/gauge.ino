@@ -49,19 +49,19 @@ uint8_t gaugeId[13];
 void testGauge(){
     uint16_t x = 0;
     uint16_t y = 0;
-    //在（0，0）点创建一个仪表盘
+    // Create a dashboard at point (0,0)
     gaugeId[0] = lcd.creatGauge(0, 0, 120, 0, 100, pointerColor, bgColor);
-    //设置该仪表盘的值为40
+    // Set the value of the dashboard to 40
     lcd.setGaugeValue(gaugeId[0],40);
-    //更改仪表盘的坐标，使其达到移动的效果
+    // Change the coordinates of the dashboard to make it move
     for(uint8_t i = 0; i < 7; i++){
       lcd.updateGauge(gaugeId[0], i*32, 0, 120, 0, 100, pointerColor, bgColor);
       delay(100);
     }
-    //删除这个仪表盘
+    // Delete the dashboard
     lcd.deleteGauge(gaugeId[0]);
     delay(100);
-    //创建多个仪表盘，使用随机指针颜色、随机背景颜色、设置表盘值为随机，使其铺满整个屏幕
+    // Create multiple dashboards, using random pointer colors, random background colors, and set the dial value to random so that it covers the entire screen
     for(uint8_t i = 0; i < 12; i++){
       bgColor = generateRandomColor();
       pointerColor = generateRandomColor();
@@ -76,24 +76,24 @@ void testGauge(){
       delay(100);
     }
     delay(1000);
-    //一个一个删除仪表盘
+    // Delete dashboards one by one
     for(uint8_t i = 0; i < 12; i++){
       lcd.deleteGauge(gaugeId[i]);
       delay(100);
     }
-    //再创建一个仪表盘
+    // Create another dashboard
     gaugeId[0] = lcd.creatGauge(0, 0, 120, 0, 100, pointerColor, bgColor);
-    //更改这个仪表盘的大小，使其达到缩放的现象
+    // Change the size of the dashboard so that it scales
     for(uint8_t i = 0; i < 10; i++){
       lcd.updateGauge(gaugeId[0], 0, 0, 120+i*12, 0, 100, pointerColor, bgColor);
       delay(100);
     }
-    //随机设置该仪表盘的指针值
+    // Set the pointer value of the dashboard at random
     for(uint8_t i = 0; i < 10; i++){
       lcd.setGaugeValue(gaugeId[0],rand()%100);
       delay(100);
     }
-    //删除仪表盘
+    // Delete dashboard
     lcd.deleteGauge(gaugeId[0]);
     delay(1000);
 }
@@ -110,8 +110,9 @@ void setup(void)
 
   Serial.begin(115200);
 
+  // Initializing 
   lcd.begin();
-  //Initializing 
+  
   lcd.cleanScreen();
   delay(500);
   lcd.setBackgroundColor(WHITE);
@@ -120,7 +121,7 @@ void setup(void)
 
 void loop(void)
 {
-  //Setting the value of the gauge.
+  // Setting the value of the gauge.
   testGauge();
   delay(1000);
 }

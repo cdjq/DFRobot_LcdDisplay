@@ -6,8 +6,9 @@
  * @License     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
  * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
+ * @maintainer [GDuang](yonglei.ren@dfrobot.com)
  * @version  V1.0
- * @date  2023-05-29
+ * @date  2024-03-19
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
@@ -402,53 +403,6 @@ void DFRobot_LcdDisplay::deleteGif(uint8_t id){
   deleteNodeByID((GenericNode**)&gif_head, id);
 }
 
-DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::drawDiskImg(int16_t x, int16_t y, String pathStr, uint16_t size)
-{
-  sControlinf_t* img = (sControlinf_t*)malloc(sizeof(sControlinf_t));
-  if (img == NULL) {
-    DBG("img malloc fail !");
-  }
-  img->x = x;
-  img->y = y;
-  img->id = pathStr.endsWith(".png");   // 0: .bmp ; 1: .png
-  img->number = getNumber(1);
-  img->inf = NULL;
-
-  sControlinf_t* obj = &head;
-  while (obj->inf != NULL) {
-    obj = obj->inf;
-  }
-  obj->inf = img;
-
-  if (size > 512) size = 512;
-  if (size < 128) size = 128;
-
-  int16_t length = pathStr.length() - 4;   // Remove the suffix to save on transmission byte count
-  if (20 <= length) {
-    DBG("The path name is too long. Shorten the path name");
-    return NULL;
-  }
-  uint8_t* cmd = creatCommand(CMD_OF_DRAWDISKIMG, 12 + length);
-  cmd[4] = img->number;
-  cmd[5] = img->id;
-  cmd[6] = x >> 8;
-  cmd[7] = x & 0xFF;
-  cmd[8] = y >> 8;
-  cmd[9] = y & 0xFF;
-  cmd[10] = size >> 8;
-  cmd[11] = size & 0xFF;
-  for (uint8_t i = 0; i < length; i++) {
-    cmd[12 + i] = pathStr[i];
-  }
-
-  writeCommand(cmd, 12 + length);
-  free(cmd);
-
-  delay(1500);   // Reading and parsing images from a USB drive is slow, resulting in slow display
-
-  return img;
-}
-
 uint8_t DFRobot_LcdDisplay::creatSlider(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_SLIDER, CMD_OF_DRAW_SLIDER_LEN);
@@ -595,82 +549,68 @@ uint8_t DFRobot_LcdDisplay:: getNewID(sGenericNode_t** head) {
       Serial.println("NULL");
     }
 
-    // 查找链表中最后一个节点并获取当前最大ID
     while (temp) {
-        id = temp->id + 1; // 更新ID
+        id = temp->id + 1; 
         if (!temp->next) {
             break;
         }
         temp = (sGenericNode_t*)temp->next;
     }
 
-    // 创建新节点并设置ID
     sGenericNode_t* new_node = (sGenericNode_t*)malloc(sizeof(sGenericNode_t));
     if (new_node) {
         new_node->id = id;
         new_node->next = NULL;
 
-        // 添加到链表末尾
         if (temp) {
             temp->next = new_node;
         } else {
             *head = new_node;
         }
     } else {
-        // 处理内存分配失败的情况
-        id = 0; // 返回错误代码或0表示失败
+        id = 0; 
     }
     Serial.println(id);
     return id;
 }
 
 void DFRobot_LcdDisplay::deleteNodeByID(sGenericNode_t** head, uint8_t id) {
-    // 检查是否提供了有效的头节点指针
     if (head == NULL || *head == NULL) {
         return;
     }
     sGenericNode_t* temp = *head;
     sGenericNode_t* prev = NULL;
 
-    // 检查头节点是否是要删除的节点
     if (temp != NULL && temp->id == id) {
-        *head = temp->next; // 改变头指针
-        free(temp);         // 释放旧的头节点
-        // 如果这是链表中的最后一个节点，确保 head 被设置为 NULL
+        *head = temp->next; 
+        free(temp); 
         if (*head == NULL) {
             return;
         }
     } else {
-        // 搜索要删除的节点，保留其前一个节点
         while (temp != NULL && temp->id != id) {
             prev = temp;
             temp = (sGenericNode_t*)temp->next;
         }
-        // 如果没有找到该ID的节点，则返回
         if (temp == NULL) return;
 
-        // 从链表中移除节点
         prev->next = temp->next;
 
-        // 释放内存
         free(temp);
     }
 
-    // 检查链表是否为空
     if (*head == NULL) {
         return;
     }
 
-    // 检查链表是否为空
     temp = *head;
     while (temp) {
         if (temp->next != NULL) {
-            return; // 发现至少还有一个节点
+            return; 
         }
         temp = (sGenericNode_t*)temp->next;
     }
-
-    // 如果链表为空，则将 head 设置为 NULL
+    
     *head = NULL;
 }
 
@@ -1491,8 +1431,8 @@ bool DFRobot_Lcd_IIC::begin()
 
 void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
 {
-  uint16_t bytesSent = 0; // 已发送的字节数
-  uint16_t bytesToSend = len; // 还需发送的字节数
+  uint16_t bytesSent = 0; // The number of bytes sent
+  uint16_t bytesToSend = len; // The number of bytes to be sent
   if (pBuf == NULL) {
     DBG("pBuf ERROR!! : null pointer");
   }
@@ -1501,20 +1441,15 @@ void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
   while (bytesToSend > 0) {
     uint16_t currentTransferSize = (bytesToSend < 32) ? bytesToSend : 32;
     
-    // 开始I2C传输
     _pWire->beginTransmission(_deviceAddr);
     
-    // 发送当前批次的数据
     _pWire->write(&pBuf[bytesSent], currentTransferSize);
     
-    // 结束当前I2C传输
     _pWire->endTransmission();
     
-    // 更新已发送和待发送的字节数
     bytesSent += currentTransferSize;
     bytesToSend -= currentTransferSize;
-    
-    // 等待一小段时间再继续下一批次的发送，以确保设备处理完毕
+
     delay(2);
   }
 }

@@ -7,8 +7,9 @@
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
  * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
+ * @maintainer [GDuang](yonglei.ren@dfrobot.com)
  * @version  V1.0
- * @date  2023-05-29
+ * @date  2024-03-19
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
@@ -50,8 +51,6 @@ void flash()   //Interrupt handler that handles changes in time
     hour++;
   }
 }
-
-
 
 void setLux(uint8_t value){
   lcd.setBar(bar1, value);
@@ -98,18 +97,10 @@ void setup(void)
   delay(500);
 
   //Create the icon, remember to display the icon first, icon on the "dot and line character", there will be interference coverage 
-  
   lcd.drawIcon(20, 0, lcd.eIconRainbow1, 350);
-  
-
-  //lcd.drawIcon(115, 0, lcd.eIconSunny, 120);
   
   lcd.drawIcon(130, 40, lcd.eIconThermometer, 120);
   lcd.drawIcon(125, 80, lcd.eIconRaindrops, 120);
-  //lcd.drawIcon(115, 120, lcd.eIconWind, 120);
-  
-
-
 
   lcd.drawIcon(0, 176, lcd.eIconPottedPlantFlower, 256);
   lcd.drawIcon(53, 176, lcd.eIconCactus3, 256);
@@ -122,8 +113,6 @@ void setup(void)
   lcdTimeId = lcd.drawLcdTime(10, 64, hour, Minute, second, 1, LIGHTGREY);
   //Show the current date
   lcd.drawLcdDate(10, 95, 3, 29, 3, 0, LIGHTGREY);
-  //Show current weather
-  //lcd.drawString(38, 170, "大雨", 0, RED);
 
   //Create a progress bar for the temperature display
   bar1 = lcd.creatBar(170, 22, 80, 15, ORANGE);
@@ -131,7 +120,6 @@ void setup(void)
   //Create a progress bar for displaying humidity
   bar2 = lcd.creatBar(170, 62, 80, 15, RED);
   labelId2 = lcd.drawString( 260, 62, "0°C", 0, RED);
-  //labelId2 = lcd.drawString( 260, 22, "0lux", 0, RED);
   //Create a progress bar for the wind speed display
   bar3 = lcd.creatBar(170, 102, 80, 15, BLUE);
   labelId3 = lcd.drawString( 260, 102, "0%", 0, BLUE);
@@ -139,17 +127,18 @@ void setup(void)
   bar4 = lcd.creatBar(170, 142, 80, 15, GREEN);
   labelId4 = lcd.drawString( 260, 142, "0m/s", 0, GREEN);
 
+  // Sets the value of the progress bar 
   setLux(rand()%100);
   setTemp(rand()%100);
   setHum(rand()%100);
   setWind(rand()%100);
 
-  lcd.drawGif(0, 80, 1, 160);
-  lcd.drawGif(115, 0, 3, 120);
-  lcd.drawGif(115, 120, 2, 120);
+  lcd.drawGif(0, 80, 1, 160);     // Rain icon
+  lcd.drawGif(115, 0, 3, 120);    // Sun icon
+  lcd.drawGif(115, 120, 2, 120);  // Wind icon
 
   MsTimer2::set(1000, flash);        // Interrupt setting function, enter interrupt every 1000ms
-  MsTimer2::start();                // start counting  
+  MsTimer2::start();                 // start counting  
 }
 
 void loop(void)

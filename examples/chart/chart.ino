@@ -7,8 +7,9 @@
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
  * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
+ * @maintainer [GDuang](yonglei.ren@dfrobot.com)
  * @version  V1.0
- * @date  2023-05-29
+ * @date  2024-03-19
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
@@ -46,67 +47,67 @@ uint16_t point2[5] = { 90,30,80,10,100 };
 
 
 void testChart(){
-    //创建一个图表，设置背景颜色为白色，模式为折线图模式
+    // Create a chart and set the background color to white and the mode to Line chart mode
     chartId1 = lcd.creatChart(/*X-axis tick labels*/"Jan\nFeb\nMar\nApr\nMay", /*Y-axis tick labels*/"100\n80\n60\n40\n20\n0",/*background Color*/ 0xFFFFFF,/*Chart style:1-3*/1);
-	//在这个图表上创建一个颜色为红色的数据系列
+	  // Create a data series colored red on this chart
     id1_1 = lcd.creatChartSeries(chartId1, /*color*/0xFF0000);
-	//往这个数据系列上添加5个点
+	  // Add 5 points to the data series
     lcd.addChartSeriesData(chartId1, id1_1, point2, 5);
     delay(2000);
-    //更新这个表格的数据系列的颜色为蓝色
+    // Update the color of the data series for this table to blue
     lcd.updateChartSeries(chartId1, id1_1, 0x0000FF);
-    //更新这个表格为柱状图并且背景设置为绿色
+    // Update the table to a bar chart and set the background to green
     lcd.updateChart(chartId1, 0x00FF00, 2);
 	  delay(2000);
-    //更新这个表格的数据系列的颜色为绿色
+    // Update the color of the data series for this table to green
     lcd.updateChartSeries(chartId1, id1_1, 0x00FF00);
-    //更新这个表格为折线图并且背景设置为蓝色
+    // Update the table to a line chart and set the background to blue
     lcd.updateChart(chartId1, 0x0000FF, 3);
-    //更新第2个点的值，从0开始计数
+    // Update the value of the second point, counting from 0
     for(uint8_t i = 0; i<5; i++){
         lcd.updateChartPoint(chartId1, id1_1, 2, 20*i);
         delay(1000);
     }
 
-    //创建第二个表格
+    // Create a second table
     chartId2 = lcd.creatChart("Jun\nJul\nAug\nSep", "100\n80\n60\n40\n20\n0",/*background Color*/ 0xFFFF00,/*Chart style:1-3*/1);
-    //在这个表格上创建一个颜色为红色的数据系列
+    // Create a data series colored red on this table
     id2_1 = lcd.creatChartSeries(chartId2, /*color*/0xFF0000);
-    //在这个表格上创建一个颜色为蓝色的数据系列
+    // Create a data series colored blue on this table
     id2_2 = lcd.creatChartSeries(chartId2, /*color*/0x0000FF);
-    //给数据系列id2_1添加数据
+    // Add data to data series id2 1
     lcd.addChartSeriesData(chartId2, id2_1, point1, 4);
-    //给数据系列id2_2添加数据
+    // Add data to data series id2 2
     lcd.addChartSeriesData(chartId2, id2_2, point2, 4);
     delay(1000);
 
-    //创建第三个表格
+    // Create a third table
     chartId3 = lcd.creatChart("Jun\nJul\nAug\nSep", "100\n80\n60\n40\n20\n0",/*background Color*/ 0xFFFF00,/*Chart style:1-3*/2);
-    //在这个表格上创建一个颜色为红色的数据系列
+    // Create a data series colored red on this table
     id3_1 = lcd.creatChartSeries(chartId3, /*color*/0xFF0000);
-    //在这个表格上创建一个颜色为蓝色的数据系列
+    // Create a data series colored blue on this table
     id3_2 = lcd.creatChartSeries(chartId3, /*color*/0x0000FF);
-    //给数据系列id2_1添加数据
+    // Add data to data series id2 1
     lcd.addChartSeriesData(chartId3, id3_1, point1, 4);
-    //给数据系列id2_2添加数据
+    // Add data to data series id2 2
     lcd.addChartSeriesData(chartId3, id3_2, point2, 4);
     delay(1000);
-    //设置图表1置顶显示
+    // Set Chart 1 to display at the top
     lcd.setTopChart(chartId1);
     delay(2000);
-    //设置图表2置顶显示
+    // Set Chart 2 to display at the top
     lcd.setTopChart(chartId2);
     delay(2000);
-    //设置图表3置顶显示
+    // Set Chart 3 to display at the top
     lcd.setTopChart(chartId3);
     delay(2000);
-	  //删除图表3
+	  // Delete Figure 3
     lcd.deleteChart(chartId3);
     delay(1000);
-    //删除图表2
+    // Delete Chart 2
     lcd.deleteChart(chartId2);
     delay(1000);
-    //删除图表1
+    // Delete Chart 1
     lcd.deleteChart(chartId1);
     delay(1000);
     
@@ -123,7 +124,6 @@ void setup(void)
 
   Serial.begin(115200);
   
-
   lcd.begin();
   lcd.cleanScreen();
   delay(500);
