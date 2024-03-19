@@ -14,7 +14,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
   /**
@@ -39,10 +39,10 @@ DFRobot_LcdDisplay::sControlinf_t *img1, *img2;
 
 /**
  * User-selectable macro definition color
- * BLACK_RGB565 BLUE_RGB565 RED_RGB565 GREEN_RGB565 CYAN_RGB565 MAGENTA_RGB565
- * YELLOW_RGB565 WHITE_RGB565 NAVY_RGB565 DARKGREEN_RGB565 DARKCYAN_RGB565 MAROON_RGB565
- * PURPLE_RGB565 OLIVE_RGB565 LIGHTGREY_RGB565 DARKGREY_RGB565 ORANGE_RGB565
- * GREENYELLOW_RGB565 DCYAN_RGB565
+ * BLACK BLUE RED GREEN CYAN MAGENTA
+ * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
+ * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
+ * GREENYELLOW DCYAN
  */
 void setup(void)
 {
@@ -58,16 +58,16 @@ void setup(void)
 
   lcd.begin();
   // Resetting the screen.
-  lcd.reset();
+  lcd.cleanScreen();
   delay(3000);
   // Display USB flash drive pictures. You can display 16-bit or 24-bit (color depth) bmp pictures (maximum screen size 320*240) and small-size png pictures (below 70*70)
   // The last parameter is the zoom index range of (128~512),128- zoom out by one,512- zoom in by one
   img1 = lcd.drawDiskImg(/*x=*/0, /*y=*/0, /*File path name (String)*/"/sea.bmp", /* Exponential Scale*/256);
   delay(1000);
-  lcd.lvglDelete(img1);
-  img2 = lcd.drawDiskImg(0, 0, "/plants.png", 256);
-  delay(1000);
-  img1 = lcd.drawDiskImg(0, 0, "/cat.bmp", 256);
+  // lcd.lvglDelete(img1);
+  // img2 = lcd.drawDiskImg(0, 0, "/plants.png", 256);
+  // delay(1000);
+  // img1 = lcd.drawDiskImg(0, 0, "/cat.bmp", 256);
 }
 
 void loop(void)

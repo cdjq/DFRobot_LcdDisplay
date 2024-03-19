@@ -25,19 +25,6 @@ bool DFRobot_LcdDisplay::begin()
   return true;
 }
 
-void DFRobot_LcdDisplay::setBackLight(bool on)
-{
-  uint8_t* cmd = creatCommand(CMD_OF_SETBACKLIGHT, CMDLEN_OF_SETBACKLIGHT);
-  if (on == true) {
-    cmd[4] = 1;
-  } else {
-    cmd[4] = 0;
-  }
-
-  writeCommand(cmd, CMDLEN_OF_SETBACKLIGHT);
-  free(cmd);
-}
-
 void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint16_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAWPIXEL, CMDLEN_OF_DRAWPIXEL);
@@ -54,17 +41,6 @@ void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint16_t color)
   cmd[8] = color >> 8;
   cmd[9] = color & 0xFF;
   writeCommand(cmd, CMDLEN_OF_DRAWPIXEL);
-  free(cmd);
-}
-
-void DFRobot_LcdDisplay::fillScreen(uint16_t color)
-{
-  uint8_t* cmd = creatCommand(CMD_OF_FILLSCREEN, CMDLEN_OF_FILLSCREEN);
-  cmd[4] = color >> 8;
-  cmd[5] = color & 0xFF;
-
-  writeCommand(cmd, CMDLEN_OF_FILLSCREEN);
-  delay(1500);
   free(cmd);
 }
 
@@ -188,61 +164,6 @@ void DFRobot_LcdDisplay::deleteRect(uint8_t id){
   deleteNodeByID((GenericNode**)&rect_head,id);
 }
 
-void DFRobot_LcdDisplay::fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color)
-{
-  uint8_t* cmd = creatCommand(CMD_OF_FILLRECT, CMDLEN_OF_FILLRECT);
-  cmd[4] = x >> 8;
-  cmd[5] = x & 0xFF;
-  cmd[6] = y >> 8;
-  cmd[7] = y & 0xFF;
-  cmd[8] = w >> 8;
-  cmd[9] = w & 0xFF;
-  cmd[10] = h >> 8;
-  cmd[11] = h & 0xFF;
-  cmd[12] = color >> 8;
-  cmd[13] = color & 0xFF;
-  writeCommand(cmd, CMDLEN_OF_FILLRECT);
-  free(cmd);
-}
-
-void DFRobot_LcdDisplay::drawRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
-  int16_t radius, uint16_t color)
-{
-  uint8_t* cmd = creatCommand(CMD_OF_DRAWROUNDRECT, CMDLEN_OF_DRAWROUNDRECT);
-  cmd[4] = x0 >> 8;
-  cmd[5] = x0 & 0xFF;
-  cmd[6] = y0 >> 8;
-  cmd[7] = y0 & 0xFF;
-  cmd[8] = w >> 8;
-  cmd[9] = w & 0xFF;
-  cmd[10] = h >> 8;
-  cmd[11] = h & 0xFF;
-  cmd[12] = radius & 0xFF;
-  cmd[13] = color >> 8;
-  cmd[14] = color & 0xFF;
-  writeCommand(cmd, CMDLEN_OF_DRAWROUNDRECT);
-  free(cmd);
-}
-
-void DFRobot_LcdDisplay::fillRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
-  int16_t radius, uint16_t color)
-{
-  uint8_t* cmd = creatCommand(CMD_OF_FILLROUNDRECT, CMDLEN_OF_FILLROUNDRECT);
-  cmd[4] = x0 >> 8;
-  cmd[5] = x0 & 0xFF;
-  cmd[6] = y0 >> 8;
-  cmd[7] = y0 & 0xFF;
-  cmd[8] = w >> 8;
-  cmd[9] = w & 0xFF;
-  cmd[10] = h >> 8;
-  cmd[11] = h & 0xFF;
-  cmd[12] = radius;
-  cmd[13] = color >> 8;
-  cmd[14] = color & 0xFF;
-  writeCommand(cmd, CMDLEN_OF_FILLROUNDRECT);
-  free(cmd);
-}
-
 uint8_t DFRobot_LcdDisplay::drawCircle(int16_t x, int16_t y, int16_t r, uint8_t borderWidth, uint32_t borderColor, uint8_t fill, uint32_t fillColor)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_CIRCLE, CMD_OF_DRAW_CIRCLE_LEN);
@@ -296,21 +217,6 @@ void DFRobot_LcdDisplay::deleteCircle(uint8_t id){
   writeCommand(cmd, CMD_DELETE_OBJ_LEN);
   free(cmd);
   deleteNodeByID((GenericNode**)&circle_head,id);
-}
-
-void DFRobot_LcdDisplay::fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
-{
-  uint8_t* cmd = creatCommand(CMD_OF_FILLCIRCLE, CMDLEN_OF_FILLCIRCLE);
-  cmd[4] = x0 >> 8;
-  cmd[5] = x0 & 0xFF;
-  cmd[6] = y0 >> 8;
-  cmd[7] = y0 & 0xFF;
-  cmd[8] = r;
-  cmd[9] = color >> 8;
-  cmd[10] = color & 0xFF;
-  writeCommand(cmd, CMDLEN_OF_FILLCIRCLE);
-  free(cmd);
-
 }
 
 uint8_t DFRobot_LcdDisplay::drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
@@ -380,28 +286,6 @@ void DFRobot_LcdDisplay::deleteTriangle(uint8_t id){
   writeCommand(cmd, CMD_DELETE_OBJ_LEN);
   free(cmd);
   deleteNodeByID((GenericNode**)&triangle_head,id);
-}
-
-void DFRobot_LcdDisplay::fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
-  int16_t x2, int16_t y2, uint16_t color)
-{
-  uint8_t* cmd = creatCommand(CMD_OF_FILLTRIANGLE, CMDLEN_OF_FILLTRIANGLE);
-  cmd[4] = x0 >> 8;
-  cmd[5] = x0 & 0xFF;
-  cmd[6] = y0 >> 8;
-  cmd[7] = y0 & 0xFF;
-  cmd[8] = x1 >> 8;
-  cmd[9] = x1 & 0xFF;
-  cmd[10] = y1 >> 8;
-  cmd[11] = y1 & 0xFF;
-  cmd[12] = x2 >> 8;
-  cmd[13] = x2 & 0xFF;
-  cmd[14] = y2 >> 8;
-  cmd[15] = y2 & 0xFF;
-  cmd[16] = color >> 8;
-  cmd[17] = color & 0xFF;
-  writeCommand(cmd, CMDLEN_OF_FILLTRIANGLE);
-  free(cmd);
 }
 
 uint8_t DFRobot_LcdDisplay::drawIcon(int16_t x, int16_t y, uint16_t iconNum, uint16_t size)
@@ -987,68 +871,6 @@ void DFRobot_LcdDisplay::deleteCompass(uint8_t id){
   writeCommand(cmd, CMD_DELETE_OBJ_LEN);
   free(cmd);
   deleteNodeByID((GenericNode**)&compass_head,id);
-}
-
-DFRobot_LcdDisplay::sControlinf_t* DFRobot_LcdDisplay::creatArc(uint16_t x, uint16_t y, uint8_t width, uint8_t height)
-{
-  sControlinf_t* arc = (sControlinf_t*)malloc(sizeof(sControlinf_t));
-  if (arc == NULL) {
-    DBG("BAR malloc fail !");
-  }
-  arc->x = x;
-  arc->y = y;
-  arc->width = width;
-  arc->height = height;
-  arc->color = RED;
-  arc->id = 3;   
-  arc->number = getNumber(1);
-  arc->inf = NULL;
-  sControlinf_t* obj = &head;
-  while (obj->inf != NULL) {
-    obj = obj->inf;
-  }
-  obj->inf = arc;
-
-  uint8_t* cmd = creatCommand(CMD_DRAW_LVGLARC, CMDLEN_DRAW_LVGLARC);
-  cmd[4] = arc->number;
-  cmd[5] = 0;
-  cmd[6] = x >> 8;
-  cmd[7] = x & 0xFF;
-  cmd[8] = y >> 8;
-  cmd[9] = y & 0xFF;
-  cmd[10] = width;
-  cmd[11] = height;
-  cmd[12] = arc->color >> 8;
-  cmd[13] = arc->color & 0xFF;
-
-  writeCommand(cmd, CMDLEN_DRAW_LVGLARC);
-  free(cmd);
-
-  return arc;
-
-}
-
-void DFRobot_LcdDisplay::setArcRotation(sControlinf_t* obj, uint16_t rotation)
-{
-  if (rotation > 359) rotation = 359;
-  uint8_t* cmd = creatCommand(CMD_DRAW_LVGLARC, CMDLEN_CHANGE_LVGLARC_ROTATION);
-  cmd[4] = obj->number;
-  cmd[5] = 1;
-  cmd[6] = 1;
-  cmd[7] = rotation >> 8;
-  cmd[8] = rotation & 0xFF;
-
-  writeCommand(cmd, CMDLEN_CHANGE_LVGLARC_ROTATION);
-  free(cmd);
-}
-
-void DFRobot_LcdDisplay::reset()
-{
-  uint8_t* cmd = creatCommand(CMD_RESET_LVGL, CMDLEN_RESET_LVGL);
-
-  writeCommand(cmd, CMDLEN_RESET_LVGL);
-  free(cmd);
-
 }
 
 uint8_t DFRobot_LcdDisplay::utf8toUnicode(uint8_t* utf8, uint16_t& uni)
@@ -1664,7 +1486,6 @@ bool DFRobot_Lcd_IIC::begin()
   _pWire->beginTransmission(_deviceAddr);
   if (_pWire->endTransmission() != 0) return false;
 
-  //setBackLight(true);
   return true;
 }
 

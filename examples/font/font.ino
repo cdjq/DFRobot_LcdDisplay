@@ -48,13 +48,17 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
+  lcd.cleanScreen();
+  delay(500);
   //set background color
   lcd.setBackgroundColor(/*Displaying the background color*/WHITE);
+ 
   //Drawing text
   //The fourth parameter is the font size, where 0 represents a font height of 24 pixels and 1 represents a font height of 12 pixels.
   //This parameter is only applicable to eChinese and eAscii text.
   labelId = lcd.drawString( 10, 10, "您好，世界hello,World012\n안녕하세요こんにちは\nПривет мирΓεια σου κόσμε", 0, RED);
   labelId = lcd.drawString( 10, 100, "您好，世界hello,World012\n안녕하세요こんにちは\nПривет мирΓεια σου κόσμε", 1, RED);
+  
 }
 
 void loop(void)

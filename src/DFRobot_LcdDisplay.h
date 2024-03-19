@@ -29,162 +29,159 @@
 #endif
 
 // color
-#define BLACK               0x000000
-#define BLUE                0x0000FF
-#define RED                 0xFF0000
-#define GREEN               0x00FF00
-#define CYAN                0x00FFFF
-#define MAGENTA             0xFF00FF
-#define YELLOW              0xFFFF00
-#define WHITE               0xFFFFFF
-#define NAVY                0x000080
-#define DARKGREEN           0x556B2F
-#define DARKCYAN            0x008B8B
-#define MAROON              0x800000
-#define PURPLE              0x800080
-#define OLIVE               0x808000
-#define LIGHTGREY           0xD3D3D3
-#define DARKGREY            0xA9A9A9
-#define ORANGE              0xFFA500
-#define GREENYELLOW         0x9ACD32
-#define DCYAN               0x008B8B
+#define BLACK               0x000000    // 黑色
+#define BLUE                0x0000FF    // 蓝色
+#define RED                 0xFF0000    // 红色
+#define GREEN               0x00FF00    // 绿色
+#define CYAN                0x00FFFF    // 青色
+#define MAGENTA             0xFF00FF    // 洋红色
+#define YELLOW              0xFFFF00    // 黄色
+#define WHITE               0xFFFFFF    // 白色
+#define NAVY                0x000080    // 海军蓝
+#define DARKGREEN           0x556B2F    // 深绿色
+#define DARKCYAN            0x008B8B    // 深青色
+#define MAROON              0x800000    // 栗色
+#define PURPLE              0x800080    // 紫色
+#define OLIVE               0x808000    // 橄榄色
+#define LIGHTGREY           0xD3D3D3    // 浅灰色
+#define DARKGREY            0xA9A9A9    // 深灰色
+#define ORANGE              0xFFA500    // 橙色
+#define GREENYELLOW         0x9ACD32    // 绿黄色
+#define DCYAN               0x008B8B    // 深青色
 
 // cmd len
-#define CMDLEN_OF_DRAWPIXEL        10
-#define CMDLEN_OF_FILLSCREEN       6
-#define CMDLEN_OF_SETBACKLIGHT     5
-#define CMDLEN_OF_DRAWLINE         14
-#define CMDLEN_OF_DRAWRECT         14
-#define CMDLEN_OF_FILLRECT         14
-#define CMDLEN_OF_DRAWROUNDRECT    15
-#define CMDLEN_OF_FILLROUNDRECT    15
-#define CMDLEN_OF_DRAWCIRCLE       11
-#define CMDLEN_OF_FILLCIRCLE       11
-#define CMDLEN_OF_DRAWTRIANGLE     18
-#define CMDLEN_OF_FILLTRIANGLE     18
-#define CMDLEN_OF_DRAWICON         13
-#define CMDLEN_OF_DRAWSTRING       36
-#define CMDLEN_OF_HEAD_LEN         3
+#define CMDLEN_OF_DRAWPIXEL        10    // 绘制像素的命令长度
+#define CMDLEN_OF_FILLSCREEN       6     // 填充屏幕的命令长度
+#define CMDLEN_OF_SETBACKLIGHT     5     // 设置背光的命令长度
+#define CMDLEN_OF_DRAWLINE         14    // 绘制线条的命令长度
+#define CMDLEN_OF_DRAWRECT         14    // 绘制矩形的命令长度
+#define CMDLEN_OF_FILLRECT         14    // 填充矩形的命令长度
+#define CMDLEN_OF_DRAWROUNDRECT    15    // 绘制圆角矩形的命令长度
+#define CMDLEN_OF_FILLROUNDRECT    15    // 填充圆角矩形的命令长度
+#define CMDLEN_OF_DRAWCIRCLE       11    // 绘制圆形的命令长度
+#define CMDLEN_OF_FILLCIRCLE       11    // 填充圆形的命令长度
+#define CMDLEN_OF_DRAWTRIANGLE     18    // 绘制三角形的命令长度
+#define CMDLEN_OF_FILLTRIANGLE     18    // 填充三角形的命令长度
+#define CMDLEN_OF_DRAWICON         13    // 绘制图标的命令长度
+#define CMDLEN_OF_DRAWSTRING       36    // 绘制字符串的命令长度
+#define CMDLEN_OF_HEAD_LEN         3     // 命令头长度
 
-#define CMDLEN_DRAW_LVGLSLIDER       14
-#define CMDLEN_DRAW_LVGLBAR          15
-#define CMDLEN_DRAW_LVGLARC          14
-#define CMDLEN_DRAW_LVGLGAUGE        14
-#define CMDLEN_DRAW_LVGLSTATION      14
-#define CMDLEN_DRAW_LVGLCOMPASS      14
-#define CMDLEN_DRAW_LVGLMETER        14
-#define CMDLEN_DRAW_LVGLCHART        14
+#define CMDLEN_DRAW_LVGLSLIDER       14    // 绘制LVGL滑块的命令长度
+#define CMDLEN_DRAW_LVGLBAR          15    // 绘制LVGL进度条的命令长度
+#define CMDLEN_DRAW_LVGLARC          14    // 绘制LVGL圆弧的命令长度
+#define CMDLEN_DRAW_LVGLGAUGE        14    // 绘制LVGL仪表盘的命令长度
+#define CMDLEN_DRAW_LVGLSTATION      14    // 绘制LVGL站点的命令长度
+#define CMDLEN_DRAW_LVGLCOMPASS      14    // 绘制LVGL指南针的命令长度
+#define CMDLEN_DRAW_LVGLMETER        14    // 绘制LVGL计量器的命令长度
+#define CMDLEN_DRAW_LVGLCHART        14    // 绘制LVGL图表的命令长度
 
-#define CMDLEN_CHANGE_LVGLARC_ROTATION       9
-#define CMDLEN_CHANGE_LVGLBAR_VALUE          9
-#define CMDLEN_CHANGE_LVGLSLIDER_VALUE       9
-#define CMDLEN_CHANGE_LVGLGAUGE_SCALE        10
-#define CMDLEN_CHANGE_LVGLGAUGE_RANGE        10
-#define CMDLEN_CHANGE_LVGLGAUGE_VALUE        8
-#define CMDLEN_CHANGE_LVGLCOMPASS_VALUE      8
-#define CMDLEN_CHANGE_LVGLMETER_SCALE        9
-#define CMDLEN_CHANGE_LVGLMETER_RANGE        10
-#define CMDLEN_CHANGE_LVGLMETER_VALUE        8
-#define CMDLEN_CHANGE_LVGLCHART_SERIE        9
-#define CMDLEN_CHANGE_LVGLCHART_POINT        9
-#define CMDLEN_CHANGE_LVGLSTATION_VALUE      9
+#define CMDLEN_CHANGE_LVGLARC_ROTATION       9    // 更改LVGL圆弧旋转的命令长度
+#define CMDLEN_CHANGE_LVGLBAR_VALUE          9    // 更改LVGL进度条值的命令长度
+#define CMDLEN_CHANGE_LVGLSLIDER_VALUE       9    // 更改LVGL滑块值的命令长度
+#define CMDLEN_CHANGE_LVGLGAUGE_SCALE        10   // 更改LVGL仪表盘刻度的命令长度
+#define CMDLEN_CHANGE_LVGLGAUGE_RANGE        10   // 更改LVGL仪表盘范围的命令长度
+#define CMDLEN_CHANGE_LVGLGAUGE_VALUE        8    // 更改LVGL仪表盘值的命令长度
+#define CMDLEN_CHANGE_LVGLCOMPASS_VALUE      8    // 更改LVGL指南针值的命令长度
+#define CMDLEN_CHANGE_LVGLMETER_SCALE        9    // 更改LVGL计量器刻度的命令长度
+#define CMDLEN_CHANGE_LVGLMETER_RANGE        10   // 更改LVGL计量器范围的命令长度
+#define CMDLEN_CHANGE_LVGLMETER_VALUE        8    // 更改LVGL计量器值的命令长度
+#define CMDLEN_CHANGE_LVGLCHART_SERIE        9    // 更改LVGL图表系列的命令长度
+#define CMDLEN_CHANGE_LVGLCHART_POINT        9    // 更改LVGL图表数据点的命令长度
+#define CMDLEN_CHANGE_LVGLSTATION_VALUE      9    // 更改LVGL站点值的命令长度
 
-#define CMDLEN_DEINIT_LVGL          5
-#define CMDLEN_RESET_LVGL           4
-#define CMDLEN_INIT_LVGL            7
+#define CMDLEN_DEINIT_LVGL          5     // LVGL反初始化的命令长度
+#define CMDLEN_RESET_LVGL           4     // LVGL重置的命令长度
+#define CMDLEN_INIT_LVGL            7     // LVGL初始化的命令长度
 
-#define CMD_DELETE_OBJ_LEN            0x06
-#define CMD_SET_TOP_OBJ_LEN           0x06
-#define CMD_SET_COMPASS_VALUE_LEN     0x07
-#define CMD_SET_LEN                   0x07
-#define CMD_SET_GAUGE_VALUE_LEN       0x07
-#define CMD_SET_LINE_METER_VALUE_LEN  0x07
-#define CMD_SET_BAR_VALUE_LEN         0x07
-#define CMD_SET_SLIDER_VALUE_LEN      0x07
-#define CMD_SET_ANGLE_OBJ_LEN         0x08
-#define CMD_DRAW_COMPASS_LEN          0x0B
-#define CMD_DRAW_CHART_LEN            0x09
-#define CMD_DRAW_SERIE_LEN            0x09
-#define CMD_OF_DRAW_ICON_INTERNAL_LEN 0x0D
-#define CMD_OF_DRAW_GIF_INTERNAL_LEN  0x0D
-#define CMD_OF_DRAW_BAR_LEN           0x10
-#define CMD_OF_DRAW_SLIDER_LEN        0x10
-#define CMD_DRAW_LINE_LEN             0x11
-#define CMD_OF_DRAW_CIRCLE_LEN        0x13
-#define CMD_OF_DRAW_GAUGE_LEN         0x15
-#define CMD_OF_DRAW_LINE_METER_LEN    0x15
-#define CMD_OF_DRAW_RECT_LEN          0x16
-#define CMD_OF_DRAW_TRIANGLE_LEN      0x19
-
+#define CMD_DELETE_OBJ_LEN            0x06    // 删除对象的命令长度
+#define CMD_SET_TOP_OBJ_LEN           0x06    // 设置顶部对象的命令长度
+#define CMD_SET_COMPASS_VALUE_LEN     0x07    // 设置指南针值的命令长度
+#define CMD_SET_LEN                   0x07    // 设置长度的命令长度
+#define CMD_SET_GAUGE_VALUE_LEN       0x07    // 设置仪表盘值的命令长度
+#define CMD_SET_LINE_METER_VALUE_LEN  0x07    // 设置线性仪表盘值的命令长度
+#define CMD_SET_BAR_VALUE_LEN         0x07    // 设置进度条值的命令长度
+#define CMD_SET_SLIDER_VALUE_LEN      0x07    // 设置滑块值的命令长度
+#define CMD_SET_ANGLE_OBJ_LEN         0x08    // 设置角度对象的命令长度
+#define CMD_DRAW_COMPASS_LEN          0x0B    // 绘制指南针的命令长度
+#define CMD_DRAW_CHART_LEN            0x09    // 绘制图表的命令长度
+#define CMD_DRAW_SERIE_LEN            0x09    // 绘制系列的命令长度
+#define CMD_OF_DRAW_ICON_INTERNAL_LEN 0x0D    // 绘制图标的内部命令长度
+#define CMD_OF_DRAW_GIF_INTERNAL_LEN  0x0D    // 绘制GIF的内部命令长度
+#define CMD_OF_DRAW_BAR_LEN           0x10    // 绘制进度条的命令长度
+#define CMD_OF_DRAW_SLIDER_LEN        0x10    // 绘制滑块的命令长度
+#define CMD_DRAW_LINE_LEN             0x11    // 绘制线条的命令长度
+#define CMD_OF_DRAW_CIRCLE_LEN        0x13    // 绘制圆形的命令长度
+#define CMD_OF_DRAW_GAUGE_LEN         0x15    // 绘制仪表盘的命令长度
+#define CMD_OF_DRAW_LINE_METER_LEN    0x15    // 绘制线性仪表盘的命令长度
+#define CMD_OF_DRAW_RECT_LEN          0x16    // 绘制矩形的命令长度
+#define CMD_OF_DRAW_TRIANGLE_LEN      0x19    // 绘制三角形的命令长度
 
 
 // cmd
-#define CMD_SET_BACKGROUND_COLOR      0x19
-#define CMD_SET_BACKGROUND_IMG        0x1A
+#define CMD_SET_BACKGROUND_COLOR      0x19    // 设置背景颜色的命令
+#define CMD_SET_BACKGROUND_IMG        0x1A    // 设置背景图像的命令
 
+#define CMD_OF_DRAW_LINE              0x03    // 绘制线条的命令
+#define CMD_OF_DRAW_RECT              0x04    // 绘制矩形的命令
+#define CMD_OF_DRAW_CIRCLE            0x06    // 绘制圆形的命令
+#define CMD_OF_DRAW_TRIANGLE          0x07    // 绘制三角形的命令
+#define CMD_OF_DRAW_ICON_INTERNAL     0x08    // 绘制内部图标的命令
+#define CMD_OF_DRAW_ICON_EXTERNAL     0x09    // 绘制外部图标的命令
+#define CMD_OF_DRAW_BAR               0x0A    // 绘制进度条的命令
+#define CMD_OF_DRAW_BAR_VALUE         0x0B    // 绘制进度条值的命令
+#define CMD_OF_DRAW_SLIDER            0x0C    // 绘制滑块的命令
+#define CMD_OF_DRAW_SLIDER_VALUE      0x0D    // 绘制滑块值的命令
+#define CMD_OF_DRAW_LINE_METER        0x10    // 绘制线性仪表盘的命令
+#define CMD_OF_DRAW_LINE_METER_VALUE  0x11    // 绘制线性仪表盘值的命令
+#define CMD_OF_DRAW_COMPASS           0x0E    // 绘制指南针的命令
+#define CMD_OF_DRAW_COMPASS_VALUE     0x0F    // 绘制指南针值的命令
+#define CMD_OF_DRAW_GAUGE             0x12    // 绘制仪表盘的命令
+#define CMD_OF_DRAW_GAUGE_VALUE       0x13    // 绘制仪表盘值的命令
+#define CMD_OF_DRAW_LINE_CHART        0x14    // 绘制折线图的命令
+#define CMD_OF_DRAW_LINE_CHART_TEXT   0x15    // 绘制折线图文本的命令
+#define CMD_OF_DRAW_SERIE             0x16    // 绘制系列的命令
+#define CMD_OF_DRAW_SERIE_DATA        0x17    // 绘制系列数据的命令
+#define CMD_OF_DRAW_TEXT              0x18    // 绘制文本的命令
+#define CMD_DELETE_OBJ                0x1B    // 删除对象的命令
+#define CMD_SET_TOP_OBJ               0x1C    // 设置顶部对象的命令
+#define CMD_SET_ANGLE_OBJ             0x1E    // 设置角度对象的命令
+#define CMD_OF_DRAW_GIF_INTERNAL      0x1F    // 绘制内部GIF的命令
 
-#define CMD_OF_DRAW_LINE              0x03
-#define CMD_OF_DRAW_RECT              0x04
-#define CMD_OF_DRAW_CIRCLE            0x06
-#define CMD_OF_DRAW_TRIANGLE          0x07
-#define CMD_OF_DRAW_ICON_INTERNAL     0x08
-#define CMD_OF_DRAW_ICON_EXTERNAL     0x09
-#define CMD_OF_DRAW_BAR               0x0A
-#define CMD_OF_DRAW_BAR_VALUE         0x0B
-#define CMD_OF_DRAW_SLIDER            0x0C
-#define CMD_OF_DRAW_SLIDER_VALUE      0x0D
-#define CMD_OF_DRAW_LINE_METER        0x10
-#define CMD_OF_DRAW_LINE_METER_VALUE  0x11
-#define CMD_OF_DRAW_COMPASS           0x0E
-#define CMD_OF_DRAW_COMPASS_VALUE     0x0F
-#define CMD_OF_DRAW_GAUGE             0x12
-#define CMD_OF_DRAW_GAUGE_VALUE       0x13
-#define CMD_OF_DRAW_LINE_CHART        0x14
-#define CMD_OF_DRAW_LINE_CHART_TEXT   0x15
-#define CMD_OF_DRAW_SERIE             0x16
-#define CMD_OF_DRAW_SERIE_DATA        0x17
-#define CMD_OF_DRAW_TEXT              0x18
-#define CMD_DELETE_OBJ                0x1B
-#define CMD_SET_TOP_OBJ               0x1C
-#define CMD_SET_ANGLE_OBJ             0x1E
-#define CMD_OF_DRAW_GIF_INTERNAL      0x1F
+#define CMD_OF_DRAWPIXEL        2     // 绘制像素的命令
+#define CMD_OF_DRAWLINE         3     // 绘制线条的命令
+#define CMD_OF_DRAWRECT         4     // 绘制矩形的命令
+#define CMD_OF_DRAWROUNDRECT    5     // 绘制圆角矩形的命令
+#define CMD_OF_DRAWCIRCLE       6     // 绘制圆形的命令
+#define CMD_OF_DRAWTRIANGLE     7     // 绘制三角形的命令
+#define CMD_OF_SETBACKLIGHT     8     // 设置背光的命令
+#define CMD_OF_FILLSCREEN       9     // 填充屏幕的命令
+#define CMD_OF_FILLRECT         10    // 填充矩形的命令
+#define CMD_OF_FILLROUNDRECT    11    // 填充圆角矩形的命令
+#define CMD_OF_FILLCIRCLE       12    // 填充圆形的命令
+#define CMD_OF_FILLTRIANGLE     13    // 填充三角形的命令
 
-#define CMD_OF_DRAWPIXEL        2
-#define CMD_OF_DRAWLINE         3
-#define CMD_OF_DRAWRECT         4
-#define CMD_OF_DRAWROUNDRECT    5
-#define CMD_OF_DRAWCIRCLE       6
-#define CMD_OF_DRAWTRIANGLE     7
-#define CMD_OF_SETBACKLIGHT     8
-#define CMD_OF_FILLSCREEN       9
-#define CMD_OF_FILLRECT         10
-#define CMD_OF_FILLROUNDRECT    11
-#define CMD_OF_FILLCIRCLE       12
-#define CMD_OF_FILLTRIANGLE     13
+#define CMD_OF_DRAWICON         20    // 绘制图标的命令
+#define CMD_OF_DRAWSTRING       21    // 绘制字符串的命令
+#define CMD_OF_DRAWDISKIMG      23    // 绘制磁盘图像的命令
 
-#define CMD_OF_DRAWICON         20
-#define CMD_OF_DRAWSTRING       21
-#define CMD_OF_DRAWDISKIMG      23
+#define CMD_DRAW_LVGLSLIDER     31    // 绘制LVGL滑块的命令
+#define CMD_DRAW_LVGLBAR        32    // 绘制LVGL进度条的命令
+#define CMD_DRAW_LVGLARC        33    // 绘制LVGL圆弧的命令
+#define CMD_DRAW_LVGLGAUGE      34    // 绘制LVGL仪表盘的命令
+#define CMD_DRAW_LVGLSTATION    35    // 绘制LVGL站点的命令
+#define CMD_DRAW_LVGLCOMPASS    36    // 绘制LVGL指南针的命令
+#define CMD_DRAW_LVGLLINEMETER  37    // 绘制LVGL线性仪表盘的命令
+#define CMD_DRAW_LVGLCHART      38    // 绘制LVGL图表的命令
 
-#define CMD_DRAW_LVGLSLIDER     31
-#define CMD_DRAW_LVGLBAR        32
-#define CMD_DRAW_LVGLSLIDER     31
-#define CMD_DRAW_LVGLARC        33
-#define CMD_DRAW_LVGLGAUGE      34
-#define CMD_DRAW_LVGLSTATION    35
-#define CMD_DRAW_LVGLCOMPASS    36
-#define CMD_DRAW_LVGLLINEMETER  37
-#define CMD_DRAW_LVGLCHART      38
+#define CMD_RESET_LVGL          0x80    // 重置LVGL的命令
+#define CMD_INIT_LVGL           0x81    // 初始化LVGL的命令
+#define CMD_DEINIT_LVGL         0x82    // 反初始化LVGL的命令
 
-#define CMD_RESET_LVGL          0x80
-#define CMD_INIT_LVGL           0x81
-#define CMD_DEINIT_LVGL         0x82
-
-#define CMD_HEADER_HIGH         0x55
-#define CMD_HEADER_LOW          0xaa
+#define CMD_HEADER_HIGH         0x55    // 命令头高位
+#define CMD_HEADER_LOW          0xaa    // 命令头低位
 
 #ifndef LCD_UNUSED
-#define LCD_UNUSED(x) ((void) x)
+#define LCD_UNUSED(x) ((void) x)        // 定义未使用的宏
 #endif
 
 
@@ -656,21 +653,8 @@ public:
    * @param font font type, eLcdFont_t
    */
   void setFont(eLcdFont_t font);
-  /**
-   * @fn fillScreen
-   * @brief Fill the entire screen
-   * @param color color to fill screen, RGB565 format
-   */
-  void fillScreen(uint16_t color);
 
   void cleanScreen();
-
-  /**
-   * @fn setBackLight
-   * @brief Set screen backlight.
-   * @param on true(on)/false(off)
-   */
-  void setBackLight(bool on);
 
   /**
    * @fn drawLine
@@ -750,43 +734,6 @@ public:
   void deleteRect(uint8_t id);
 
   /**
-   * @fn fillRect
-   * @brief Fill a rectangle on the screen
-   * @param x Start of rectangle x coordinate
-   * @param y Start of rectangle y coordinate
-   * @param w  Width of a rectangle
-   * @param h  Height of rectangle
-   * @param color Rectangular color
-   */
-  void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
-
-  /**
-   * @fn drawRoundRect
-   * @brief Draw rounded rectangles on the screen
-   * @param x0 Start of rectangle x coordinate
-   * @param y0 Start of rectangle y coordinate
-   * @param w  Width of a rectangle
-   * @param h  Height of rectangle
-   * @param radius  Radius of the rounded corners
-   * @param color Rectangular color
-   */
-  void drawRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
-    int16_t radius, uint16_t color);
-
-  /**
-   * @fn fillRoundRect
-   * @brief Fill a rounded rectangle on the screen
-   * @param x0 Start of rectangle x coordinate
-   * @param y0 Start of rectangle y coordinate
-   * @param w  Width of a rectangle
-   * @param h  Height of rectangle
-   * @param radius  Radius of the rounded corners
-   * @param color Rectangular color
-   */
-  void fillRoundRect(int16_t x0, int16_t y0, int16_t w, int16_t h,
-    int16_t radius, uint16_t color);
-
-  /**
    * @fn drawCircle
    * @brief Draw circles on the screen
    * @param x Center of the circle x coordinate
@@ -820,16 +767,6 @@ public:
    * @param id circles id
    */
   void deleteCircle(uint8_t id);
-
-  /**
-   * @fn fillCircle
-   * @brief Fill the circle on the screen
-   * @param x0 Center of the circle x coordinate
-   * @param y0 Center of the circle y coordinate
-   * @param r  Radius of the circle
-   * @param color Color of the circle
-   */
-  void fillCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color);
 
   /**
    * @fn drawTriangle
@@ -871,20 +808,6 @@ public:
    * @param id Triangle id
    */
   void deleteTriangle(uint8_t id);
-
-  /**
-   * @fn fillTriangle
-   * @brief Fill a triangle on the screen
-   * @param x0 The x-coordinate of the first point of the triangle
-   * @param y0 The y-coordinate of the first point of the triangle
-   * @param x1 The x-coordinate of the second point of the triangle
-   * @param y1 The y-coordinate of the second point of the triangle
-   * @param x2 The x-coordinate of the third point of the triangle
-   * @param y2 The y-coordinate of the third point of the triangle
-   * @param color Color of the circle
-   */
-  void fillTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
-    int16_t x2, int16_t y2, uint16_t color);
 
   /**
    * @fn drawIcon
@@ -1160,25 +1083,6 @@ public:
   void deleteCompass(uint8_t id);
 
   /**
-   * @fn creatArc
-   * @brief Creating an angle control
-   * @param x The x-axis coordinate of the control
-   * @param y The y-axis coordinate of the control
-   * @param width  Control width
-   * @param height Control height
-   * @return Handle of the angle control
-   */
-  sControlinf_t* creatArc(uint16_t x, uint16_t y, uint8_t width, uint8_t height);
-
-  /**
-   * @fn setArcRotation
-   * @brief Set the value of the angle control
-   * @param obj Handle of the angle control
-   * @param rotation the new value
-   */
-  void setArcRotation(sControlinf_t* obj, uint16_t rotation);
-
-  /**
    * @fn creatLineMeter
    * @brief Create a linear gauge control
    * @param x The x-axis coordinate of the control
@@ -1288,12 +1192,6 @@ public:
    * @param obj Delete the handle of a control object
    */
   void lvglDelete(sControlinf_t* obj);
-
-  /**
-   * @fn reset
-   * @brief Reset the display screen. After the display screen is reset, all the created lvgl controls will be deleted, and the displayed content will be cleared as well.
-   */
-  void reset();
 
 private:
   TwoWire* _pWire;

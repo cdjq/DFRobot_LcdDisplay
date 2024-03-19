@@ -95,9 +95,9 @@ void setup(void)
   lcd.begin();
   lcd.setBackgroundColor(BLACK);
   lcd.cleanScreen();
-  delay(1000);
+  delay(500);
 
-  //Create the icon, remember to display the icon first, icon on the "dot and line character", there will be interference coverage
+  //Create the icon, remember to display the icon first, icon on the "dot and line character", there will be interference coverage 
   
   lcd.drawIcon(20, 0, lcd.eIconRainbow1, 350);
   

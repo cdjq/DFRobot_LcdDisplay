@@ -46,42 +46,50 @@ uint32_t generateRandomColor() {
 }
 uint8_t barId[11];
 void testBar(){
-  barId[0] = lcd.creatBar(/*x = */0, /*y = */10, /*width=*/10, /*height=*/200, /*progress bar color*/RED);
-  lcd.setBar(barId[0],50);
-  for(uint8_t i = 0; i <= 10; i++){
-    barColor = generateRandomColor();
-    lcd.updateBar(barId[0],i*31, 10, 10, 200, barColor);
-    delay(100);
-  }
+	//创建一个竖状的进度条
+    barId[0] = lcd.creatBar(/*x = */0, /*y = */10, /*width=*/10, /*height=*/200, /*progress bar color*/RED);
+    //将该进度条的值设置为50
+    lcd.setBar(barId[0],50);
+    //更改该进度条的位置(从左到右)，颜色设置为随机色，
+    for(uint8_t i = 0; i <= 10; i++){
+      barColor = generateRandomColor();
+      lcd.updateBar(barId[0],i*31, 10, 10, 200, barColor);
+      delay(100);
+    }
+  	//更改该进度条的位置(从右到左)，颜色设置为随机色，
+    for(uint8_t i = 0; i <= 10; i++){
+      barColor = generateRandomColor();
+      lcd.updateBar(barId[0],310-i*31, 10, 10, 200, barColor);
+      delay(100);
+    }
+    delay(1000);
+    //从左到右依次创建多个随机颜色，高度依次递减的进度条
+    for(uint8_t i = 1; i <= 10; i++){
+      barColor = generateRandomColor();
+      barId[i] = lcd.creatBar(i*31, 10, 10, 200 - i*10, barColor);
+      delay(100);
+      
+    }
+    delay(1000);
+    //依次给每个进度条设置随机值
+    for(uint8_t i = 0; i<=10; i++){
+      lcd.setBar(barId[i],rand()%100);
+      delay(100);
+    }
+    delay(1000);
+    //依次更改进度条，更改其位置、宽、高、颜色，将其改为水平进度条的效果
+    for(uint8_t i = 0; i<=10; i++){
+      barColor = generateRandomColor();
+      lcd.updateBar(barId[i], 10, i*23, 310 -i*20 , 10, barColor);
+      delay(100);
+    }
+    delay(1000);
+    //一个一个删除所有进度条
+    for(uint8_t i = 0 ; i <= 10; i++){
+      lcd.deleteBar(barId[i]);
+      delay(100);
+    }
 
-  for(uint8_t i = 0; i <= 10; i++){
-    barColor = generateRandomColor();
-    lcd.updateBar(barId[0],310-i*31, 10, 10, 200, barColor);
-    delay(100);
-  }
-  delay(1000);
-  for(uint8_t i = 1; i <= 10; i++){
-    barColor = generateRandomColor();
-    barId[i] = lcd.creatBar(i*31, 10, 10, 200 - i*10, barColor);
-    delay(100);
-    
-  }
-  delay(1000);
-  for(uint8_t i = 0; i<=10; i++){
-    lcd.setBar(barId[i],rand()%100);
-    delay(100);
-  }
-  delay(1000);
-  for(uint8_t i = 0; i<=10; i++){
-    barColor = generateRandomColor();
-    lcd.updateBar(barId[i], 10, i*23, 310 -i*20 , 10, barColor);
-    delay(100);
-  }
-  delay(1000);
-  for(uint8_t i = 0 ; i <= 10; i++){
-    lcd.deleteBar(barId[i]);
-    delay(100);
-  }
 }
 
 void setup(void)
@@ -97,6 +105,8 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
+  lcd.cleanScreen();
+  delay(500);
   //Initializing 
   lcd.setBackgroundColor(/*Displaying the background color*/WHITE);
   
@@ -107,5 +117,3 @@ void loop(void)
   testBar();
   delay(1000);
 }
-
-

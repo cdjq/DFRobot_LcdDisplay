@@ -33,7 +33,7 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-//填充颜色
+//滑块颜色
 uint32_t sliderColor = 0x00FF00;
 //产生随机颜色
 uint32_t generateRandomColor() {
@@ -44,42 +44,48 @@ uint32_t generateRandomColor() {
 }
 uint8_t sliderId[11];
 void testSlider(){
-  sliderId[0] = lcd.creatSlider(/*x = */0, /*y = */10, /*width=*/10, /*height=*/200, /*color*/RED);
-  lcd.setSliderValue(sliderId[0],50);
-  for(uint8_t i = 0; i <= 10; i++){
-    sliderColor = generateRandomColor();
-    lcd.updateSlider(sliderId[0],i*31, 10, 10, 200, sliderColor);
-    delay(100);
-  }
-
-  for(uint8_t i = 0; i <= 10; i++){
-    sliderColor = generateRandomColor();
-    lcd.updateSlider(sliderId[0],310-i*31, 10, 10, 200, sliderColor);
-    delay(100);
-  }
-  delay(1000);
-  for(uint8_t i = 1; i <= 10; i++){
-    sliderColor = generateRandomColor();
-    sliderId[i] = lcd.creatSlider(i*31, 10, 10, 200 - i*10, sliderColor);
-    delay(100);
-    
-  }
-  delay(1000);
-  for(uint8_t i = 0; i<=10; i++){
-    lcd.setSliderValue(sliderId[i],rand()%100);
-    delay(100);
-  }
-  delay(1000);
-  for(uint8_t i = 0; i<=10; i++){
-    sliderColor = generateRandomColor();
-    lcd.updateSlider(sliderId[i], 10, i*23, 310 -i*20 , 10, sliderColor);
-    delay(100);
-  }
-  delay(1000);
-  for(uint8_t i = 0 ; i <= 10; i++){
-    lcd.deleteSlider(sliderId[i]);
-    delay(100);
-  }
+	//创建一个竖状的滑块
+    sliderId[0] = lcd.creatSlider(/*x = */0, /*y = */10, /*width=*/10, /*height=*/200, /*color*/RED);
+    //将该滑块的值设置为50
+    lcd.setSliderValue(sliderId[0],50);
+    //更改该滑块的位置(从左到右)，颜色设置为随机色
+    for(uint8_t i = 0; i <= 10; i++){
+      sliderColor = generateRandomColor();
+      lcd.updateSlider(sliderId[0],i*31, 10, 10, 200, sliderColor);
+      delay(100);
+    }
+    //更改该滑块的位置(从右到左)，颜色设置为随机色
+    for(uint8_t i = 0; i <= 10; i++){
+      sliderColor = generateRandomColor();
+      lcd.updateSlider(sliderId[0],310-i*31, 10, 10, 200, sliderColor);
+      delay(100);
+    }
+    delay(1000);
+    //从左到右依次创建多个随机颜色，高度依次递减的滑块
+    for(uint8_t i = 1; i <= 10; i++){
+      sliderColor = generateRandomColor();
+      sliderId[i] = lcd.creatSlider(i*31, 10, 10, 200 - i*10, sliderColor);
+      delay(100);
+    }
+    delay(1000);
+    //依次给每个滑块设置随机值
+    for(uint8_t i = 0; i<=10; i++){
+      lcd.setSliderValue(sliderId[i],rand()%100);
+      delay(100);
+    }
+    delay(1000);
+    //依次更改滑块，更改其位置、宽、高、颜色，将其改为水平滑块的效果
+    for(uint8_t i = 0; i<=10; i++){
+      sliderColor = generateRandomColor();
+      lcd.updateSlider(sliderId[i], 10, i*23, 310 -i*20 , 10, sliderColor);
+      delay(100);
+    }
+    delay(1000);
+    //一个一个删除所有的滑块
+    for(uint8_t i = 0 ; i <= 10; i++){
+      lcd.deleteSlider(sliderId[i]);
+      delay(100);
+    }
   
 }
 
@@ -96,6 +102,8 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
+  lcd.cleanScreen();
+  delay(500);
   //Initializing 
   lcd.setBackgroundColor(WHITE);
   testSlider();

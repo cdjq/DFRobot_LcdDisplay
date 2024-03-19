@@ -112,7 +112,10 @@ void setup(void)
 
   lcd.begin();
   //Initializing 
+  lcd.cleanScreen();
+  delay(500);
   lcd.setBackgroundColor(WHITE);
+  
 }
 
 void loop(void)

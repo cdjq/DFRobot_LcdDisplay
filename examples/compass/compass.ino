@@ -89,9 +89,11 @@ void setup(void)
   Serial.begin(115200);
 
   lcd.begin();
-  //Initializing 
-  lcd.setBackgroundColor(GREEN);
+  lcd.cleanScreen();
   delay(200);
+  //Initializing 
+  lcd.setBackgroundColor(WHITE);
+
   testCompass();
 }
 

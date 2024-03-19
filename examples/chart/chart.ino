@@ -122,10 +122,13 @@ void setup(void)
   #endif
 
   Serial.begin(115200);
-  delay(1000);
+  
 
   lcd.begin();
-  lcd.setBackgroundColor(GREEN);
+  lcd.cleanScreen();
+  delay(500);
+  lcd.setBackgroundColor(WHITE);
+  
   
 }
 
