@@ -7,7 +7,8 @@
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
  * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
- * @version  V1.0
+ * @maintainer [GDuang](yonglei.ren@dfrobot.com)
+ * @version  V2.0
  * @date  2024-03-19
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */

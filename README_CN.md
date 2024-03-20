@@ -1,5 +1,5 @@
 # DFRobot_LcdDisplay
-- [English Version](./README.md)
+- [中文版](./README_CN.md)
 
   该产品是一块I2C驱动和UART的tft显示屏,屏幕里面内置固件,集成了部分lvgl控件,和GDL图形显示
 并在硬件上集成了一块GT30L24A3W字库芯片,支持多个国家的语言显示,并且在固件芯片上内置
@@ -379,19 +379,19 @@
 
   /**
    * @fn creatChart
-   * @brief 创建一个表格控件
+   * @brief 创建一个图表控件
    * @param strX 在图表的x轴上标记
    * @param strY 在图表的y轴上标记
    * @param bgColor 背景颜色
    * @param type 图表类型(折线图/条形图)
-   * @return 表格控件句柄
+   * @return 图表控件句柄
    */
   uint8_t creatChart(String strX, String strY, uint32_t bgColor, uint8_t type);
 
   /**
    * @fn updateChart
-   * @brief 更新表格控件
-   * @param id 表格控件句柄
+   * @brief 更新图表控件
+   * @param id 图表控件句柄
    * @param bgColor 背景颜色
    * @param type 图表类型(折线图/条形图)
    */
@@ -400,7 +400,7 @@
   /**
    * @fn creatChartSeries
    * @brief 在图表中创建折线图或条形图序列
-   * @param chartId 表格控件句柄
+   * @param chartId 图表控件句柄
    * @param color 折线图/条形图的颜色
    * @return 返回序列的索引
    */
@@ -409,7 +409,7 @@
   /**
    * @fn updateChartSeries
    * @brief 更新图表中的折线图或条形图序列
-   * @param chartId 表格控件句柄
+   * @param chartId 图表控件句柄
    * @param seriesId 数据序列的索引
    * @param color 折线图/条形图的颜色
    */
@@ -418,7 +418,7 @@
   /**
    * @fn addChart
    * @brief 分配一个数据序列并将其添加到图表中
-   * @param chartId 表格控件句柄
+   * @param chartId 图表控件句柄
    * @param SeriesId 分配的数据序列
    * @param point 曲线图/条形图需要一组数据
    * @param len  数组长度
@@ -428,8 +428,8 @@
 
   /**
    * @fn updateChartPoint
-   * @brief 更新表格中某点的值
-   * @param chartId 表格控件句柄
+   * @brief 更新图表中某点的值
+   * @param chartId 图表控件句柄
    * @param SeriesId 分配的数据序列号
    * @param pointNum 点编号
    * @param value  值
@@ -439,16 +439,16 @@
   /**
    * 
    * @fn setTopChart
-   * @brief 设置表格控件在最顶层的图层
-   * @param id 表格控件句柄
+   * @brief 设置图表控件在最顶层的图层
+   * @param id 图表控件句柄
    */
   void setTopChart(uint8_t id);
 
   /**
    * 
    * @fn deleteChart
-   * @brief 删除表格控件
-   * @param id 表格控件句柄
+   * @brief 删除图表控件
+   * @param id 图表控件句柄
    */
   void deleteChart(uint8_t id);
 
@@ -517,8 +517,8 @@
 
   /**
    * @fn updateCompass
-   * @brief Update a compass control
-   * @param id指南针控件句柄
+   * @brief 更新指南针控件
+   * @param id 指南针控件句柄
    * @param x 控件的x轴坐标
    * @param y 控件的y轴坐标
    * @param diameter  指南针控件直径
@@ -581,14 +581,13 @@
 
   /**
    * @fn setMeterValue
-   * @brief 在线形仪表控件上设置一个新值
-   * @param obj 线形仪表控件的id
+   * @brief 在线形仪表控件上设置指定值
+   * @param lineMeterId 线形仪表控件句柄
    * @param value 新值
    */
   void setMeterValue(uint8_t lineMeterId, uint16_t value);
 
   /**
-   * 
    * @fn deleteLineMeter
    * @brief 删除线性仪表控件
    * @param id 线性仪表控件的id
@@ -596,7 +595,6 @@
   void deleteLineMeter(uint8_t id);
 
   /**
-   * 
    * @fn setTopLineMeter
    * @brief 设置线性仪表在最顶层的图层显示
    * @param id 线性仪表控件的id
@@ -611,12 +609,13 @@
    * @param str 要显示的文本
    * @param fontSize 文字大小(只适用于中文及英文):0 (24px大小)，1 (12px大小)
    * @param color 文本颜色
+   * @return 文本控件句柄
    */
   uint8_t drawString(uint16_t x, uint16_t y, String str, uint8_t fontSize, uint32_t color);
 
   /**
    * @fn updateString
-   * @brief 在屏幕上更新显示设置的时间
+   * @brief 在屏幕上更新显示的文本
    * @param id 控件id
    * @param x 起始位置的x坐标
    * @param y 起始位置的y坐标
@@ -643,6 +642,7 @@
    * @param seconds 秒
    * @param fontSize 字体大小
    * @param color 字体颜色
+   * @return 时间控件句柄
    */
   uint8_t drawLcdTime(uint8_t x, uint8_t y, uint8_t hour, uint8_t Minute, uint8_t seconds, uint8_t fontSize, uint16_t color);
 

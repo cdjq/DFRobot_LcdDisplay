@@ -7,8 +7,8 @@
  * @author [fengli](li.feng@dfrobot.com)
  * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @maintainer [GDuang](yonglei.ren@dfrobot.com)
- * @version  V1.0
- * @date  2024-03-19
+ * @version  V2.0
+ * @date  2024-03-20
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #ifndef DFROBOT_LCDDISPLAY_H_
@@ -117,11 +117,9 @@
 #define CMD_OF_DRAW_RECT_LEN          0x16
 #define CMD_OF_DRAW_TRIANGLE_LEN      0x19
 
-
 // cmd
 #define CMD_SET_BACKGROUND_COLOR      0x19
 #define CMD_SET_BACKGROUND_IMG        0x1A
-
 
 #define CMD_OF_DRAW_LINE              0x03
 #define CMD_OF_DRAW_RECT              0x04
@@ -188,11 +186,9 @@
 #define LCD_UNUSED(x) ((void) x)
 #endif
 
-
 class DFRobot_LcdDisplay
 {
 public:
-
   /**
    * @enum sLcdIcon_t
    * @brief To display different icons using the library, you can select the corresponding enum for the desired icon.
@@ -209,7 +205,6 @@ public:
     eIconFireExtinguisher,
     eIconFire,
     eIconHydrant,
-
     eIconLeft,
     eIconLifeladder,
     eIconMedicalCare,
@@ -222,7 +217,6 @@ public:
     eIconCry,
     eIconCute,
     eIconDepressed,
-
     eIconDizzy,
     eIconEmbarrassed,
     eIconFunny,
@@ -233,7 +227,6 @@ public:
     eIconResentful,
     eIconSad,
     eIconSerious,
-
     eIconShy,
     eIconSmile,
     eIconSurprised,
@@ -246,7 +239,6 @@ public:
     eIconAntenna,
     eIconBattery,
     eIconBluetooth,
-
     eIconBulb,
     eIconCarbonDioxide,
     eIconColor,
@@ -257,8 +249,6 @@ public:
     eIconLiquid,
     eIconMicrophone,
     eIconMountain,
-
-
     eIconPressure,
     eIconRaindrops,
     eIconThermometer,
@@ -271,8 +261,6 @@ public:
     eIconBird,
     eIconButterfly,
     eIconCaterpillar,
-
-
     eIconChick,
     eIconChicken,
     eIconChipmunk,
@@ -283,7 +271,6 @@ public:
     eIconDragon,
     eIconElephant,
     eIconHorse,
-
     eIconMonkey,
     eIconOwl,
     eIconPig,
@@ -294,8 +281,6 @@ public:
     eIconSnake,
     eIconTurtle,
     eIconUnicorn,
-
-
     eIconWasp,
     eIconWorm,
 
@@ -308,8 +293,6 @@ public:
     eIconEcoAccumulatorBattery,
     eIconGlassRecycle,
     eIconGlobalWarming,
-
-
     eIconGreenPower,
     eIconGreenEnergy,
     eIconGreenhouse,
@@ -320,8 +303,6 @@ public:
     eIconProtectEarth,
     eIconRainLandscape,
     eIconRecyclingCar,
-
-
     eIconRelaxLandscape,
     eIconSolar,
     eIconTap,
@@ -334,8 +315,6 @@ public:
     eIconBeachBed,
     eIconBeachUmbrella8,
     eIconChristmasStocking,
-
-
     eIconCoconut,
     eIconFan,
     eIconFireplace,
@@ -346,8 +325,6 @@ public:
     eIconSanta,
     eIconShorts,
     eIconSlipper,
-
-    
     eIconSnowman,
     eIconSunny,
     eIconSweater,
@@ -360,8 +337,6 @@ public:
     // transport icons
     eIconAirplane,
     eIconAmbulance,
-
-
     eIconAutomobile,
     eIconBicycle,
     eIconBus,
@@ -372,21 +347,18 @@ public:
     eIconHighSpeedRailway,
     eIconHorizontalTrafficLight,
     eIconKickScooter,
-
-
     eIconMotorScooter,
     eIconMotorway,
     eIconOncomingTaxi,
     eIconPoliceCar,
     eIconTractor,
     eIconVerticalTrafficLight,
+
     // Agriculture icons
     eIconBarn,
     eIconBarrier,
     eIconBoots,
     eIconCutWood,
-
-
     eIconEggs,
     eIconFertilizer,
     eIconFruits,
@@ -397,12 +369,11 @@ public:
     eIconStorageBucket,
     eIconTool,
     eIconTractor2,
-
-
     eIconVegetables,
     eIconWateringCan,
     eIconWellWater,
     eIconWheelbarrow,
+
     // people icons
     eIconDesigner,
     eIconDiver,
@@ -410,8 +381,6 @@ public:
     eIconLabScientist,
     eIconMagicianMale,
     eIconNurse,
-
-
     eIconPhotographerMale,
     eIconPolice,
     eIconProgrammerMale,
@@ -424,8 +393,6 @@ public:
     eIconAvocado,
     eIconBanana,
     eIconBeerMug,
-
-
     eIconBentoBox,
     eIconBirthdayCake,
     eIconBread,
@@ -436,8 +403,6 @@ public:
     eIconChocolateBar,
     eIconCutOfMeat,
     eIconEarOfCorn,
-
-
     eIconEgg,
     eIconFrenchFries,
     eIconGrapes,
@@ -448,21 +413,18 @@ public:
     eIconPineapple,
     eIconPopcorn,
     eIconPotato,
-
-
     eIconRedApple,
     eIconSalad,
     eIconShaomai,
     eIconSandwich,
     eIconShortcake,
     eIconStrawberry,
+
     // Numeric graphic icons
     eIconArrowDown,
     eIconArrowLeft,
     eIconArrowRight,
     eIconArrowUp,
-
-
     eIconDiamond,
     eIconEight,
     eIconFive,
@@ -473,8 +435,6 @@ public:
     eIconOctagon,
     eIconOne,
     eIconPentagon,
-
-
     eIconRectangle,
     eIconSeven,
     eIconSix,
@@ -484,10 +444,9 @@ public:
     eIconTwo,
     eIconWindmillShape,
     eIconZero,
+
     // Weather icons
     eIconCloudy,
-
-
     eIconMoon,
     eIconLightning,
     eIconMoonCloudy,
@@ -498,9 +457,8 @@ public:
     eIconSnow,
     eIconSonwy,
     eIconSunnyCloudy,
-
-
     eIconWhirlwind,
+
     // Music icons
     eIconAccordion,
     eIconBassDrum,
@@ -511,8 +469,6 @@ public:
     eIconGuitar,
     eIconHarmonica,
     eIconHarp,
-
-
     eIconHeadphones,
     eIconMelodica,
     eIconMusic,
@@ -523,9 +479,8 @@ public:
     eIconSaxophone,
     eIconSpeakerAudio,
     eIconTrumpet,
-
-
     eIconXylophone,
+
     // Sports icons
     eIconBadminton,
     eIconBasketball,
@@ -536,8 +491,6 @@ public:
     eIconDiving,
     eIconDumbbell,
     eIconGolf,
-
-
     eIconIceHockey,
     eIconKarate,
     eIconPingPong,
@@ -550,8 +503,6 @@ public:
     eIconBranch,
     eIconCactus1,
     eIconCactus2,
-
-
     eIconCactus3,
     eIconDeciduousTree,
     eIconDecorativePottedPlants,
@@ -562,12 +513,10 @@ public:
     eIconPalmTree,
     eIconPottedPlantFlower,
     eIconRose,
-
     eIconRose1,
     eIconSunflower,
     eIconSunflower1,
     eIconTulips,
-
   }sLcdIcon_t;
 
   /**
@@ -664,14 +613,14 @@ public:
    * @param y1 End Y-coordinate of the line.
    * @param width line width
    * @param color the color of the line, RGB888 format
-   * @return line id
+   * @return line control handle
    */
   uint8_t drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint8_t width, uint32_t color);
 
   /**
    * @fn updateLine
    * @brief Update a straight line on the screen.
-   * @param id Line id
+   * @param id Line control handle
    * @param x0 Start X-coordinate of the line.
    * @param y0 Start Y-coordinate of the line.
    * @param x1 End X-coordinate of the line.
@@ -685,7 +634,7 @@ public:
    * 
    * @fn deleteLine
    * @brief Delete line
-   * @param id line id
+   * @param id line control handle
    */
   void deleteLine(uint8_t id);
 
@@ -701,7 +650,7 @@ public:
    * @param fill fill
    * @param fillColor fill color
    * @param rounded rounded
-   * @return rect id
+   * @return rect control handle
    * 
    */
   uint8_t drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint8_t borderWidth, uint32_t borderColor, uint8_t fill, uint32_t fillColor, uint8_t rounded);
@@ -709,7 +658,7 @@ public:
   /**
    * @fn updateRect
    * @brief update rectangles on the screen
-   * @param id rectangles id
+   * @param id rectangles control handle
    * @param x Start of rectangle x coordinate
    * @param y Start of rectangle y coordinate
    * @param w  Width of a rectangle
@@ -727,7 +676,7 @@ public:
    * 
    * @fn deleteRect
    * @brief Delete rectangles
-   * @param id rectangles id
+   * @param id rectangles control handle
    */
   void deleteRect(uint8_t id);
 
@@ -741,14 +690,14 @@ public:
    * @param borderColor border Color
    * @param fill fill
    * @param fillColor fill color
-   * @return circle id
+   * @return circle control handle
    */
   uint8_t drawCircle(int16_t x, int16_t y, int16_t r, uint8_t borderWidth, uint32_t borderColor, uint8_t fill, uint32_t fillColor);
 
   /**
    * @fn updateCircle
    * @brief Update circles on the screen
-   * @param id Circles id
+   * @param id Circles control handle
    * @param x Center of the circle x coordinate
    * @param y Center of the circle y coordinate
    * @param r  Radius of the circle
@@ -763,7 +712,7 @@ public:
    * 
    * @fn deleteCircle
    * @brief Delete circles
-   * @param id circles id
+   * @param id circles control handle
    */
   void deleteCircle(uint8_t id);
 
@@ -780,14 +729,14 @@ public:
    * @param borderColor border color
    * @param fill fill
    * @param fillColor fill color
-   * @return triangle id
+   * @return triangle control handle
    */
   uint8_t drawTriangle(int16_t x0, int16_t y0, int16_t x1, int16_t y1, int16_t x2, int16_t y2, uint8_t borderWidth, uint32_t borderColor, uint8_t fill, uint32_t fillColor);
 
  /**
    * @fn updateTriangle
    * @brief Draw a triangle on the screen
-   * @param id triangle id
+   * @param id triangle control handle
    * @param x0 The x-coordinate of the first point of the triangle
    * @param y0 The y-coordinate of the first point of the triangle
    * @param x1 The x-coordinate of the second point of the triangle
@@ -805,7 +754,7 @@ public:
    * 
    * @fn deleteTriangle
    * @brief Delete Triangles
-   * @param id Triangle id
+   * @param id Triangle control handle
    */
   void deleteTriangle(uint8_t id);
 
@@ -814,11 +763,11 @@ public:
    * @brief Draw an icon
    * @param x The x-coordinate of the first point of the icon
    * @param y The y-coordinate of the first point of the icon
-   * @param id The icon's corresponding number
+   * @param iconNum The icon's corresponding number
    * @param size Icon scaling factor
-   * @return Icon id
+   * @return Icon control handle
    */
-  uint8_t drawIcon(int16_t x, int16_t y, uint16_t id, uint16_t size = 255);
+  uint8_t drawIcon(int16_t x, int16_t y, uint16_t iconNum, uint16_t size = 255);
 
   /**
    * @fn drawIcon
@@ -827,14 +776,14 @@ public:
    * @param y The y-coordinate of the first point of the icon
    * @param str Picture path
    * @param zoom Icon scaling factor
-   * @return Icon id
+   * @return Icon control handle
    */
   uint8_t drawIcon(int16_t x, int16_t y, String str, uint16_t zoom);
   
   /**
    * @fn setAngleIcon
    * @brief Set the Angle of the icon
-   * @param id 
+   * @param id Icon control handle
    * @param angle rotation angle
    */
   void setAngleIcon(uint8_t id, int16_t angle);
@@ -862,7 +811,7 @@ public:
   /**
    * @fn deleteIcon
    * @brief Delete icon
-   * @param id The id of the icon control
+   * @param id Icon control handle
    */
   void deleteIcon(uint8_t id);
 
@@ -871,11 +820,11 @@ public:
    * @brief Draw gif
    * @param x The x-coordinate of the first point of the gif
    * @param y The y-coordinate of the first point of the gif
-   * @param id The enumerated value corresponding to the GIF
+   * @param gifNum The enumerated value corresponding to the GIF
    * @param size GIF scaling factor
-   * @return GIF control id
+   * @return GIF control handle
    */
-  uint8_t drawGif(int16_t x, int16_t y, uint16_t id, uint16_t size = 255);
+  uint8_t drawGif(int16_t x, int16_t y, uint16_t gifNum, uint16_t size = 255);
 
   /**
    * @fn drawGif
@@ -884,14 +833,14 @@ public:
    * @param y The y-coordinate of the first point of the icon
    * @param str Picture path
    * @param zoom Icon scaling factor
-   * @return Gif id
+   * @return Gif control handle
    */
   uint8_t drawGif(int16_t x, int16_t y, String str, uint16_t zoom);
 
   /**
    * @fn deleteGif
-   * @brief Delete the GIF control
-   * @param id GIF control id
+   * @brief Delete the Gif control
+   * @param id Gif control handle
    */
   void deleteGif(uint8_t id);
 
@@ -910,6 +859,7 @@ public:
   /**
    * @fn updateSlider
    * @brief Update a slider control
+   * @param id Slider control handle
    * @param x The x-coordinate of the slider
    * @param y The y-coordinate of the slider
    * @param width The width of the slider
@@ -930,7 +880,7 @@ public:
    * 
    * @fn deleteSlider
    * @brief Delete slider
-   * @param id slider id
+   * @param id slider control handle
    */
   void deleteSlider(uint8_t id);
 
@@ -942,14 +892,14 @@ public:
    * @param width Width of the progress bar
    * @param height Height of the progress bar
    * @param color Color of the progress bar
-   * @return Bar id
+   * @return Bar control handle
    */
   uint8_t creatBar(uint16_t x, uint16_t y, uint16_t width, uint8_t height, uint32_t color);
 
   /**
    * @fn updateBar
    * @brief Update a progress bar control
-   * @param id Bar id
+   * @param id Bar control handle
    * @param x The x coordinate of the progress bar
    * @param y The y coordinate of the progress bar
    * @param width Width of the progress bar
@@ -970,7 +920,7 @@ public:
    * 
    * @fn deleteBar
    * @brief Delete bar
-   * @param id bar id
+   * @param id bar control handle
    */
   void deleteBar(uint8_t id);
 
@@ -988,7 +938,7 @@ public:
   /**
    * @fn updateChart
    * @brief Update a chart control
-   * @param id Chart id
+   * @param id Chart control handle
    * @param bgColor background color
    * @param type Type of chart (line chart / bar chart)
    */
@@ -997,7 +947,7 @@ public:
   /**
    * @fn creatChartSeries
    * @brief Create a line chart or bar chart sequence in the chart
-   * @param chartId chart id
+   * @param chartId chart control handle
    * @param color Color of line chart/bar chart
    * @return Return the index of the series
    */
@@ -1006,7 +956,7 @@ public:
   /**
    * @fn updateChartSeries
    * @brief Update a line chart or bar chart sequence in the chart
-   * @param chartId chart id
+   * @param chartId chart control handle
    * @param seriesId series id
    * @param color Color of line chart/bar chart
    */
@@ -1026,7 +976,7 @@ public:
   /**
    * @fn updateChartPoint
    * @brief Update the value of a point in the table
-   * @param chartId chart id
+   * @param chartId chart control handle
    * @param seriesId series id
    * @param pointNum point number
    * @param value  new value
@@ -1036,7 +986,7 @@ public:
    * 
    * @fn setTopChart
    * @brief Set Top chart
-   * @param id chart id
+   * @param id chart control handle
    */
   void setTopChart(uint8_t id);
 
@@ -1044,7 +994,7 @@ public:
    * 
    * @fn deleteChart
    * @brief Delete chart
-   * @param id chart id
+   * @param id chart control handle
    */
   void deleteChart(uint8_t id);
 
@@ -1065,6 +1015,7 @@ public:
   /**
    * @fn updateGauge
    * @brief update a dial control
+   * @param id gauge control handle
    * @param x The x-axis coordinate of the control
    * @param y The y-axis coordinate of the control
    * @param diameter  Gauge diameter
@@ -1088,7 +1039,7 @@ public:
   /**
    * @fn setGaugeValue
    * @brief Sets the value indicated by the dial
-   * @param gaugeId gauge id
+   * @param gaugeId gauge control handle
    * @param value the new value
    */
   void setGaugeValue(uint8_t gaugeId, uint16_t value);
@@ -1097,7 +1048,7 @@ public:
    * 
    * @fn deleteGauge
    * @brief Delete gauge
-   * @param id gauge id
+   * @param id gauge control handle
    */
   void deleteGauge(uint8_t id);
 
@@ -1107,14 +1058,14 @@ public:
    * @param x The x-axis coordinate of the control
    * @param y The y-axis coordinate of the control
    * @param diameter  Compass diameter
-   * @return compass id
+   * @return compass control handle
    */
   uint8_t creatCompass(uint16_t x, uint16_t y, uint16_t diameter);
 
   /**
    * @fn updateCompass
    * @brief Update a compass control
-   * @param id compass id
+   * @param id compass control handle
    * @param x The x-axis coordinate of the control
    * @param y The y-axis coordinate of the control
    * @param diameter  Compass diameter
@@ -1124,7 +1075,7 @@ public:
   /**
    * @fn setCompassScale
    * @brief Setting the angle of the compass pointer
-   * @param compassId compass id
+   * @param compassId compass control handle
    * @param scale Pointer angle(0~360)
    */
   void setCompassScale(uint8_t compassId, uint16_t scale);
@@ -1133,7 +1084,7 @@ public:
    * 
    * @fn deleteCompass
    * @brief Delete compass
-   * @param id compass id
+   * @param id compass control handle
    */
   void deleteCompass(uint8_t id);
 
@@ -1154,7 +1105,7 @@ public:
   /**
    * @fn updateLineMeter
    * @brief update a linear gauge control
-   * @param id
+   * @param id linear gauge control handle
    * @param x The x-axis coordinate of the control
    * @param y The y-axis coordinate of the control
    * @param size  LineMeter size
@@ -1178,7 +1129,7 @@ public:
   /**
    * @fn setMeterValue
    * @brief Set a new value on the line meter
-   * @param lineMeterId line meter id
+   * @param lineMeterId line meter control handle
    * @param value new value
    */
   void setMeterValue(uint8_t lineMeterId, uint16_t value);
@@ -1187,7 +1138,7 @@ public:
    * 
    * @fn deleteLineMeter
    * @brief Delete LineMeter
-   * @param id LineMeter id
+   * @param id LineMeter control handle
    */
   void deleteLineMeter(uint8_t id);
 
@@ -1195,7 +1146,7 @@ public:
    * 
    * @fn setTopLineMeter
    * @brief Set Top LineMeter
-   * @param id LineMeter id
+   * @param id LineMeter control handle
    */
   void setTopLineMeter(uint8_t id);
 
@@ -1213,7 +1164,7 @@ public:
   /**
    * @fn updateString
    * @brief Change text on the screen
-   * @param id Text id
+   * @param id Text control handle
    * @param x The x-coordinate of the starting position
    * @param y The y-coordinate of the starting position
    * @param str The text to display
@@ -1225,7 +1176,7 @@ public:
   /**
    * @fn deleteString
    * @brief Delete text on the screen
-   * @param id Text id
+   * @param id Text control handle
    */
   void deleteString(uint8_t id);
 
@@ -1239,6 +1190,7 @@ public:
    * @param seconds second
    * @param fontSize font size
    * @param color Color of text
+   * @return time control handle
    */
   uint8_t drawLcdTime(uint8_t x, uint8_t y, uint8_t hour, uint8_t Minute, uint8_t seconds, uint8_t fontSize, uint16_t color);
 

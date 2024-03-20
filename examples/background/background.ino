@@ -5,7 +5,8 @@
  * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
- * @version  V1.0
+ * @author [GDuang](yonglei.ren@dfrobot.com)
+ * @version  V2.0
  * @date  2024-03-19
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */

@@ -12,39 +12,70 @@ DFRobot_Lcd_UART	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
+begin               KEYWORD2
+setBackgroundColor  KEYWORD2
+setBackgroundImg    KEYWORD2
+cleanScreen         KEYWORD2
+drawPixel           KEYWORD2
+drawLine            KEYWORD2
+updateLine          KEYWORD2
+deleteLine          KEYWORD2
+drawRect            KEYWORD2
+updateRect          KEYWORD2
+deleteRect          KEYWORD2
+drawCircle          KEYWORD2
+updateCircle        KEYWORD2
+deleteCircle        KEYWORD2
+drawTriangle        KEYWORD2
+updateTriangle      KEYWORD2
+deleteTriangle      KEYWORD2
+drawIcon            KEYWORD2
+setAngleIcon        KEYWORD2
+updateIcon          KEYWORD2
+updateIcon          KEYWORD2
+deleteIcon          KEYWORD2
+drawGif             KEYWORD2
+deleteGif           KEYWORD2
+creatSlider         KEYWORD2
+updateSlider        KEYWORD2
+setSliderValue      KEYWORD2
+deleteSlider        KEYWORD2
+creatBar            KEYWORD2
+updateBar           KEYWORD2
+setBar              KEYWORD2
+deleteBar           KEYWORD2
+creatChart          KEYWORD2
+updateChart         KEYWORD2
+creatChartSeries    KEYWORD2
+updateChartSeries   KEYWORD2
+addChartSeriesData  KEYWORD2
+updateChartPoint    KEYWORD2
+setTopChart         KEYWORD2
+deleteChart         KEYWORD2
+creatGauge          KEYWORD2
+updateGauge         KEYWORD2
+setGaugeScale       KEYWORD2
+setGaugeValue       KEYWORD2
+deleteGauge         KEYWORD2
+creatCompass        KEYWORD2
+updateCompass       KEYWORD2
+setCompassScale     KEYWORD2
+void deleteCompass  KEYWORD2
+creatLineMeter      KEYWORD2
+updateLineMeter     KEYWORD2
+setMeterScale       KEYWORD2
+setMeterValue       KEYWORD2
+deleteLineMeter     KEYWORD2
+setTopLineMeter     KEYWORD2
+drawString          KEYWORD2
+updateString        KEYWORD2
+deleteString        KEYWORD2
+drawLcdTime         KEYWORD2
+updateLcdTime       KEYWORD2
+drawLcdDate         KEYWORD2
 
-begin	KEYWORD2
 
-drawPixel	KEYWORD2
-drawLine	KEYWORD2
-drawRect	KEYWORD2
-drawCircle	KEYWORD2
-drawTriangle	KEYWORD2
-drawIcon	KEYWORD2
-  
-creatSlider	KEYWORD2
-setSliderValue	KEYWORD2
-creatBar	KEYWORD2
-setBar	KEYWORD2
-creatChart	KEYWORD2
-setChartTickTexts	KEYWORD2 
-creatGauge	KEYWORD2
-setCompassScale	KEYWORD2
-setGaugeScale	KEYWORD2
-setGaugeRange	KEYWORD2
-setGaugeValue	KEYWORD2
-creatCompass	KEYWORD2
-addChart	KEYWORD2
-creatLineMeter	KEYWORD2
-creatChartSerie	KEYWORD2
-addChartPoint	KEYWORD2
-setMeterValue	KEYWORD2
-setMeterScale	KEYWORD2
-setMeterRange	KEYWORD2
-drawString	KEYWORD2
-drawStringHepler	KEYWORD2
-drawLcdDate	KEYWORD2
-drawLcdTime	KEYWORD2
+
 
 #######################################
 # Constants (LITERAL1)
@@ -372,7 +403,6 @@ eThailand	LITERAL1
 eAlb	LITERAL1
 eKhmer	LITERAL1
 eKorean	LITERAL1
-
 
 BLACK	LITERAL1
 BLUE	LITERAL1

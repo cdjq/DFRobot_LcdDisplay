@@ -7,8 +7,8 @@
  * @author [fengli](li.feng@dfrobot.com)
  * @maintainer [qsjhyy](yihuan.huang@dfrobot.com)
  * @maintainer [GDuang](yonglei.ren@dfrobot.com)
- * @version  V1.0
- * @date  2024-03-19
+ * @version  V2.0
+ * @date  2024-03-20
  * @url https://github.com/DFRobot/DFRobot_LcdDisplay
  */
 #include "DFRobot_LcdDisplay.h"
@@ -564,9 +564,7 @@ uint8_t DFRobot_LcdDisplay::getNumber(uint8_t id)
 uint8_t DFRobot_LcdDisplay:: getNewID(sGenericNode_t** head) {
     uint8_t id = 1;
     sGenericNode_t* temp = *head;
-    if(temp == NULL){
-      // Serial.println("NULL");
-    }
+    if(temp == NULL){}
 
     while (temp) {
         id = temp->id + 1; 
@@ -589,7 +587,6 @@ uint8_t DFRobot_LcdDisplay:: getNewID(sGenericNode_t** head) {
     } else {
         id = 0; 
     }
-    // Serial.println(id);
     return id;
 }
 
@@ -781,7 +778,6 @@ void DFRobot_LcdDisplay::deleteGauge(uint8_t id){
   deleteNodeByID((GenericNode**)&gauge_head,id);
 }
 
-
 uint8_t DFRobot_LcdDisplay::creatCompass(uint16_t x, uint16_t y, uint16_t diameter)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_COMPASS,CMD_DRAW_COMPASS_LEN);
@@ -886,8 +882,6 @@ uint8_t DFRobot_LcdDisplay::utf8toUnicode(uint8_t* utf8, uint16_t& uni)
       uni <<= 6;
       uni |= (utf8[index] & 0x03f);
       index++;
-
-
     }
     lenght = 2;
   } else if (utf8[index] <= 0x80) {
@@ -924,7 +918,6 @@ void DFRobot_LcdDisplay::setBackgroundImg(uint8_t location, String str){
 uint16_t DFRobot_LcdDisplay::getWordLen(uint8_t* utf8, uint8_t len)
 {
   uint16_t index = 0;
-  // uint32_t uni = 0;
   uint16_t length = 0;DBG("\n");
   DBG("len=");DBG(len);
   while (index < len) {
@@ -1322,7 +1315,6 @@ void DFRobot_LcdDisplay::deleteChart(uint8_t id){
   deleteNodeByID((GenericNode**)&line_chart_head,id);
 }
 
-
 void DFRobot_LcdDisplay::setMeterValue(uint8_t lineMeterId, uint16_t value)
 {
 
@@ -1397,8 +1389,7 @@ void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
   if (pBuf == NULL) {
     DBG("pBuf ERROR!! : null pointer");
   }
-  // Serial.print("len = ");
-  // Serial.println(len);
+
   while (bytesToSend > 0) {
     uint16_t currentTransferSize = (bytesToSend < 32) ? bytesToSend : 32;
     
@@ -1428,7 +1419,6 @@ void DFRobot_Lcd_IIC::readACK(uint8_t* pBuf, uint16_t len)
   }
 
 }
-
 
 DFRobot_Lcd_UART::DFRobot_Lcd_UART(Stream& s)
 {
