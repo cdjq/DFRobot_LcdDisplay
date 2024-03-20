@@ -308,7 +308,7 @@ uint8_t DFRobot_LcdDisplay::drawIcon(int16_t x, int16_t y, uint16_t iconNum, uin
 }
 
 uint8_t DFRobot_LcdDisplay::drawIcon(int16_t x, int16_t y, String str, uint16_t zoom){
-  char* data = str.c_str();
+  const char* data = str.c_str();
   uint8_t length = strlen(data);
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_ICON_EXTERNAL, length + 11);
   uint8_t id = getID(CMD_OF_DRAW_ICON_INTERNAL);
@@ -352,7 +352,7 @@ void DFRobot_LcdDisplay::updateIcon(uint8_t iconId, int16_t x, int16_t y, uint16
 }
 
 void DFRobot_LcdDisplay::updateIcon(uint8_t iconId, int16_t x, int16_t y, String str, uint16_t zoom){
-  char* data = str.c_str();
+  const char* data = str.c_str();
   uint8_t length = strlen(data);
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_ICON_EXTERNAL, length + 11);
   cmd[4] = iconId;
@@ -390,6 +390,25 @@ uint8_t DFRobot_LcdDisplay::drawGif(int16_t x, int16_t y, uint16_t gifNum, uint1
   cmd[11] = y >> 8;
   cmd[12] = y & 0xFF;
   writeCommand(cmd, CMD_OF_DRAW_GIF_INTERNAL_LEN);
+  free(cmd);
+  return id;
+}
+
+uint8_t DFRobot_LcdDisplay::drawGif(int16_t x, int16_t y, String str, uint16_t zoom)
+{
+  const char* data = str.c_str();
+  uint8_t length = strlen(data);
+  uint8_t* cmd = creatCommand(CMD_OF_DRAW_GIF_EXTERNAL, length + 11);
+  uint8_t id = getID(CMD_OF_DRAW_GIF_INTERNAL);
+  cmd[4] = id;
+  cmd[5] = zoom >> 8;
+  cmd[6] = zoom & 0xFF;
+  cmd[7] = x >> 8;
+  cmd[8] = x & 0xFF;
+  cmd[9] = y >> 8;
+  cmd[10] = y & 0xFF;
+  memcpy(cmd+11, data, length);
+  writeCommand(cmd, length + 11);
   free(cmd);
   return id;
 }
@@ -546,7 +565,7 @@ uint8_t DFRobot_LcdDisplay:: getNewID(sGenericNode_t** head) {
     uint8_t id = 1;
     sGenericNode_t* temp = *head;
     if(temp == NULL){
-      Serial.println("NULL");
+      // Serial.println("NULL");
     }
 
     while (temp) {
@@ -570,7 +589,7 @@ uint8_t DFRobot_LcdDisplay:: getNewID(sGenericNode_t** head) {
     } else {
         id = 0; 
     }
-    Serial.println(id);
+    // Serial.println(id);
     return id;
 }
 
@@ -582,7 +601,8 @@ void DFRobot_LcdDisplay::deleteNodeByID(sGenericNode_t** head, uint8_t id) {
     sGenericNode_t* prev = NULL;
 
     if (temp != NULL && temp->id == id) {
-        *head = temp->next; 
+        // *head = temp->next; 
+        *head = static_cast<DFRobot_LcdDisplay::sGenericNode_t*>(temp->next);
         free(temp); 
         if (*head == NULL) {
             return;
@@ -715,7 +735,6 @@ void DFRobot_LcdDisplay::updateGauge(uint8_t id, uint16_t x, uint16_t y, uint16_
   cmd[20] = y & 0xFF;
   writeCommand(cmd, CMD_OF_DRAW_GAUGE_LEN);
   free(cmd);
- return id;
 }
 
 void DFRobot_LcdDisplay::setGaugeScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end)
@@ -881,37 +900,6 @@ uint8_t DFRobot_LcdDisplay::utf8toUnicode(uint8_t* utf8, uint16_t& uni)
   return lenght;
 }
 
-void DFRobot_LcdDisplay::drawStringHepler(uint16_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color, uint16_t fgColor)
-{
-
-
-  uint8_t* cmd = creatCommand(CMD_OF_DRAWSTRING, lenght + 13);
-  if (cmd == NULL) {
-    DBG("cmd null");
-  }
-  cmd[4] = x >> 8;
-  cmd[5] = x & 0xFF;
-  cmd[6] = y;
-
-  cmd[7] = type;
-  cmd[8] = color >> 8;
-  cmd[9] = color & 0xFF;
-  cmd[10] = fgColor >> 8;
-  cmd[11] = fgColor & 0xFF;
-  cmd[12] = _font;
-  for (uint8_t i = 0;i < lenght;i++) {
-    cmd[13 + i] = uni[i];
-  }
-  writeCommand(cmd, lenght + 13);
-  free(cmd);
-
-}
-
-void DFRobot_LcdDisplay::setFont(eLcdFont_t font)
-{
-  _font = font;
-}
-
 void DFRobot_LcdDisplay::setBackgroundColor(uint32_t bg_color)
 {
   uint8_t* cmd = creatCommand(CMD_SET_BACKGROUND_COLOR, CMD_SET_LEN);
@@ -924,7 +912,7 @@ void DFRobot_LcdDisplay::setBackgroundColor(uint32_t bg_color)
 }
 
 void DFRobot_LcdDisplay::setBackgroundImg(uint8_t location, String str){
-  char* data = str.c_str();
+  const char* data = str.c_str();
   uint8_t length = strlen(data);
   uint8_t* cmd = creatCommand(CMD_SET_BACKGROUND_IMG, length + 5);
   cmd[4] = location;
@@ -982,7 +970,7 @@ uint16_t DFRobot_LcdDisplay::getWordLen(uint8_t* utf8, uint8_t len)
 
 uint8_t DFRobot_LcdDisplay::drawString(uint16_t x, uint16_t y, String str, uint8_t fontSize, uint32_t color)
 {
-  char* data = str.c_str();
+  const char* data = str.c_str();
   uint8_t length = strlen(data);
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_TEXT, length + 13);
   uint8_t id = getID(CMD_OF_DRAW_TEXT);
@@ -1003,7 +991,7 @@ uint8_t DFRobot_LcdDisplay::drawString(uint16_t x, uint16_t y, String str, uint8
 
 void DFRobot_LcdDisplay::updateString(uint8_t id, uint16_t x, uint16_t y, String str, uint8_t fontSize, uint32_t color)
 {
-  char* data = str.c_str();
+  const char* data = str.c_str();
   uint16_t length = strlen(data);
   if(length > 242){
     length = 242;
@@ -1409,8 +1397,8 @@ void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
   if (pBuf == NULL) {
     DBG("pBuf ERROR!! : null pointer");
   }
-  Serial.print("len = ");
-  Serial.println(len);
+  // Serial.print("len = ");
+  // Serial.println(len);
   while (bytesToSend > 0) {
     uint16_t currentTransferSize = (bytesToSend < 32) ? bytesToSend : 32;
     

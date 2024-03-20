@@ -133,9 +133,9 @@ void setup(void)
   setHum(rand()%100);
   setWind(rand()%100);
 
-  lcd.drawGif(0, 80, 1, 160);     // Rain icon
-  lcd.drawGif(115, 0, 3, 120);    // Sun icon
-  lcd.drawGif(115, 120, 2, 120);  // Wind icon
+  lcd.drawGif(0, 80, lcd.eGifRain, 160);     // Rain icon
+  lcd.drawGif(115, 0, lcd.eGifSun, 120);    // Sun icon
+  lcd.drawGif(115, 120, lcd.eGifWind, 120);  // Wind icon
 
   MsTimer2::set(1000, flash);        // Interrupt setting function, enter interrupt every 1000ms
   MsTimer2::start();                 // start counting  

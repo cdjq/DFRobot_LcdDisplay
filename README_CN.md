@@ -52,14 +52,6 @@
   void setBackgroundImg(uint8_t location, String str);
 
   /**
-   * @fn setFont
-   * @brief 设置字体，便于计算连续的字体显示位置
-   * @param font 字体类型
-   */
-  void setFont(eLcdFont_t font);
-
-
-  /**
    * @fn cleanScreen
    * @brief 清屏，清除屏幕中的所有控件对象
    */
@@ -288,12 +280,22 @@
   uint8_t drawGif(int16_t x, int16_t y, uint16_t id, uint16_t size = 255);
 
   /**
+   * @fn drawGif
+   * @brief 绘制外置动图
+   * @param x 动图第一个点的x坐标
+   * @param y 动图第一个点的y坐标
+   * @param str 动图路径
+   * @param zoom 动图缩放系数
+   * @return 动图控件句柄
+   */
+  uint8_t drawGif(int16_t x, int16_t y, String str, uint16_t zoom);
+
+  /**
    * @fn updateIcon
    * @brief 删除动图控件
    * @param id 动图控件句柄
    */
   void deleteGif(uint8_t id);
-
 
   /**
    * @fn creatSlider

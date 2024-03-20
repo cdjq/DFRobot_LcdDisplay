@@ -36,6 +36,13 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
+/**
+ * User-selectable macro definition color
+ * BLACK BLUE RED GREEN CYAN MAGENTA
+ * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
+ * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
+ * GREENYELLOW DCYAN
+ */
 // fill color
 uint32_t barColor = 0x00FF00;
 // Generate random colors

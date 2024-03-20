@@ -118,7 +118,6 @@
 #define CMD_OF_DRAW_TRIANGLE_LEN      0x19
 
 
-
 // cmd
 #define CMD_SET_BACKGROUND_COLOR      0x19
 #define CMD_SET_BACKGROUND_IMG        0x1A
@@ -149,6 +148,7 @@
 #define CMD_SET_TOP_OBJ               0x1C
 #define CMD_SET_ANGLE_OBJ             0x1E
 #define CMD_OF_DRAW_GIF_INTERNAL      0x1F
+#define CMD_OF_DRAW_GIF_EXTERNAL      0x20
 
 #define CMD_OF_DRAWPIXEL        2
 #define CMD_OF_DRAWLINE         3
@@ -571,21 +571,14 @@ public:
   }sLcdIcon_t;
 
   /**
-   * @enum eLcdFont_t
-   * @brief When using fonts, pass the following enums to the setFont() function to select different fonts
+   * @enum sLcdGif_t
+   * @brief To display different gifs using the library, you can select the corresponding enum for the desired gif.
    */
   typedef enum {
-    eChinese,/**<Chinese*/
-    eShiftJis,/**<Japanese*/
-    eAscii,/**<ACSII*/
-    eGreece,/**<Greek*/
-    eCyrillic,/**<Cyrillic*/
-    eHebrew,/**<Hebrew*/
-    eThailand,/**<Greek for unequal width*/
-    eAlb,/**<Arabic*/
-    eKhmer,/**<khmer*/
-    eKorean,/**<Korean*/
-  }eLcdFont_t;
+    eGifRain = 1,/**<Chinese*/
+    eGifWind,/**<Japanese*/
+    eGifSun,/**<ACSII*/
+  }sLcdGif_t;
 
   /**
     * @struct sControlinf_t
@@ -651,19 +644,15 @@ public:
   void setBackgroundImg(uint8_t location, String str);
 
   /**
-   * @fn setFont
-   * @brief Set font for easy calculation of consecutive font display positions.
-   * @param font font type, eLcdFont_t
-   */
-  void setFont(eLcdFont_t font);
-
-  /**
    * @fn cleanScreen
    * @brief Clear the screen to clear all control objects on the screen
    */
   void cleanScreen();
 
-
+  /**
+   * @fn drawPixel
+   * @brief Draw pixels on the screen
+   */
   void drawPixel(int16_t x, int16_t y, uint16_t color);
 
   /**
@@ -889,12 +878,22 @@ public:
   uint8_t drawGif(int16_t x, int16_t y, uint16_t id, uint16_t size = 255);
 
   /**
+   * @fn drawGif
+   * @brief Draw the gif on the USB flash drive
+   * @param x The x-coordinate of the first point of the icon
+   * @param y The y-coordinate of the first point of the icon
+   * @param str Picture path
+   * @param zoom Icon scaling factor
+   * @return Gif id
+   */
+  uint8_t drawGif(int16_t x, int16_t y, String str, uint16_t zoom);
+
+  /**
    * @fn deleteGif
    * @brief Delete the GIF control
    * @param id GIF control id
    */
   void deleteGif(uint8_t id);
-
 
   /**
    * @fn creatSlider
@@ -908,7 +907,7 @@ public:
    */
   uint8_t creatSlider(uint16_t x, uint16_t y, uint16_t width, uint16_t height, uint16_t color);
 
-    /**
+  /**
    * @fn updateSlider
    * @brief Update a slider control
    * @param x The x-coordinate of the slider
@@ -1287,7 +1286,6 @@ private:
   sGenericNode_t *slider_head = NULL;
   sGenericNode_t *icon_head = NULL;
   sGenericNode_t *gif_head = NULL;
-  eLcdFont_t _font = eAscii;
   uint8_t _deviceAddr;
 
   uint16_t getWordLen(uint8_t* utf8, uint8_t len);
@@ -1295,7 +1293,6 @@ private:
   uint8_t addChartPoint(sControlinf_t* obj, uint8_t id, uint16_t value);
   uint8_t setChartTickTexts(sControlinf_t* obj, String xtext, String ytext);
   uint8_t setChartAxisTexts(uint8_t chartId, uint8_t axis, String text);
-  void drawStringHepler(uint16_t x, uint8_t y, uint8_t* uni, uint8_t lenght, uint8_t type, uint16_t color, uint16_t fgColor);
   uint8_t getNewID(sGenericNode_t** head);
   void deleteNodeByID(sGenericNode_t** head, uint8_t id);
   uint8_t getNumber(uint8_t id);

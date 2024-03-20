@@ -50,13 +50,6 @@ To use this library, please download the library file first, and paste it into t
   void setBackgroundImg(uint8_t location, String str);
 
   /**
-   * @fn setFont
-   * @brief Set font for easy calculation of consecutive font display positions.
-   * @param font font type, eLcdFont_t
-   */
-  void setFont(eLcdFont_t font);
-
-  /**
    * @fn cleanScreen
    * @brief Clear the screen to clear all control objects on the screen
    */
@@ -285,12 +278,22 @@ To use this library, please download the library file first, and paste it into t
   uint8_t drawGif(int16_t x, int16_t y, uint16_t id, uint16_t size = 255);
 
   /**
+   * @fn drawGif
+   * @brief Draw the gif on the USB flash drive
+   * @param x The x-coordinate of the first point of the icon
+   * @param y The y-coordinate of the first point of the icon
+   * @param str Picture path
+   * @param zoom Icon scaling factor
+   * @return Gif id
+   */
+  uint8_t drawGif(int16_t x, int16_t y, String str, uint16_t zoom);
+
+  /**
    * @fn deleteGif
    * @brief Delete the GIF control
    * @param id GIF control id
    */
   void deleteGif(uint8_t id);
-
 
   /**
    * @fn creatSlider

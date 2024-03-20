@@ -39,6 +39,7 @@ DFRobot_Lcd_UART lcd(FPSerial);
 uint8_t iconId[5]; // An array for storing icon ids
 void testIcon(){
     // Create a few ICONS at (0,0), which are file names, so the file will be read from an external USB flash drive
+    // If there is no corresponding path on the USB flash drive, a white screen will be displayed
     iconId[0] = lcd.drawIcon(0, 0, "cat.png", 256);
     delay(200);
     iconId[1] = lcd.drawIcon(0, 0, "fish.png", 256);

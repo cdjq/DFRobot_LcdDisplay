@@ -33,6 +33,13 @@ SoftwareSerial softSerial(/*rx =*/4, /*tx =*/5);
 DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
+/**
+ * User-selectable macro definition color
+ * BLACK BLUE RED GREEN CYAN MAGENTA
+ * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
+ * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
+ * GREENYELLOW DCYAN
+ */
 void setup(void)
 {
     #ifndef  I2C_COMMUNICATION

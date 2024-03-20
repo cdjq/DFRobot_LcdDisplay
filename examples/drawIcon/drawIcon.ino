@@ -216,6 +216,6 @@ void setup(void)
 }
 
 void loop(void){
-    // testIcon();
-    testIcon2();
+    testIcon();
+    // testIcon2();
 }

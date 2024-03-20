@@ -32,6 +32,13 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
+/**
+ * User-selectable macro definition color
+ * BLACK BLUE RED GREEN CYAN MAGENTA
+ * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
+ * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
+ * GREENYELLOW DCYAN
+ */
 // Switch background color
 void testBackgroundColor(){
     lcd.setBackgroundColor(RED);

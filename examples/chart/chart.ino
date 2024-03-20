@@ -45,7 +45,13 @@ uint8_t id1_1 = 0, id1_2 = 0, id2_1 = 0, id2_2 = 0, id3_1 = 0, id3_2 = 0;
 uint16_t point1[5] = { 10,90,30,0,90 };
 uint16_t point2[5] = { 90,30,80,10,100 };
 
-
+/**
+ * User-selectable macro definition color
+ * BLACK BLUE RED GREEN CYAN MAGENTA
+ * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
+ * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
+ * GREENYELLOW DCYAN
+ */
 void testChart(){
     // Create a chart and set the background color to white and the mode to Line chart mode
     chartId1 = lcd.creatChart(/*X-axis tick labels*/"Jan\nFeb\nMar\nApr\nMay", /*Y-axis tick labels*/"100\n80\n60\n40\n20\n0",/*background Color*/ 0xFFFFFF,/*Chart style:1-3*/1);
