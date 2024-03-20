@@ -1369,33 +1369,6 @@ void DFRobot_LcdDisplay::setMeterScale(sControlinf_t* obj, uint16_t angle, int16
   free(cmd1);
 }
 
-void DFRobot_LcdDisplay::lvglDelete(sControlinf_t* obj)
-{
-  if (obj == NULL) {
-    DBG("NULL pointer");
-    return;
-  }
-  uint8_t* cmd = creatCommand(CMD_DEINIT_LVGL, CMDLEN_DEINIT_LVGL);
-  cmd[4] = obj->number;
-  writeCommand(cmd, CMDLEN_DEINIT_LVGL);
-  free(cmd);
-
-  // uint16_t number = 1;
-  sControlinf_t* objDel = &head;
-  sControlinf_t* last;
-  while (objDel->inf != NULL) {
-    last = objDel;
-    objDel = objDel->inf;
-    if (obj->number == objDel->number) {
-      last->inf = objDel->inf;
-      free(objDel);
-      break;
-    }
-  }
-  delay(500);   // Make sure to delete succeed
-
-}
-
 uint8_t* DFRobot_LcdDisplay::creatCommand(uint8_t cmd, uint8_t len)
 {
   uint8_t* data = (uint8_t*)malloc(sizeof(uint8_t) * len);
