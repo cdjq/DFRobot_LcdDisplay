@@ -58,6 +58,15 @@
   void cleanScreen();
 
   /**
+   * @fn drawPixel
+   * @brief 在屏幕上画一个像素点
+   * @param x 像素点的x坐标
+   * @param y 像素点的y坐标
+   * @param color 像素点的颜色
+   */
+  void drawPixel(int16_t x, int16_t y, uint32_t color);
+
+  /**
    * @fn drawLine
    * @brief 在屏幕上画一条直线
    * @param x0 直线的起点x坐标

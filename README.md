@@ -58,8 +58,11 @@ To use this library, please download the library file first, and paste it into t
   /**
    * @fn drawPixel
    * @brief Draw pixels on the screen
+   * @param x The x coordinate of the pixel
+   * @param y The y coordinate of the pixel
+   * @param color the color of the pixel, RGB888 format
    */
-  void drawPixel(int16_t x, int16_t y, uint16_t color);
+  void drawPixel(int16_t x, int16_t y, uint32_t color);
 
   /**
    * @fn drawLine

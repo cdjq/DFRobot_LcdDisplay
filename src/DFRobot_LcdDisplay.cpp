@@ -26,7 +26,7 @@ bool DFRobot_LcdDisplay::begin()
   return true;
 }
 
-void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint16_t color)
+void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint32_t color)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAWPIXEL, CMDLEN_OF_DRAWPIXEL);
   if (320 <= x) {
@@ -39,8 +39,9 @@ void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint16_t color)
   cmd[5] = x & 0xFF;
   cmd[6] = y >> 8;
   cmd[7] = y & 0xFF;
-  cmd[8] = color >> 8;
-  cmd[9] = color & 0xFF;
+  cmd[8] = color >> 16;
+  cmd[9] = color >> 8;
+  cmd[10] = color & 0xFF;
   writeCommand(cmd, CMDLEN_OF_DRAWPIXEL);
   free(cmd);
 }

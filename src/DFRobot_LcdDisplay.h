@@ -66,7 +66,6 @@
 #define CMDLEN_OF_DRAWICON         13
 #define CMDLEN_OF_DRAWSTRING       36
 #define CMDLEN_OF_HEAD_LEN         3
-
 #define CMDLEN_DRAW_LVGLSLIDER       14
 #define CMDLEN_DRAW_LVGLBAR          15
 #define CMDLEN_DRAW_LVGLARC          14
@@ -75,7 +74,6 @@
 #define CMDLEN_DRAW_LVGLCOMPASS      14
 #define CMDLEN_DRAW_LVGLMETER        14
 #define CMDLEN_DRAW_LVGLCHART        14
-
 #define CMDLEN_CHANGE_LVGLARC_ROTATION       9
 #define CMDLEN_CHANGE_LVGLBAR_VALUE          9
 #define CMDLEN_CHANGE_LVGLSLIDER_VALUE       9
@@ -89,11 +87,9 @@
 #define CMDLEN_CHANGE_LVGLCHART_SERIE        9
 #define CMDLEN_CHANGE_LVGLCHART_POINT        9
 #define CMDLEN_CHANGE_LVGLSTATION_VALUE      9
-
 #define CMDLEN_DEINIT_LVGL          5
 #define CMDLEN_RESET_LVGL           4
 #define CMDLEN_INIT_LVGL            7
-
 #define CMD_DELETE_OBJ_LEN            0x06
 #define CMD_SET_TOP_OBJ_LEN           0x06
 #define CMD_SET_COMPASS_VALUE_LEN     0x07
@@ -120,7 +116,6 @@
 // cmd
 #define CMD_SET_BACKGROUND_COLOR      0x19
 #define CMD_SET_BACKGROUND_IMG        0x1A
-
 #define CMD_OF_DRAW_LINE              0x03
 #define CMD_OF_DRAW_RECT              0x04
 #define CMD_OF_DRAW_CIRCLE            0x06
@@ -160,11 +155,9 @@
 #define CMD_OF_FILLROUNDRECT    11
 #define CMD_OF_FILLCIRCLE       12
 #define CMD_OF_FILLTRIANGLE     13
-
 #define CMD_OF_DRAWICON         20
 #define CMD_OF_DRAWSTRING       21
 #define CMD_OF_DRAWDISKIMG      23
-
 #define CMD_DRAW_LVGLSLIDER     31
 #define CMD_DRAW_LVGLBAR        32
 #define CMD_DRAW_LVGLSLIDER     31
@@ -174,7 +167,6 @@
 #define CMD_DRAW_LVGLCOMPASS    36
 #define CMD_DRAW_LVGLLINEMETER  37
 #define CMD_DRAW_LVGLCHART      38
-
 #define CMD_RESET_LVGL          0x80
 #define CMD_INIT_LVGL           0x81
 #define CMD_DEINIT_LVGL         0x82
@@ -601,8 +593,11 @@ public:
   /**
    * @fn drawPixel
    * @brief Draw pixels on the screen
+   * @param x The x coordinate of the pixel
+   * @param y The y coordinate of the pixel
+   * @param color the color of the pixel, RGB888 format
    */
-  void drawPixel(int16_t x, int16_t y, uint16_t color);
+  void drawPixel(int16_t x, int16_t y, uint32_t color);
 
   /**
    * @fn drawLine
