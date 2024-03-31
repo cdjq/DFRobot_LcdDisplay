@@ -28,13 +28,21 @@ bool DFRobot_LcdDisplay::begin()
 
 void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint32_t color)
 {
-  uint8_t* cmd = creatCommand(CMD_OF_DRAWPIXEL, CMDLEN_OF_DRAWPIXEL);
+  uint8_t* cmd = creatCommand(CMD_OF_DRAW_PIXEL, CMD_DRAW_PIXEL_LEN);
   if (320 <= x) {
     x = 319;
   }
   if (240 <= y) {
     y = 239;
   }
+  cmd[4] = color >> 16;
+  cmd[5] = color >> 8;
+  cmd[6] = color & 0xFF;
+  cmd[7] = x >> 8;
+  cmd[8] = x & 0xFF;
+  cmd[9] = y >> 8;
+  cmd[10] = y & 0xFF;
+  /*
   cmd[4] = x >> 8;
   cmd[5] = x & 0xFF;
   cmd[6] = y >> 8;
@@ -42,7 +50,8 @@ void DFRobot_LcdDisplay::drawPixel(int16_t x, int16_t y, uint32_t color)
   cmd[8] = color >> 16;
   cmd[9] = color >> 8;
   cmd[10] = color & 0xFF;
-  writeCommand(cmd, CMDLEN_OF_DRAWPIXEL);
+  */
+  writeCommand(cmd, CMD_DRAW_PIXEL_LEN);
   free(cmd);
 }
 
@@ -735,31 +744,6 @@ void DFRobot_LcdDisplay::updateGauge(uint8_t id, uint16_t x, uint16_t y, uint16_
   free(cmd);
 }
 
-void DFRobot_LcdDisplay::setGaugeScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end)
-{
-
-  uint8_t* cmd = creatCommand(CMD_DRAW_LVGLGAUGE, CMDLEN_CHANGE_LVGLGAUGE_SCALE);
-  cmd[4] = obj->number;
-  cmd[5] = 3;
-  cmd[6] = angle >> 8;
-  cmd[7] = angle & 0xFF;
-  cmd[8] = 6;
-  cmd[9] = 6;
-
-  writeCommand(cmd, CMDLEN_CHANGE_LVGLGAUGE_SCALE);
-  free(cmd);
-
-  uint8_t* cmd1 = creatCommand(CMD_DRAW_LVGLGAUGE, CMDLEN_CHANGE_LVGLGAUGE_RANGE);
-  cmd1[4] = obj->number;
-  cmd1[5] = 1;
-  cmd1[6] = start >> 8;
-  cmd1[7] = start & 0xFF;
-  cmd1[8] = end >> 8;
-  cmd1[9] = end & 0xFF;
-  writeCommand(cmd1, CMDLEN_CHANGE_LVGLGAUGE_RANGE);
-  free(cmd1);
-}
-
 void DFRobot_LcdDisplay::setGaugeValue(uint8_t gaugeId, uint16_t value)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_GAUGE_VALUE, CMD_SET_GAUGE_VALUE_LEN);
@@ -1198,7 +1182,7 @@ uint8_t DFRobot_LcdDisplay::creatChartSeries(uint8_t chartId, uint32_t color)
   cmd[6] = color >> 16;
   cmd[7] = color >> 8;
   cmd[8] = color ;
-  writeCommand(cmd, CMDLEN_CHANGE_LVGLCHART_SERIE);
+  writeCommand(cmd, CMD_DRAW_SERIE_LEN);
   free(cmd);
   return serieId;
 }
@@ -1210,37 +1194,8 @@ void DFRobot_LcdDisplay::updateChartSeries(uint8_t chartId, uint8_t seriesId, ui
   cmd[6] = color >> 16;
   cmd[7] = color >> 8;
   cmd[8] = color ;
-  writeCommand(cmd, CMDLEN_CHANGE_LVGLCHART_SERIE);
+  writeCommand(cmd, CMD_DRAW_SERIE_LEN);
   free(cmd);
-}
-
-uint8_t DFRobot_LcdDisplay::setChartTickTexts(sControlinf_t* obj, String xtext, String ytext)
-{
-  uint8_t len_x = xtext.length();
-  uint8_t len_y = ytext.length();
-  uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, len_x + 7);
-  cmd[4] = obj->number;
-  cmd[5] = 3;   // 3 : The type of instruction that stores label information
-  cmd[6] = 1;   // Add the X-axis label
-  for (uint8_t i = 0;i < len_x;i++) {
-    cmd[7 + i] = xtext[i];
-  }
-  writeCommand(cmd, len_x + 7);
-  free(cmd);
-
-  delay(10);
-
-  uint8_t* cmd1 = creatCommand(CMD_DRAW_LVGLCHART, len_y + 7);
-  cmd1[4] = obj->number;
-  cmd1[5] = 3;
-  cmd1[6] = 2;   // Add the Y-axis label
-  for (uint8_t i = 0;i < len_y;i++) {
-    cmd1[7 + i] = ytext[i];
-  }
-
-  writeCommand(cmd1, len_y + 7);
-  free(cmd1);
-  return 1;
 }
 
 uint8_t DFRobot_LcdDisplay::setChartAxisTexts(uint8_t chartId, uint8_t axis, String text)
@@ -1257,19 +1212,6 @@ uint8_t DFRobot_LcdDisplay::setChartAxisTexts(uint8_t chartId, uint8_t axis, Str
   return 1;
 }
 
-uint8_t DFRobot_LcdDisplay::addChartPoint(sControlinf_t* obj, uint8_t id, uint16_t value)
-{
-  uint8_t* cmd = creatCommand(CMD_DRAW_LVGLCHART, CMDLEN_CHANGE_LVGLCHART_POINT);
-  cmd[4] = obj->number;
-  cmd[5] = 2;   // 2 : Added instruction type for chart series points
-  cmd[6] = id;
-  cmd[7] = value >> 8;
-  cmd[8] = value & 0xFF;
-
-  writeCommand(cmd, CMDLEN_CHANGE_LVGLCHART_POINT);
-  free(cmd);
-  return 1;
-}
 
 void DFRobot_LcdDisplay::updateChartPoint(uint8_t chartId, uint8_t SeriesId, uint8_t pointNum, uint16_t value){
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_SERIE_DATA, 10);
@@ -1327,28 +1269,6 @@ void DFRobot_LcdDisplay::setMeterValue(uint8_t lineMeterId, uint16_t value)
   free(cmd);
 }
 
-void DFRobot_LcdDisplay::setMeterScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end)
-{
-  uint8_t* cmd = creatCommand(CMD_DRAW_LVGLLINEMETER, CMDLEN_CHANGE_LVGLMETER_SCALE);
-  cmd[4] = obj->number;
-  cmd[5] = 3;
-  cmd[6] = angle >> 8;
-  cmd[7] = angle & 0xFF;
-  cmd[8] = 18;
-
-  writeCommand(cmd, CMDLEN_CHANGE_LVGLMETER_SCALE);
-  free(cmd);
-
-  uint8_t* cmd1 = creatCommand(CMD_DRAW_LVGLLINEMETER, CMDLEN_CHANGE_LVGLMETER_RANGE);
-  cmd1[4] = obj->number;
-  cmd1[5] = 1;
-  cmd1[6] = start >> 8;
-  cmd1[7] = start & 0xFF;
-  cmd1[8] = end >> 8;
-  cmd1[9] = end & 0xFF;
-  writeCommand(cmd1, CMDLEN_CHANGE_LVGLMETER_RANGE);
-  free(cmd1);
-}
 
 uint8_t* DFRobot_LcdDisplay::creatCommand(uint8_t cmd, uint8_t len)
 {

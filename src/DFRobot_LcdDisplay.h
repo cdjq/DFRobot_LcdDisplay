@@ -51,45 +51,7 @@
 #define DCYAN               0x008B8B
 
 // cmd len
-#define CMDLEN_OF_DRAWPIXEL        10
-#define CMDLEN_OF_FILLSCREEN       6
-#define CMDLEN_OF_SETBACKLIGHT     5
-#define CMDLEN_OF_DRAWLINE         14
-#define CMDLEN_OF_DRAWRECT         14
-#define CMDLEN_OF_FILLRECT         14
-#define CMDLEN_OF_DRAWROUNDRECT    15
-#define CMDLEN_OF_FILLROUNDRECT    15
-#define CMDLEN_OF_DRAWCIRCLE       11
-#define CMDLEN_OF_FILLCIRCLE       11
-#define CMDLEN_OF_DRAWTRIANGLE     18
-#define CMDLEN_OF_FILLTRIANGLE     18
-#define CMDLEN_OF_DRAWICON         13
-#define CMDLEN_OF_DRAWSTRING       36
 #define CMDLEN_OF_HEAD_LEN         3
-#define CMDLEN_DRAW_LVGLSLIDER       14
-#define CMDLEN_DRAW_LVGLBAR          15
-#define CMDLEN_DRAW_LVGLARC          14
-#define CMDLEN_DRAW_LVGLGAUGE        14
-#define CMDLEN_DRAW_LVGLSTATION      14
-#define CMDLEN_DRAW_LVGLCOMPASS      14
-#define CMDLEN_DRAW_LVGLMETER        14
-#define CMDLEN_DRAW_LVGLCHART        14
-#define CMDLEN_CHANGE_LVGLARC_ROTATION       9
-#define CMDLEN_CHANGE_LVGLBAR_VALUE          9
-#define CMDLEN_CHANGE_LVGLSLIDER_VALUE       9
-#define CMDLEN_CHANGE_LVGLGAUGE_SCALE        10
-#define CMDLEN_CHANGE_LVGLGAUGE_RANGE        10
-#define CMDLEN_CHANGE_LVGLGAUGE_VALUE        8
-#define CMDLEN_CHANGE_LVGLCOMPASS_VALUE      8
-#define CMDLEN_CHANGE_LVGLMETER_SCALE        9
-#define CMDLEN_CHANGE_LVGLMETER_RANGE        10
-#define CMDLEN_CHANGE_LVGLMETER_VALUE        8
-#define CMDLEN_CHANGE_LVGLCHART_SERIE        9
-#define CMDLEN_CHANGE_LVGLCHART_POINT        9
-#define CMDLEN_CHANGE_LVGLSTATION_VALUE      9
-#define CMDLEN_DEINIT_LVGL          5
-#define CMDLEN_RESET_LVGL           4
-#define CMDLEN_INIT_LVGL            7
 #define CMD_DELETE_OBJ_LEN            0x06
 #define CMD_SET_TOP_OBJ_LEN           0x06
 #define CMD_SET_COMPASS_VALUE_LEN     0x07
@@ -106,6 +68,7 @@
 #define CMD_OF_DRAW_GIF_INTERNAL_LEN  0x0D
 #define CMD_OF_DRAW_BAR_LEN           0x10
 #define CMD_OF_DRAW_SLIDER_LEN        0x10
+#define CMD_DRAW_PIXEL_LEN            0x11
 #define CMD_DRAW_LINE_LEN             0x11
 #define CMD_OF_DRAW_CIRCLE_LEN        0x13
 #define CMD_OF_DRAW_GAUGE_LEN         0x15
@@ -116,6 +79,7 @@
 // cmd
 #define CMD_SET_BACKGROUND_COLOR      0x19
 #define CMD_SET_BACKGROUND_IMG        0x1A
+#define CMD_OF_DRAW_PIXEL             0x02
 #define CMD_OF_DRAW_LINE              0x03
 #define CMD_OF_DRAW_RECT              0x04
 #define CMD_OF_DRAW_CIRCLE            0x06
@@ -142,34 +106,6 @@
 #define CMD_SET_ANGLE_OBJ             0x1E
 #define CMD_OF_DRAW_GIF_INTERNAL      0x1F
 #define CMD_OF_DRAW_GIF_EXTERNAL      0x20
-
-#define CMD_OF_DRAWPIXEL        2
-#define CMD_OF_DRAWLINE         3
-#define CMD_OF_DRAWRECT         4
-#define CMD_OF_DRAWROUNDRECT    5
-#define CMD_OF_DRAWCIRCLE       6
-#define CMD_OF_DRAWTRIANGLE     7
-#define CMD_OF_SETBACKLIGHT     8
-#define CMD_OF_FILLSCREEN       9
-#define CMD_OF_FILLRECT         10
-#define CMD_OF_FILLROUNDRECT    11
-#define CMD_OF_FILLCIRCLE       12
-#define CMD_OF_FILLTRIANGLE     13
-#define CMD_OF_DRAWICON         20
-#define CMD_OF_DRAWSTRING       21
-#define CMD_OF_DRAWDISKIMG      23
-#define CMD_DRAW_LVGLSLIDER     31
-#define CMD_DRAW_LVGLBAR        32
-#define CMD_DRAW_LVGLSLIDER     31
-#define CMD_DRAW_LVGLARC        33
-#define CMD_DRAW_LVGLGAUGE      34
-#define CMD_DRAW_LVGLSTATION    35
-#define CMD_DRAW_LVGLCOMPASS    36
-#define CMD_DRAW_LVGLLINEMETER  37
-#define CMD_DRAW_LVGLCHART      38
-#define CMD_RESET_LVGL          0x80
-#define CMD_INIT_LVGL           0x81
-#define CMD_DEINIT_LVGL         0x82
 
 #define CMD_HEADER_HIGH         0x55
 #define CMD_HEADER_LOW          0xaa
@@ -1238,7 +1174,6 @@ private:
   uint16_t getWordLen(uint8_t* utf8, uint8_t len);
   uint8_t utf8toUnicode(uint8_t* utf8, uint16_t& uni);
   uint8_t addChartPoint(sControlinf_t* obj, uint8_t id, uint16_t value);
-  uint8_t setChartTickTexts(sControlinf_t* obj, String xtext, String ytext);
   uint8_t setChartAxisTexts(uint8_t chartId, uint8_t axis, String text);
   uint8_t getNewID(sGenericNode_t** head);
   void deleteNodeByID(sGenericNode_t** head, uint8_t id);
