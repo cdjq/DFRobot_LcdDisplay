@@ -813,72 +813,6 @@ void DFRobot_LcdDisplay::deleteCompass(uint8_t id){
   deleteNodeByID((GenericNode**)&compass_head,id);
 }
 
-uint8_t DFRobot_LcdDisplay::utf8toUnicode(uint8_t* utf8, uint16_t& uni)
-{
-  uint8_t lenght = 0;
-  uint8_t index = 0;
-
-  if (utf8[index] >= 0xfc) {
-
-    uni = utf8[index] & 1;
-    index++;
-    for (uint8_t i = 1;i <= 5;i++) {
-      uni <<= 6;
-      uni |= (utf8[index] & 0x3f);
-
-      index++;
-    }
-    lenght = 6;
-  } else if (utf8[index] >= 0xf8) {
-
-    uni = utf8[index] & 3;
-    index++;
-    for (uint8_t i = 1;i <= 4;i++) {
-      uni <<= 6;
-      uni |= (utf8[index] & 0x03f);
-
-      index++;
-    }
-    lenght = 5;
-  } else if (utf8[index] >= 0xf0) {
-
-    uni = utf8[index] & 7;
-    index++;
-    for (uint8_t i = 1;i <= 3;i++) {
-      uni <<= 6;
-      uni |= (utf8[index] & 0x03f);
-      index++;
-    }
-    lenght = 4;
-  } else if (utf8[index] >= 0xe0) {
-    uni = utf8[index] & 15;
-    index++;
-    for (uint8_t i = 1;i <= 2;i++) {
-      uni <<= 6;
-      uni |= (utf8[index] & 0x03f);
-      index++;
-    }
-    lenght = 3;
-  } else if (utf8[index] >= 0xc0) {
-
-    uni = utf8[index] & 0x1f;
-    index++;
-    for (uint8_t i = 1;i <= 1;i++) {
-      uni <<= 6;
-      uni |= (utf8[index] & 0x03f);
-      index++;
-    }
-    lenght = 2;
-  } else if (utf8[index] <= 0x80) {
-    uni = (utf8[index] & 0x7f);
-    lenght = 1;
-
-  } else {
-    DBG("no this");
-  }
-  return lenght;
-}
-
 void DFRobot_LcdDisplay::setBackgroundColor(uint32_t bg_color)
 {
   uint8_t* cmd = creatCommand(CMD_SET_BACKGROUND_COLOR, CMD_SET_LEN);
@@ -900,51 +834,6 @@ void DFRobot_LcdDisplay::setBackgroundImg(uint8_t location, String str){
   free(cmd);
 }
 
-uint16_t DFRobot_LcdDisplay::getWordLen(uint8_t* utf8, uint8_t len)
-{
-  uint16_t index = 0;
-  uint16_t length = 0;DBG("\n");
-  DBG("len=");DBG(len);
-  while (index < len) {
-    DBG("index=");DBG(index);
-    if (utf8[index] >= 0xfc) {
-      index++;
-      for (uint8_t i = 1;i <= 5;i++) {
-        index++;
-      }
-      length += 1;
-    } else if (utf8[index] >= 0xf8) {
-      index++;
-      for (uint8_t i = 1;i <= 4;i++) {
-        index++;
-      }
-      length += 1;
-    } else if (utf8[index] >= 0xf0) {
-      index++;
-      for (uint8_t i = 1;i <= 3;i++) {
-        index++;
-      }
-      length += 15;
-    } else if (utf8[index] >= 0xe0) {
-      index++;
-      for (uint8_t i = 1;i <= 2;i++) {
-        index++;
-      }
-      length += 15;
-    } else if (utf8[index] >= 0xc0) {
-
-      index++;
-      for (uint8_t i = 1;i <= 1;i++) {
-        index++;
-      }
-      length += 9;
-    } else if (utf8[index] <= 0x80) {
-      index++;
-      length += 9;
-    }
-  }
-  return length;
-}
 
 uint8_t DFRobot_LcdDisplay::drawString(uint16_t x, uint16_t y, String str, uint8_t fontSize, uint32_t color)
 {
@@ -1323,7 +1212,7 @@ void DFRobot_Lcd_IIC::writeCommand(uint8_t* pBuf, uint16_t len)
     bytesSent += currentTransferSize;
     bytesToSend -= currentTransferSize;
 
-    delay(2);
+    delay(50);
   }
 }
 

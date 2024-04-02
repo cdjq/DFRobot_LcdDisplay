@@ -13,7 +13,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
 /**
@@ -59,9 +59,9 @@ void setup(void)
 }
 
 void loop(void){
-    // testLine();
-    // testRects();
-    // testCircles();
+    testLine();
+    testRects();
+    testCircles();
     testTriangles();
 }
 
@@ -238,11 +238,10 @@ void testCircles() {
 }
 
 uint8_t trianglesId[10];
-uint8_t triangles1;
 // Draw triangles
 void testTriangles(){
   // Draw a triangle with the top center of the screen as the vertex and the bottom of the screen for the other two vertices
-  triangles1 = lcd.drawTriangle(160, 0, 0, 239, 319, 239, 1, borderColor, 0, fillColor);
+  trianglesId[0] = lcd.drawTriangle(160, 0, 0, 239, 319, 239, 1, borderColor, 0, fillColor);
   // Update the three vertices of the triangle to scale
   for (uint8_t i=0; i <10; i++){
     lcd.updateTriangle(trianglesId[0], 160, i*12, i*16, 239 - i*12,319-i*16, 239-i*12, 1, borderColor, 0, fillColor);

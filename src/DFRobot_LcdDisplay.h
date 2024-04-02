@@ -1171,8 +1171,6 @@ private:
   sGenericNode_t *gif_head = NULL;
   uint8_t _deviceAddr;
 
-  uint16_t getWordLen(uint8_t* utf8, uint8_t len);
-  uint8_t utf8toUnicode(uint8_t* utf8, uint16_t& uni);
   uint8_t addChartPoint(sControlinf_t* obj, uint8_t id, uint16_t value);
   uint8_t setChartAxisTexts(uint8_t chartId, uint8_t axis, String text);
   uint8_t getNewID(sGenericNode_t** head);

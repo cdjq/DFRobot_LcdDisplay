@@ -15,7 +15,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
 /**
@@ -63,10 +63,6 @@ void testIcon(){
         lcd.updateIcon(iconId[2], i*64, 0, "shy.png", 256);
     }
     delay(200);
-    for(uint8_t i = 0; i < 2; i++){
-        lcd.updateIcon(iconId[1], i*64, 0, "fish.png", 256);
-    }
-    delay(500);
     // Delete these ICONS
     for(uint8_t i = 0; i < 5; i++){
         lcd.deleteIcon(iconId[i]);
