@@ -369,12 +369,12 @@ To use this library, please download the library file first, and paste it into t
   void updateBar(uint8_t id, uint16_t x, uint16_t y, uint16_t width, uint8_t height, uint32_t color);
 
   /**
-   * @fn setBar
+   * @fn setBarValue
    * @brief Set the value of the progress bar, which can include a unit but must start with a number
    * @param barId Progress bar control handle
    * @param value Value of the progress bar
    */
-  void setBar(uint8_t barId, uint16_t);
+  void setBarValue(uint8_t barId, uint16_t);
 
   /**
    * 
@@ -487,16 +487,6 @@ To use this library, please download the library file first, and paste it into t
   void updateGauge(uint8_t id, uint16_t x, uint16_t y, uint16_t diameter, uint16_t start, uint16_t end, uint32_t pointerColor, uint32_t bgColor);
 
   /**
-   * @fn setGaugeScale
-   * @brief Setting the parameters of the dial control
-   * @param obj dial control handle
-   * @param angle angle of the scale (0..360)
-   * @param start minimum value
-   * @param end maximum value
-   */
-  void setGaugeScale(sControlinf_t * obj, uint16_t angle, int16_t start, int16_t end);
-
-  /**
    * @fn setGaugeValue
    * @brief Sets the value indicated by the dial
    * @param gaugeId gauge control handle
@@ -575,16 +565,6 @@ To use this library, please download the library file first, and paste it into t
    * @param bgColor pointer color
    */
   void updateLineMeter(uint8_t id, uint16_t x, uint16_t y, uint16_t size, uint16_t start, uint16_t end, uint32_t pointerColor, uint32_t bgColor);
-
-  /**
-   * @fn setMeterScale
-   * @brief Sets parameters for the linear meter control
-   * @param obj pointer to a line meter object
-   * @param angle angle of the scale (0..360)
-   * @param start minimum value
-   * @param end maximum value
-   */
-  void setMeterScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end);
 
   /**
    * @fn setMeterValue

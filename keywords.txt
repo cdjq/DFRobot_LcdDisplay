@@ -42,7 +42,7 @@ setSliderValue      KEYWORD2
 deleteSlider        KEYWORD2
 creatBar            KEYWORD2
 updateBar           KEYWORD2
-setBar              KEYWORD2
+setBarValue         KEYWORD2
 deleteBar           KEYWORD2
 creatChart          KEYWORD2
 updateChart         KEYWORD2
@@ -54,16 +54,13 @@ setTopChart         KEYWORD2
 deleteChart         KEYWORD2
 creatGauge          KEYWORD2
 updateGauge         KEYWORD2
-setGaugeScale       KEYWORD2
 setGaugeValue       KEYWORD2
 deleteGauge         KEYWORD2
 creatCompass        KEYWORD2
 updateCompass       KEYWORD2
-setCompassScale     KEYWORD2
 void deleteCompass  KEYWORD2
 creatLineMeter      KEYWORD2
 updateLineMeter     KEYWORD2
-setMeterScale       KEYWORD2
 setMeterValue       KEYWORD2
 deleteLineMeter     KEYWORD2
 setTopLineMeter     KEYWORD2
@@ -422,4 +419,3 @@ LIGHTGREY	LITERAL1
 DARKGREY	LITERAL1
 ORANGE	LITERAL1
 GREENYELLOW	LITERAL1
-DCYAN	LITERAL1

@@ -14,7 +14,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-//#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+// #define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
 /**
@@ -116,6 +116,9 @@ eIconAccordion, eIconBassDrum, eIconCDDiskDVD, eIconCello, eIconElectricGuitar, 
 eIconHarmonica, eIconHarp, eIconHeadphones, eIconMelodica, eIconMusic, eIconMusicStereo, eIconMusicTurntable,
 eIconMuteSoundOff, eIconPiano, eIconSaxophone, eIconSpeakerAudio, eIconTrumpet, eIconXylophone,
 
+// Gif
+eGifRain, eGifWind, eGifSun,
+
 #endif
 
 
@@ -157,8 +160,8 @@ void testIcon(){
     delay(1000);
 }
 
-DFRobot_LcdDisplay::sControlinf_t* icon1;
 uint8_t iconId2[20]; // An array for storing icon ids
+uint8_t gifId[3];  // An array for storing gif ids
 // Show specified ICONS
 void testIcon2(){
   // Drawing icons
@@ -195,7 +198,17 @@ void testIcon2(){
   for(uint8_t i = 0; i < 20; i++) {
       lcd.deleteIcon(iconId2[i]); // Delete using the ID of the storage
   }
-  delay(1000);
+  delay(3000);
+
+  gifId[0] = lcd.drawGif(0, 0, lcd.eGifRain, 120);     // Rain gif
+  gifId[1] = lcd.drawGif(120, 0, lcd.eGifSun, 120);     // Sun gif
+  gifId[2] = lcd.drawGif(180, 0, lcd.eGifWind, 120);  // Wind gif
+  delay(3000);
+  // Delete the displayed icon
+  for(uint8_t i = 0; i < 3; i++) {
+      lcd.deleteGif(gifId[i]); // Delete using the ID of the storage
+  }
+  delay(3000);
 }
 
 void setup(void)

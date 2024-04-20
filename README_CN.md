@@ -371,12 +371,12 @@
   void updateBar(uint8_t id, uint16_t x, uint16_t y, uint16_t width, uint8_t height, uint32_t color);
 
   /**
-   * @fn setBar
+   * @fn setBarValue
    * @brief 设置进度条的值，进度条可以包含一个单位，但必须以数字开头
    * @param barId 进度条控件句柄
    * @param value 进度条的值
    */
-  void setBar(uint8_t barId, uint16_t value);
+  void setBarValue(uint8_t barId, uint16_t value);
 
   /**
    * 
@@ -489,16 +489,6 @@
   void updateGauge(uint8_t id, uint16_t x, uint16_t y, uint16_t diameter, uint16_t start, uint16_t end, uint32_t pointerColor, uint32_t bgColor);
 
   /**
-   * @fn setGaugeScale
-   * @brief 设置仪表盘控件的参数
-   * @param obj 仪表盘控制句柄
-   * @param angle 刻度角度(0~360)
-   * @param start 最小值
-   * @param end 最大值
-   */
-  void setGaugeScale(sControlinf_t * obj, uint16_t angle, int16_t start, int16_t end);
-
-  /**
    * @fn setGaugeValue
    * @brief设置表盘指示的值
    * @param gaugeId 仪表盘控件句柄
@@ -577,16 +567,6 @@
    * @param bgColor 背景颜色
    */
   void updateLineMeter(uint8_t id, uint16_t x, uint16_t y, uint16_t size, uint16_t start, uint16_t end, uint32_t pointerColor, uint32_t bgColor);
-
-  /**
-   * @fn setMeterScale
-   * @brief 设置线性仪表的参数
-   * @param obj 指向线性仪表对象
-   * @param angle 角度范围 (0..360)
-   * @param start 最小值
-   * @param end 最大值
-   */
-  void setMeterScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end);
 
   /**
    * @fn setMeterValue

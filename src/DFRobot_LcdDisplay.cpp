@@ -531,7 +531,7 @@ void DFRobot_LcdDisplay::updateBar(uint8_t id, uint16_t x, uint16_t y, uint16_t 
   free(cmd);
 }
 
-void DFRobot_LcdDisplay::setBar(uint8_t barId, uint16_t value)
+void DFRobot_LcdDisplay::setBarValue(uint8_t barId, uint16_t value)
 {
   uint8_t* cmd = creatCommand(CMD_OF_DRAW_BAR_VALUE, CMD_SET_BAR_VALUE_LEN);
   if (cmd == NULL) {
@@ -552,23 +552,6 @@ void DFRobot_LcdDisplay::deleteBar(uint8_t id){
   writeCommand(cmd, CMD_DELETE_OBJ_LEN);
   free(cmd);
   deleteNodeByID((GenericNode**)&bar_head,id);
-}
-
-uint8_t DFRobot_LcdDisplay::getNumber(uint8_t id)
-{
-  LCD_UNUSED(id);
-  uint16_t number = 1;
-  sControlinf_t* obj = &head;
-  sControlinf_t* last;
-  while (1) {
-    last = obj;
-    obj = obj->inf;
-    if (obj == NULL) {
-      number = last->number + 1;
-      break;
-    }
-  }
-  return number;
 }
 
 uint8_t DFRobot_LcdDisplay:: getNewID(sGenericNode_t** head) {

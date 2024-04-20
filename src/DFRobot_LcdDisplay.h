@@ -48,7 +48,6 @@
 #define DARKGREY            0xA9A9A9
 #define ORANGE              0xFFA500
 #define GREENYELLOW         0x9ACD32
-#define DCYAN               0x008B8B
 
 // cmd len
 #define CMDLEN_OF_HEAD_LEN         3
@@ -452,25 +451,10 @@ public:
    * @brief To display different gifs using the library, you can select the corresponding enum for the desired gif.
    */
   typedef enum {
-    eGifRain = 1,/**<Chinese*/
-    eGifWind,/**<Japanese*/
-    eGifSun,/**<ACSII*/
+    eGifRain = 1,
+    eGifWind,
+    eGifSun,
   }sLcdGif_t;
-
-  /**
-    * @struct sControlinf_t
-    * @brief Objects that point to different controls
-    */
-  typedef struct controlinf {
-    uint32_t number; /**<Control ID */
-    uint16_t id; /**<Control ID, different controls have different functionalities.*/
-    int16_t x; /**<X coordinate of the control's position.*/
-    int16_t y; /**<Y coordinate of the control's position.*/
-    int16_t width; /**<Control width */
-    int16_t height; /**<Control height*/
-    uint16_t color; /**<Color Control*/
-    struct controlinf* inf; /**<The next control pointer */
-  }sControlinf_t;
 
   typedef struct chartinfo {
     uint8_t id; /**<chart ID */
@@ -840,12 +824,12 @@ public:
   void updateBar(uint8_t id, uint16_t x, uint16_t y, uint16_t width, uint8_t height, uint32_t color);
 
   /**
-   * @fn setBar
+   * @fn setBarValue
    * @brief Set the value of the progress bar, which can include a unit but must start with a number
    * @param barId Progress bar control handle
    * @param value Value of the progress bar
    */
-  void setBar(uint8_t barId, uint16_t);
+  void setBarValue(uint8_t barId, uint16_t);
 
   /**
    * 
@@ -958,16 +942,6 @@ public:
   void updateGauge(uint8_t id, uint16_t x, uint16_t y, uint16_t diameter, uint16_t start, uint16_t end, uint32_t pointerColor, uint32_t bgColor);
 
   /**
-   * @fn setGaugeScale
-   * @brief Setting the parameters of the dial control
-   * @param obj dial control handle
-   * @param angle angle of the scale (0..360)
-   * @param start minimum value
-   * @param end maximum value
-   */
-  void setGaugeScale(sControlinf_t * obj, uint16_t angle, int16_t start, int16_t end);
-
-  /**
    * @fn setGaugeValue
    * @brief Sets the value indicated by the dial
    * @param gaugeId gauge control handle
@@ -1046,16 +1020,6 @@ public:
    * @param bgColor pointer color
    */
   void updateLineMeter(uint8_t id, uint16_t x, uint16_t y, uint16_t size, uint16_t start, uint16_t end, uint32_t pointerColor, uint32_t bgColor);
-
-  /**
-   * @fn setMeterScale
-   * @brief Sets parameters for the linear meter control
-   * @param obj pointer to a line meter object
-   * @param angle angle of the scale (0..360)
-   * @param start minimum value
-   * @param end maximum value
-   */
-  void setMeterScale(sControlinf_t* obj, uint16_t angle, int16_t start, int16_t end);
 
   /**
    * @fn setMeterValue
@@ -1154,7 +1118,6 @@ public:
 
 private:
   TwoWire* _pWire;
-  sControlinf_t head;
   sGenericNode_t *line_chart_head = NULL;
   sGenericNode_t *series_head = NULL;
   sGenericNode_t *compass_head = NULL;
@@ -1171,11 +1134,9 @@ private:
   sGenericNode_t *gif_head = NULL;
   uint8_t _deviceAddr;
 
-  uint8_t addChartPoint(sControlinf_t* obj, uint8_t id, uint16_t value);
   uint8_t setChartAxisTexts(uint8_t chartId, uint8_t axis, String text);
   uint8_t getNewID(sGenericNode_t** head);
   void deleteNodeByID(sGenericNode_t** head, uint8_t id);
-  uint8_t getNumber(uint8_t id);
   uint8_t getID(uint8_t type);
 
   uint8_t* creatCommand(uint8_t cmd, uint8_t len);

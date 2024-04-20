@@ -1,6 +1,6 @@
 /**!
- * @file  drawLine.ino
- * @brief  Draw lines on the display
+ * @file  graphics.ino
+ * @brief  draw graphics on the display
  * @details  Draw various lines on the display screen by setting different parameters (maximum screen size 320*240);
  * @n  Can display: 16 or 24 bit (color depth) bmp picture; Small size (under 70*70)png image
  * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
@@ -13,7 +13,7 @@
  */
 #include "DFRobot_LcdDisplay.h"
 
-#define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
+// #define I2C_COMMUNICATION  // I2C communication. If you want to use UART communication, comment out this line of code.
 
 #ifdef  I2C_COMMUNICATION
 /**
@@ -39,7 +39,7 @@ DFRobot_Lcd_UART lcd(FPSerial);
  * BLACK BLUE RED GREEN CYAN MAGENTA
  * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
  * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
- * GREENYELLOW DCYAN
+ * GREENYELLOW 
  */
 void setup(void)
 {

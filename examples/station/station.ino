@@ -53,22 +53,22 @@ void flash()   //Interrupt handler that handles changes in time
 }
 
 void setLux(uint8_t value){
-  lcd.setBar(bar1, value);
+  lcd.setBarValue(bar1, value);
   lcd.updateString(labelId1, 260, 22, String(value)+"lux", 0, ORANGE);
 }
 
 void setTemp(uint8_t value){
-  lcd.setBar(bar2, value);
+  lcd.setBarValue(bar2, value);
   lcd.updateString(labelId2, 260, 62, String(value)+"°C", 0, RED);
 }
 
 void setHum(uint8_t value){
-  lcd.setBar(bar3, value);
+  lcd.setBarValue(bar3, value);
   lcd.updateString(labelId3, 260, 102, String(value)+"%", 0, BLUE);
 }
 
 void setWind(uint8_t value){
-  lcd.setBar(bar4, value);
+  lcd.setBarValue(bar4, value);
   lcd.updateString(labelId4, 260, 142, String(value)+"m/s", 0, GREEN);
 }
 
@@ -77,7 +77,7 @@ void setWind(uint8_t value){
  * BLACK BLUE RED GREEN CYAN MAGENTA
  * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
  * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
- * GREENYELLOW DCYAN
+ * GREENYELLOW 
  */
 void setup(void)
 {
@@ -132,14 +132,11 @@ void setup(void)
   setTemp(rand()%100);
   setHum(rand()%100);
   setWind(rand()%100);
+
   lcd.drawGif(0, 80, lcd.eGifRain, 160);     // Rain icon
   lcd.drawGif(115, 0, lcd.eGifSun, 120);    // Sun icon
   lcd.drawGif(115, 120, lcd.eGifWind, 120);  // Wind icon
-/*
-  lcd.drawGif(0, 80, "rain.gif", 160);     // Rain icon
-  lcd.drawGif(115, 0, "sun.gif", 120);    // Sun icon
-  lcd.drawGif(115, 120, "wind.gif", 120);  // Wind icon
-*/
+
   MsTimer2::set(1000, flash);        // Interrupt setting function, enter interrupt every 1000ms
   MsTimer2::start();                 // start counting  
 }

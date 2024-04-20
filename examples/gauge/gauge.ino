@@ -1,10 +1,10 @@
 
 /**!
  * @file gauge.ino
- * @brief Dial Control
+ * @brief Gauge Control
  * @details Can be used for displaying values such as speed and pressure.
  * @n  Most parameters are related to the screen size (320*240). Please ensure that the custom parameters do not exceed the screen limits.
- * @n  After scaling the dial widget, the display quality may degrade. Please use appropriate parameters
+ * @n  After scaling the gauge widget, the display quality may degrade. Please use appropriate parameters
  * @copyright  Copyright (c) 2010 DFRobot Co.Ltd (http://www.dfrobot.com)
  * @license     The MIT License (MIT)
  * @author [fengli](li.feng@dfrobot.com)
@@ -42,7 +42,7 @@
  * BLACK BLUE RED GREEN CYAN MAGENTA
  * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
  * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
- * GREENYELLOW DCYAN
+ * GREENYELLOW 
  */
 uint32_t bgColor = GREEN;
 uint32_t pointerColor = RED;
@@ -69,7 +69,7 @@ void testGauge(){
     // Delete the dashboard
     lcd.deleteGauge(gaugeId[0]);
     delay(100);
-    // Create multiple dashboards, using random pointer colors, random background colors, and set the dial value to random so that it covers the entire screen
+    // Create multiple dashboards, using random pointer colors, random background colors, and set the gauge value to random so that it covers the entire screen
     for(uint8_t i = 0; i < 12; i++){
       bgColor = generateRandomColor();
       pointerColor = generateRandomColor();

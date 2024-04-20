@@ -41,7 +41,7 @@
  * BLACK BLUE RED GREEN CYAN MAGENTA
  * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
  * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
- * GREENYELLOW DCYAN
+ * GREENYELLOW 
  */
 // fill color
 uint32_t barColor = 0x00FF00;
@@ -57,7 +57,7 @@ void testBar(){
 	  // Create a vertical progress bar
     barId[0] = lcd.creatBar(/*x = */0, /*y = */10, /*width=*/10, /*height=*/200, /*progress bar color*/RED);
     // Set the value of the progress bar to 50
-    lcd.setBar(barId[0],50);
+    lcd.setBarValue(barId[0],50);
     // Change the position of the progress bar (from left to right) and set the color to random
     for(uint8_t i = 0; i <= 10; i++){
       barColor = generateRandomColor();
@@ -81,7 +81,7 @@ void testBar(){
     delay(1000);
     // Set a random value for each progress bar in turn
     for(uint8_t i = 0; i<=10; i++){
-      lcd.setBar(barId[i],rand()%100);
+      lcd.setBarValue(barId[i],rand()%100);
       delay(100);
     }
     delay(1000);

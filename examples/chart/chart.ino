@@ -35,8 +35,6 @@
   DFRobot_Lcd_UART lcd(FPSerial);
 #endif
 
-DFRobot_LcdDisplay::sControlinf_t* chart;
-
 uint8_t chartId1 = 0;
 uint8_t chartId2 = 0;
 uint8_t chartId3 = 0;
@@ -50,7 +48,7 @@ uint16_t point2[5] = { 90,30,80,10,100 };
  * BLACK BLUE RED GREEN CYAN MAGENTA
  * YELLOW WHITE NAVY DARKGREEN DARKCYAN MAROON
  * PURPLE OLIVE LIGHTGREY DARKGREY ORANGE
- * GREENYELLOW DCYAN
+ * GREENYELLOW 
  */
 void testChart(){
     // Create a chart and set the background color to white and the mode to Line chart mode
